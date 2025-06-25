@@ -1,134 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verda4Garden – Pet Available</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f8f5f0;
-      margin: 0;
-      padding: 0;
-      color: #444;
-    }
-    header {
-      background: linear-gradient(to right, #e8dcc9, #f4ede3);
-      padding: 30px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      color: #5a4b3b;
-      border-bottom: 3px solid #e1d4be;
-    }
-    .container {
-      padding: 30px;
-      max-width: 900px;
-      margin: auto;
-      background: #fffaf3;
-      box-shadow: 0 0 15px rgba(0,0,0,0.05);
-      border-radius: 14px;
-    }
-    h3 {
-      margin-top: 40px;
-      text-align: center;
-      color: #7a614c;
-      font-size: 22px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .pet-list, .sheckles-list, .sprinkler-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 20px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verda4Garden – Pets Available</title>
+<style>
+  /* Reset & base */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f5f0;
+    margin: 0; padding: 0; color: #444;
+  }
+
+  header {
+    background: linear-gradient(to right, #e8dcc9, #f4ede3);
+    padding: 30px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #5a4b3b;
+    border-bottom: 3px solid #e1d4be;
+    user-select: none;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 30px auto 60px;
+    padding: 30px;
+    background: #fffaf3;
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.07);
+  }
+
+  h3 {
+    margin-top: 40px;
+    text-align: center;
+    color: #7a614c;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    user-select: none;
+  }
+
+  /* Lists */
+  .pet-list, .sheckles-list, .sprinkler-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  /* Items */
+  .pet-item, .sheckles-item, .sprinkler-item {
+    background: #fef7ee;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    font-size: 16px;
+    color: #5a4b3b;
+    cursor: pointer;
+    flex: 1 1 220px;
+    max-width: 260px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+  }
+
+  .pet-item:hover, .sheckles-item:hover, .sprinkler-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  .pet-icon {
+    font-size: 48px;
+    width: 64px;
+    text-align: center;
+  }
+
+  .pet-info strong {
+    color: #a0683c;
+    font-size: 18px;
+    display: block;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    font-size: 14px;
+    color: #8c7e6b;
+    padding: 30px 15px;
+    background: #f8f1e7;
+    border-top: 2px solid #e0d4c2;
+    user-select: none;
+  }
+
+  .button-group {
+    margin-top: 15px;
+  }
+
+  .social-button {
+    display: inline-block;
+    margin: 6px 12px;
+    padding: 10px 24px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+  }
+
+  .social-button:hover {
+    transform: scale(1.05);
+  }
+
+  /* Modal */
+  #petModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  #petModal .modal-content {
+    background: #fffaf3;
+    padding: 28px 30px 36px;
+    border-radius: 14px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    position: relative;
+  }
+
+  #petModal .close-btn {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b5946;
+    font-weight: 700;
+    line-height: 1;
+    user-select: none;
+  }
+
+  #petModal h2 {
+    color: #7a614c;
+    margin-bottom: 12px;
+    font-size: 28px;
+    user-select: none;
+  }
+
+  #petModal p {
+    font-size: 16px;
+    margin: 6px 0;
+    color: #5a4b3b;
+    user-select: text;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
     .pet-item, .sheckles-item, .sprinkler-item {
-      flex: 1 1 45%;
-      background: #fef7ee;
-      padding: 18px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      font-size: 16px;
-      color: #5a4b3b;
+      flex: 1 1 100%;
+      max-width: 100%;
     }
-    .pet-item strong, .sheckles-item strong, .sprinkler-item strong {
-      color: #a0683c;
-    }
-    footer {
-      text-align: center;
-      font-size: 14px;
-      color: #8c7e6b;
-      padding: 30px;
-      background: #f8f1e7;
-      margin-top: 40px;
-      border-top: 2px solid #e0d4c2;
-    }
-    .button-group {
-      margin-top: 15px;
-    }
-    .social-button {
-      display: inline-block;
-      margin: 6px 12px;
-      padding: 10px 24px;
-      background-color: #25d366;
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 15px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-    .social-button:hover {
-      transform: scale(1.05);
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <header>
-    Verda4Garden – Pets Available
-  </header>
-  <div class="container">
-    <div class="pet-list">
-      <div class="pet-item"><strong>DB 1</strong>: 100K</div>
-      <div class="pet-item"><strong>QB 1</strong>: 35k</div>
-      <div class="pet-item"><strong>Redfox 1</strong>: 15k</div>
-      <div class="pet-item"><strong>Mantis 10+ (2)</strong>: 5k</div>
-      <div class="pet-item"><strong>Mantis 30+ (2)</strong>: 10k</div>
-      <div class="pet-item"><strong>Seal (3)</strong>: 10k</div>
-      <div class="pet-item"><strong>Macaw 1</strong>: 30k</div>
-      <div class="pet-item"><strong>Moon Cat (6)</strong>: 5k</div>
-      <div class="pet-item"><strong>Blood Owl 1</strong>: 15k</div>
-      <div class="pet-item"><strong>Night Owl (2)</strong>: 10k</div>
-      <div class="pet-item"><strong>Owl (3)</strong>: 5k</div>
-      <div class="pet-item"><strong>Peacock (2)</strong>: offer</div>
-      <div class="pet-item"><strong>Capybara 1</strong>: offer</div>
-      <div class="pet-item"><strong>Toucan (2)</strong>: offer</div>
-      <div class="pet-item"><strong>Orangutan 1</strong>: offer</div>
-      <div class="pet-item"><strong>Petal Bee 1</strong>: 5k</div>
-    </div>
 
-    <h3>Sheckles Available</h3>
-    <div class="sheckles-list">
-      <div class="sheckles-item"><strong>1.8T</strong>: 3rb</div>
-      <div class="sheckles-item"><strong>2.7T</strong>: 5rb</div>
-      <div class="sheckles-item"><strong>3.6T</strong>: 8k</div>
-      <div class="sheckles-item"><strong>4.5T</strong>: 10k</div>
-    </div>
+<header>Verda4Garden – Pets Available</header>
 
-    <h3>Sprinkler Available</h3>
-    <div class="sprinkler-list">
-      <div class="sprinkler-item"><strong>Full Paket</strong>: 15k</div>
-    </div>
+<div class="container">
+
+  <div class="pet-list" id="petList"></div>
+
+  <h3>Sheckles Available</h3>
+  <div class="sheckles-list">
+    <div class="sheckles-item"><strong>1.8T</strong>: 3k</div>
+    <div class="sheckles-item"><strong>2.7T</strong>: 5k</div>
+    <div class="sheckles-item"><strong>3.6T</strong>: 8k</div>
+    <div class="sheckles-item"><strong>4.5T</strong>: 10k</div>
   </div>
-  <footer>
-    Contact us via TikTok: <strong>@fahril29124</strong><br>
-    Prices may vary depending on pet size and availability.<br>
-    <div class="button-group">
-      <a class="social-button" href="https://wa.me/6285651205765" target="_blank">Chat for Pets</a>
-      <a class="social-button" href="https://wa.me/6281545733412" target="_blank">Chat for Sheckles</a>
-    </div>
-  </footer>
+
+  <h3>Sprinkler Available</h3>
+  <div class="sprinkler-list">
+    <div class="sprinkler-item"><strong>Full Paket</strong>: 10k</div>
+  </div>
+</div>
+
+<footer>
+  Contact us via TikTok or whatsapp: <strong>@fahril29124</strong><br />
+  Prices may vary depending on pet size and availability.<br />
+  <div class="button-group">
+    <a class="social-button" href="https://wa.me/6285651205765" target="_blank" rel="noopener">Chat for Pets</a>
+    <a class="social-button" href="https://wa.me/6281545733412" target="_blank" rel="noopener">Chat for Sheckles</a>
+    <a class="social-button" href="https://linktr.ee/FahrilAS" target="_blank" rel="noopener">Linktree</a>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div id="petModal" role="dialog" aria-modal="true" aria-labelledby="modalName" tabindex="-1">
+  <div class="modal-content">
+    <button class="close-btn" aria-label="Close modal" onclick="closeModal()">×</button>
+    <div class="pet-icon" id="modalIcon">🐾</div>
+    <h2 id="modalName"></h2>
+    <p id="modalDesc"></p>
+    <p><strong>Rarity:</strong> <span id="modalRarity"></span></p>
+  </div>
+</div>
+
+<script>
+  // Data for pets
+  const petData = {
+    DB: {
+      emoji: "🐝🎉",
+      name: "Disco Bee",
+      rarity: "Divine",
+      desc: "Pet Divine yang paling langka. Setiap ~15 menit ada peluang 12% untuk membuat buah sekitar menjadi Disco dengan nilai jual hingga 125x.",
+      price: "90k"
+    },
+    QB: {
+      emoji: "👑🐝",
+      name: "Queen Bee",
+      rarity: "Divine",
+      desc: "Pet Divine terbesar. Setiap ~25 menit memberikan mutasi Pollinated pada buah sekitar dan menyegarkan kemampuan pet dengan cooldown tertinggi.",
+      price: "30k"
+    },
+    Redfox: {
+      emoji: "🦊",
+      name: "Red Fox",
+      rarity: "Mythical",
+      desc: "Tiada ~8 menit duplikasi seed player lain.",
+      price: "15k"
+    },
+    Mantis10: {
+      emoji: "🦗",
+      name: "Praying Mantis (10+)",
+      rarity: "Mythical",
+      desc: "Setiap ~80 detik beri ~1.5× chance mutasi.",
+      price: "5k"
+    },
+    Mantis30: {
+      emoji: "🦗",
+      name: "Praying Mantis (30+)",
+      rarity: "Mythical",
+      desc: "Setiap ~80 detik beri ~1.5× chance mutasi.",
+      price: "10k"
+    },
+    Seal: {
+      emoji: "🦭",
+      name: "Seal",
+      rarity: "Rare",
+      desc: "Saat dijual dapat refund pet egg.",
+      price: "10k"
+    },
+    Macaw: {
+      emoji: "🦜❤️",
+      name: "Scarlet Macaw",
+      rarity: "Paradise",
+      desc: "Ada chance apply Verdent mutation.",
+      price: "30k"
+    },
+    Moon: {
+      emoji: "🌕🐱",
+      name: "Moon Cat",
+      rarity: "Legendary",
+      desc: "Boost ukuran buah + replant Moonlit fruits.",
+      price: "5k"
+    },
+    Blood: {
+      emoji: "🦉🩸",
+      name: "Blood Owl",
+      rarity: "Mythical",
+      desc: "Tambahan XP ke semua pet aktif.",
+      price: "15k"
+    },
+    Night: {
+      emoji: "🌙🦉",
+      name: "Night Owl",
+      rarity: "Night",
+      desc: "Tambahan 0.23 XP/s ke semua pet.",
+      price: "10k"
+    },
+    Owl: {
+      emoji: "🦉",
+      name: "Owl",
+      rarity: "Mythical",
+      desc: "Tambahan 0.22 XP/s ke semua pet.",
+      price: "5k"
+    },
+    Peacock: {
+      emoji: "🦚",
+      name: "Peacock",
+      rarity: "Paradise",
+      desc: "Kurangi cooldown pet lain secara acak.",
+      price: "offer"
+    },
+    Capybara: {
+      emoji: "🦫",
+      name: "Capybara",
+      rarity: "Paradise",
+      desc: "Tidak pernah kelaparan + lebih banyak XP.",
+      price: "offer"
+    },
+    Toucan: {
+      emoji: "🦜",
+      name: "Toucan",
+      rarity: "Rare",
+      desc: "Boost ukuran buah tropis dalam radius.",
+      price: "offer"
+    },
+    Orangutan: {
+      emoji: "🦧",
+      name: "Orangutan",
+      rarity: "Rare",
+      desc: "~2.5% refund buah saat dijual.",
+      price: "offer"
+    },
+    Petal: {
+      emoji: "🌸🐝",
+      name: "Petal Bee",
+      rarity: "Event",
+      desc: "Polinasi tiap 25 menit + 1% chance bunga tetap.",
+      price: "5k"
+    }
+  };
+
+  const petList = document.getElementById('petList');
+
+  // Generate pet items dynamically
+  for (const key in petData) {
+    const pet = petData[key];
+    const div = document.createElement('div');
+    div.className = 'pet-item';
+    div.dataset.key = key;
+    div.setAttribute('tabindex', '0');
+    div.setAttribute('role', 'button');
+    div.setAttribute('aria-label', `${pet.name}, price ${pet.price}`);
+    div.innerHTML = `
+      <div class="pet-icon">${pet.emoji}</div>
+      <div class="pet-info">
+        <strong>${key}</strong>: ${pet.price}
+      </div>
+    `;
+    petList.appendChild(div);
+  }
+
+  // Modal elements
+  const petModal = document.getElementById('petModal');
+  const modalName = document.getElementById('modalName');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalRarity = document.getElementById('modalRarity');
+  const modalIcon = document.getElementById('modalIcon');
+
+  // Open modal on click or keyboard (Enter, Space)
+  petList.addEventListener('click', e => {
+    openPetModal(e.target);
+  });
+
+  petList.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      openPetModal(e.target);
+      e.preventDefault();
+    }
+  });
+
+  function openPetModal(target) {
+    while (target && !target.classList.contains('pet-item')) {
+      target = target.parentElement;
+    }
+    if (!target) return;
+
+    const key = target.dataset.key;
+    if (petData[key]) {
+      const pet = petData[key];
+      modalName.textContent = pet.name;
+      modalDesc.textContent = pet.desc;
+      modalRarity.textContent = pet.rarity;
+      modalIcon.textContent = pet.emoji;
+      petModal.style.display = 'flex';
+      petModal.focus();
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  // Close modal
+  function closeModal() {
+    petModal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Close modal when clicking outside content
+  petModal.addEventListener('click', e => {
+    if (e.target === petModal) closeModal();
+  });
+
+  // Close modal on ESC key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && petModal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+</script>
 </body>
 </html>
