@@ -1,16 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Verda4Garden – Pets Available</title>
+<title>Verda4Garden – Pets, Sheckles & Sprinkler Available</title>
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* Reset & base */
+  /* Base & Layout Styles */
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: #f8f5f0;
     margin: 0; padding: 0; color: #444;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
   }
+  body.dark-mode {
+    background: #222;
+    color: #eee;
+  }
+  body.dark-mode header {
+    background: linear-gradient(to right, #333, #444);
+    color: #eee;
+    border-bottom: 3px solid #555;
+  }
+  body.dark-mode .container {
+    background: #333;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  }
+  body.dark-mode h3 {
+    color: #a0a0a0;
+  }
+  body.dark-mode .pet-item, body.dark-mode .bundle-item {
+    background: #444;
+    color: #ddd;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  body.dark-mode .pet-item:hover {
+    background-color: #555; /* Darker hover for dark mode */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+  body.dark-mode .bundle-item:hover {
+    background-color: #5a6b5a; /* Darker hover for dark mode bundle */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+  body.dark-mode .pet-info strong {
+    color: #ccc;
+  }
+  body.dark-mode .bundle-name {
+    color: #eee;
+  }
+  body.dark-mode .bundle-price {
+    color: #90ee90;
+  }
+  body.dark-mode #cartPanel, body.dark-mode #historyPanel {
+    background: #333;
+    box-shadow: -3px 0 15px rgba(0,0,0,0.3);
+  }
+  body.dark-mode .cart-item, body.dark-mode .history-item {
+    border-bottom: 1px solid #555;
+  }
+  body.dark-mode .cart-item-name {
+    color: #ccc;
+  }
+  body.dark-mode #cartTotal, body.dark-mode #discountDisplay {
+    color: #eee;
+  }
+  body.dark-mode #checkoutForm label {
+    color: #ccc;
+  }
+  body.dark-mode #checkoutForm input,
+  body.dark-mode #checkoutForm textarea,
+  body.dark-mode #checkoutForm select {
+    background: #555;
+    color: #eee;
+    border: 1px solid #666;
+  }
+  body.dark-mode #checkoutForm input::placeholder,
+  body.dark-mode #checkoutForm textarea::placeholder {
+    color: #aaa;
+  }
+  body.dark-mode #langSelector, body.dark-mode #darkModeToggle {
+    background: #555;
+    color: #eee;
+    border: 1px solid #666;
+  }
+  body.dark-mode .cart-item-controls button {
+    background: #666;
+  }
+  body.dark-mode .cart-item-controls button:disabled {
+    background: #888;
+  }
+
 
   header {
     background: linear-gradient(to right, #e8dcc9, #f4ede3);
@@ -21,8 +101,28 @@
     color: #5a4b3b;
     border-bottom: 3px solid #e1d4be;
     user-select: none;
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    box-sizing: border-box;
+    min-height: 80px;
   }
-
+  #langSelector, #darkModeToggle {
+    position: static;
+    margin: 5px 0;
+    padding: 6px 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
   .container {
     max-width: 960px;
     margin: 30px auto 60px;
@@ -31,28 +131,38 @@
     border-radius: 14px;
     box-shadow: 0 0 20px rgba(0,0,0,0.07);
   }
-
   h3 {
-    margin-top: 40px;
-    text-align: center;
     color: #7a614c;
-    font-size: 22px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    user-select: none;
+    margin-top: 30px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    text-align: center;
   }
-
-  /* Lists */
-  .pet-list, .sheckles-list, .sprinkler-list {
+  .product-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .product-section-header h3 {
+    margin: 0;
+  }
+  .filter-controls {
+    display: flex;
+    gap: 10px;
+  }
+  .filter-controls input, .filter-controls select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  .pet-list, .sheckles-list, .sprinkler-list, .bundle-list {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    margin-top: 20px;
     justify-content: center;
   }
-
-  /* Items */
-  .pet-item, .sheckles-item, .sprinkler-item {
+  .pet-item {
     background: #fef7ee;
     padding: 18px 22px;
     border-radius: 12px;
@@ -60,359 +170,1809 @@
     font-size: 16px;
     color: #5a4b3b;
     cursor: pointer;
-    flex: 1 1 220px;
-    max-width: 260px;
+    flex: 1 1 260px;
+    max-width: 300px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 14px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     user-select: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-
-  .pet-item:hover, .sheckles-item:hover, .sprinkler-item:hover {
+  .pet-item:hover {
     transform: translateY(-6px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    background-color: #fcefdc;
   }
-
   .pet-icon {
     font-size: 48px;
     width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .pet-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  .pet-info {
+    flex-grow: 1;
     text-align: center;
   }
-
   .pet-info strong {
     color: #a0683c;
     font-size: 18px;
     display: block;
+    margin-bottom: 6px;
   }
-
-  /* Footer */
-  footer {
-    text-align: center;
+  .pet-info p {
     font-size: 14px;
-    color: #8c7e6b;
-    padding: 30px 15px;
-    background: #f8f1e7;
-    border-top: 2px solid #e0d4c2;
-    user-select: none;
+    margin: 0;
+    line-height: 1.4;
   }
-
-  .button-group {
-    margin-top: 15px;
-  }
-
-  .social-button {
-    display: inline-block;
-    margin: 6px 12px;
-    padding: 10px 24px;
-    background-color: #25d366;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 15px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-  }
-
-  .social-button:hover {
-    transform: scale(1.05);
-  }
-
-  /* Modal */
-  #petModal {
-    display: none;
+  /* Cart Panel */
+  #cartPanel {
     position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-
-  #petModal .modal-content {
+    top: 80px;
+    right: 0;
+    width: 320px;
+    height: 90vh;
     background: #fffaf3;
-    padding: 28px 30px 36px;
-    border-radius: 14px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    position: relative;
+    box-shadow: -3px 0 15px rgba(0,0,0,0.1);
+    border-radius: 14px 0 0 14px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 10000;
+    overflow-y: auto;
   }
-
-  #petModal .close-btn {
-    position: absolute;
-    top: 14px;
-    right: 18px;
-    font-size: 24px;
-    background: none;
+  #cartPanel.open {
+    transform: translateX(0);
+  }
+  #cartToggleBtn {
+    position: fixed;
+    top: 90px;
+    right: 320px;
+    background: #25d366;
+    color: white;
     border: none;
-    cursor: pointer;
-    color: #6b5946;
+    border-radius: 12px 0 0 12px;
+    padding: 10px 18px;
     font-weight: 700;
-    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     user-select: none;
+    transition: background-color 0.2s ease;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-
-  #petModal h2 {
+  #cartToggleBtn:hover {
+    background: #20b858;
+  }
+  #cartItemCount {
+    background: #e94b35;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 25px;
+    text-align: center;
+  }
+  #cartPanel h3 {
+    margin: 0 0 16px 0;
     color: #7a614c;
-    margin-bottom: 12px;
-    font-size: 28px;
-    user-select: none;
+    font-size: 22px;
+    text-align: center;
+  }
+  #cartItems {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+  }
+  .cart-item {
+    border-bottom: 1px solid #e0d4c2;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cart-item-info {
+    flex-grow: 1;
+  }
+  .cart-item-name {
+    font-weight: 700;
+    color: #a0683c;
+  }
+  .cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cart-item-controls button {
+    background: #a0683c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .cart-item-controls button:disabled {
+    background: #e0d4c2;
+    cursor: not-allowed;
+  }
+  #cartTotal, #discountDisplay {
+    font-weight: 700;
+    font-size: 18px;
+    color: #5a4b3b;
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  #checkoutForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #checkoutForm label {
+    font-weight: 600;
+    color: #5a4b3b;
+  }
+  #checkoutForm input, #checkoutForm textarea, #checkoutForm select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    resize: vertical;
+  }
+  #checkoutBtn {
+    background: #25d366;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  #checkoutBtn:disabled {
+    background: #b2ddb0;
+    cursor: not-allowed;
+  }
+  #checkoutBtn:hover:not(:disabled) {
+    background: #20b858;
+  }
+  .error {
+    border-color: #e94b35;
+  }
+  .error-message {
+    font-size: 12px;
+    color: #e94b35;
+    display: none;
+    margin-top: -8px;
+    margin-bottom: 4px;
   }
 
-  #petModal p {
-    font-size: 16px;
-    margin: 6px 0;
-    color: #5a4b3b;
-    user-select: text;
+  /* History Panel */
+  #historyPanel {
+    position: fixed;
+    top: 80px;
+    right: 340px;
+    width: 320px;
+    max-height: 90vh;
+    background: #fffaf3;
+    box-shadow: -3px 0 15px rgba(0,0,0,0.1);
+    border-radius: 14px 0 0 14px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: none;
+    flex-direction: column;
+    user-select: none;
+    z-index: 10000;
   }
+  #historyPanel.open {
+    display: flex;
+  }
+  #historyPanel h3 {
+    margin: 0 0 16px 0;
+    color: #7a614c;
+    font-size: 22px;
+    text-align: center;
+  }
+  #historyItems .history-item {
+    border-bottom: 1px solid #e0d4c2;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #5a4b3b;
+  }
+  #historyToggleBtn {
+    position: fixed;
+    top: 90px;
+    right: 640px;
+    background: #3a3a3a;
+    color: white;
+    border: none;
+    border-radius: 12px 0 0 12px;
+    padding: 10px 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    user-select: none;
+    transition: background-color 0.2s ease;
+    z-index: 10001;
+  }
+  #historyToggleBtn:hover {
+    background: #1f1f1f;
+  }
+
+  /* Bundle list styling */
+  .bundle-item {
+    background: #dce9d9;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    font-size: 16px;
+    color: #3a503a;
+    cursor: pointer;
+    flex: 1 1 280px;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    user-select: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+  .bundle-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    background-color: #e4f0e1;
+  }
+  .bundle-name {
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .bundle-desc {
+    font-size: 14px;
+    color: #2f452f;
+    white-space: pre-wrap;
+  }
+  .bundle-price {
+    font-weight: 700;
+    font-size: 18px;
+    color: #2a6b2a;
+    margin-top: auto;
+  }
+
+  /* FAQ & Testimonials */
+  .faq-item, .testimonial-item {
+    background: #fef7ee;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .faq-item strong {
+    color: #7a614c;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .testimonial-item blockquote {
+    margin: 0 0 10px 0;
+    font-style: italic;
+    color: #5a4b3b;
+  }
+  .testimonial-item cite {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    color: #888;
+  }
+  body.dark-mode .faq-item, body.dark-mode .testimonial-item {
+    background: #444;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  body.dark-mode .faq-item strong {
+    color: #ccc;
+  }
+  body.dark-mode .testimonial-item blockquote {
+    color: #ddd;
+  }
+  body.dark-mode .testimonial-item cite {
+    color: #bbb;
+  }
+
+  /* Add to Cart Confirmation Pop-up */
+  .add-to-cart-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #25d366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .add-to-cart-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .add-to-cart-popup .icon {
+    font-size: 24px;
+  }
+
+  /* Flying item animation */
+  .flying-item {
+      position: fixed;
+      font-size: 30px;
+      z-index: 1000000;
+      pointer-events: none;
+      opacity: 1;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+
+  /* Skeleton Loading */
+  .skeleton-item {
+    background-color: #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    flex: 1 1 260px;
+    max-width: 300px;
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  .skeleton-item.bundle {
+      flex: 1 1 280px;
+      max-width: 320px;
+  }
+  .skeleton-item .skeleton-line {
+    background-color: #cccccc;
+    height: 1em;
+    border-radius: 4px;
+  }
+  .skeleton-item .skeleton-icon {
+    background-color: #cccccc;
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+  .skeleton-item .skeleton-line.title {
+    width: 80%;
+    height: 1.2em;
+    margin: 0 auto;
+  }
+  .skeleton-item .skeleton-line.desc {
+    width: 95%;
+    margin: 0 auto;
+  }
+  .skeleton-item .skeleton-line.price {
+    width: 50%;
+    height: 1.2em;
+    margin: 0 auto;
+  }
+  body.dark-mode .skeleton-item {
+    background-color: #4a4a4a;
+  }
+  body.dark-mode .skeleton-item .skeleton-line,
+  body.dark-mode .skeleton-item .skeleton-icon {
+    background-color: #666666;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+  }
+
 
   /* Responsive */
-  @media (max-width: 600px) {
-    .pet-item, .sheckles-item, .sprinkler-item {
-      flex: 1 1 100%;
-      max-width: 100%;
+  @media (max-width: 700px) {
+    header {
+      padding: 20px;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 24px;
+    }
+    #langSelector, #darkModeToggle {
+      width: calc(100% - 20px);
+    }
+
+    #cartPanel, #historyPanel {
+      width: 100%;
+      height: 60vh;
+      bottom: 0;
+      top: auto;
+      border-radius: 14px 14px 0 0;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    #cartPanel.open, #historyPanel.open {
+      transform: translateY(0);
+      display: flex !important;
+    }
+    #cartToggleBtn {
+      right: 0;
+      top: auto;
+      bottom: calc(60vh + 15px);
+      border-radius: 12px 0 0 12px;
+      padding: 12px 20px;
+      z-index: 10000;
+    }
+    #historyToggleBtn {
+      right: auto;
+      left: 0;
+      bottom: calc(60vh + 15px);
+      top: auto;
+      border-radius: 0 12px 12px 0;
+      padding: 12px 20px;
+      z-index: 10000;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    /* Adjust pet item layout for smaller screens */
+    .pet-item, .bundle-item {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .pet-info {
+        text-align: center;
+    }
+    .filter-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+    .filter-controls input, .filter-controls select {
+        width: calc(100% - 18px);
     }
   }
 </style>
 </head>
 <body>
 
-<header>Verda4Garden – Pets Available</header>
+<header>
+  Verda4Garden – Pets, Sheckles & Sprinkler Available
+  <select id="langSelector" aria-label="Pilih Bahasa / Choose Language">
+    <option value="id">Bahasa Indonesia</option>
+    <option value="en">English</option>
+  </select>
+  <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙 Dark Mode</button>
+</header>
 
 <div class="container">
 
+  <!-- Pet Section with Search & Filter -->
+  <div class="product-section-header">
+    <h3 id="petsTitle">Pets Available</h3>
+    <div class="filter-controls">
+      <input type="text" id="petSearchInput" placeholder="Cari pet..." aria-label="Cari pet">
+      <select id="petRarityFilter" aria-label="Filter berdasarkan kelangkaan">
+        <option value="">Semua Kelangkaan</option>
+        <!-- Options populated by JS -->
+      </select>
+    </div>
+  </div>
   <div class="pet-list" id="petList"></div>
 
-  <h3>Sheckles Available</h3>
-  <div class="sheckles-list">
-    <div class="sheckles-item"><strong>1.8T</strong>: 3k</div>
-    <div class="sheckles-item"><strong>2.7T</strong>: 5k</div>
-    <div class="sheckles-item"><strong>3.6T</strong>: 8k</div>
-    <div class="sheckles-item"><strong>4.5T</strong>: 10k</div>
-  </div>
+  <!-- Sheckles Section -->
+  <h3 id="shecklesTitle">Sheckles Available</h3>
+  <div class="sheckles-list" id="shecklesList"></div>
 
-  <h3>Sprinkler Available</h3>
-  <div class="sprinkler-list">
-    <div class="sprinkler-item"><strong>Full Paket</strong>: 10k</div>
-  </div>
+  <!-- Sprinkler Section -->
+  <h3 id="sprinklerTitle">Sprinkler Available</h3>
+  <div class="sprinkler-list" id="sprinklerList"></div>
+
+  <!-- Bundle Section -->
+  <h3 id="bundleTitle">Bundle Packages</h3>
+  <div class="bundle-list" id="bundleList"></div>
+
+  ---
+
+  <!-- FAQ Section -->
+  <h3 id="faqTitle">FAQ (Pertanyaan yang Sering Diajukan)</h3>
+  <div id="faqList"></div>
+
+  ---
+
+  <!-- Testimonial Section -->
+  <h3 id="testimonialsTitle">Testimoni Pelanggan</h3>
+  <div id="testimonialList"></div>
+
 </div>
 
-<footer>
-  Contact us via TikTok or whatsapp: <strong>@fahril29124</strong><br />
-  Prices may vary depending on pet size and availability.<br />
-  <div class="button-group">
-    <a class="social-button" href="https://wa.me/6285651205765" target="_blank" rel="noopener">Chat for Pets</a>
-    <a class="social-button" href="https://wa.me/6281545733412" target="_blank" rel="noopener">Chat for Sheckles</a>
-    <a class="social-button" href="https://linktr.ee/FahrilAS" target="_blank" rel="noopener">Linktree</a>
-  </div>
-</footer>
+<button id="cartToggleBtn" aria-expanded="false" aria-controls="cartPanel" aria-label="Toggle keranjang belanja">
+  🛒 <span id="cartButtonText">Keranjang</span> (<span id="cartItemCount">0</span>)
+</button>
+<button id="historyToggleBtn" aria-expanded="false" aria-controls="historyPanel" aria-label="Toggle riwayat pembelian">📜 Riwayat</button>
 
-<!-- Modal -->
-<div id="petModal" role="dialog" aria-modal="true" aria-labelledby="modalName" tabindex="-1">
-  <div class="modal-content">
-    <button class="close-btn" aria-label="Close modal" onclick="closeModal()">×</button>
-    <div class="pet-icon" id="modalIcon">🐾</div>
-    <h2 id="modalName"></h2>
-    <p id="modalDesc"></p>
-    <p><strong>Rarity:</strong> <span id="modalRarity"></span></p>
-  </div>
+<!-- Cart Panel -->
+<aside id="cartPanel" role="region" aria-label="Keranjang belanja">
+  <h3 id="cartTitle">Keranjang</h3>
+  <div id="cartItems">Keranjang kosong</div>
+  <div id="discountDisplay" style="display:none;"></div>
+  <div id="cartTotal">Total: Rp 0</div>
+
+  <form id="checkoutForm" aria-label="Formulir checkout">
+    <label for="buyerName" id="labelBuyerName">Nama ROBLOX <span style="color:red;">*</span></label>
+    <input type="text" id="buyerName" name="buyerName" required placeholder="USN roblox" autocomplete="name" />
+    <div id="buyerNameError" class="error-message">Nama minimal 3 karakter.</div>
+
+    <label for="paymentMethod" id="labelPaymentMethod">Metode Pembayaran <span style="color:red;">*</span></label>
+    <select id="paymentMethod" name="paymentMethod" required>
+      <option value="" disabled selected>Pilih metode pembayaran</option>
+      <!-- Options populated by JS -->
+    </select>
+    <div id="paymentMethodError" class="error-message">Pilih metode pembayaran.</div>
+
+    <label for="promoCode" id="labelPromoCode">Kode Promo</label>
+    <input type="text" id="promoCode" name="promoCode" placeholder="Masukkan kode promo" autocomplete="off" />
+    <div id="promoCodeMessage" class="error-message" style="display:none;"></div>
+
+    <label for="ratingSelect" id="labelRating">Rating</label>
+    <select id="ratingSelect" name="ratingSelect">
+      <option value="">Pilih rating (opsional)</option>
+      <!-- Options populated by JS -->
+    </select>
+
+    <label for="buyerNote" id="labelBuyerNote">Catatan (opsional)</label>
+    <textarea id="buyerNote" name="buyerNote" rows="2" placeholder="Contoh: minta yang gemuk kak"></textarea>
+
+    <button type="submit" id="checkoutBtn" disabled>Checkout via WhatsApp</button>
+  </form>
+</aside>
+
+<!-- History Panel -->
+<aside id="historyPanel" role="region" aria-label="Riwayat pembelian">
+  <h3>Riwayat Pembelian</h3>
+  <div id="historyItems">Belum ada riwayat pembelian.</div>
+</aside>
+
+<!-- Add to Cart Confirmation Pop-up -->
+<div id="addToCartPopup" class="add-to-cart-popup">
+  <span class="icon">✅</span> <span id="popupMessage"></span>
 </div>
 
 <script>
-  // Data for pets
-  const petData = {
-    DB: {
-      emoji: "🐝🎉",
-      name: "Disco Bee",
-      rarity: "Divine",
-      desc: "Pet Divine yang paling langka. Setiap ~15 menit ada peluang 12% untuk membuat buah sekitar menjadi Disco dengan nilai jual hingga 125x.",
-      price: "90k"
+  console.log("Script initiated."); // First log in the script
+
+  const allProducts = {
+    // Pets
+    DB: { emoji: "🐝🎉", price: 80000, category: "pet" },
+    QB: { emoji: "👑🐝", price: 30000, category: "pet" },
+    Redfox: { emoji: "🦊", price: 15000, category: "pet" },
+    Mantis10: { emoji: "🦗", price: 5000, category: "pet" },
+    Mantis30: { emoji: "🦗", price: 10000, category: "pet" },
+    Seal: { emoji: "🦭", price: 10000, category: "pet" },
+    Macaw: { emoji: "🦜❤️", price: 30000, category: "pet" },
+    Moon: { emoji: "🌕🐱", price: 5000, category: "pet" },
+    Blood: { emoji: "🦉🩸", price: 15000, category: "pet" },
+    Night: { emoji: "🌙🦉", price: 10000, category: "pet" },
+    Owl: { emoji: "🦉", price: 10000, category: "pet" },
+    Peacock: { emoji: "🦚", price: 15000, category: "pet" },
+    Dragonfly: { emoji: "🐉🪰", price: 55000, category: "pet" },
+    Raccoon: { emoji: "🦝", price: 85000, category: "pet" },
+    Butterfly: { emoji: "🦋", price: 70000, category: "pet" },
+    MimicOctopus: { emoji: "🐙", price: 100000, category: "pet" },
+
+    // Sheckles
+    sheckles1_8t: { emoji: "💰", price: 3000, category: "sheckles" },
+    sheckles2_7t: { emoji: "💰", price: 5000, category: "sheckles" },
+    sheckles3_6t: { emoji: "💰", price: 8000, category: "sheckles" },
+    sheckles4_5t: { emoji: "💰", price: 10000, category: "sheckles" },
+
+    // Sprinkler
+    sprinklerFullPackage: { emoji: "💦", price: 15000, category: "sprinkler" },
+
+    // Bundles
+    bundleA: { price: 120000, category: "bundle" },
+    bundleB: { price: 40000, category: "bundle" },
+    bundleC: { price: 22000, category: "bundle" }
+  };
+
+  let currentLang = 'id';
+
+  const translations = {
+    id: {
+      petsTitle: "Pets Tersedia",
+      shecklesTitle: "Sheckles Tersedia",
+      sprinklerTitle: "Sprinkler Tersedia",
+      bundleTitle: "Paket Bundling",
+      cartTitle: "Keranjang",
+      emptyCart: "Keranjang kosong",
+      totalText: "Total",
+      discountText: "Diskon",
+      finalTotalText: "Total Akhir",
+      buyerNameLabel: "Nama ROBLOX *",
+      paymentMethodLabel: "Metode Pembayaran *",
+      promoCodeLabel: "Kode Promo",
+      ratingLabel: "Rating",
+      noteLabel: "Catatan (opsional)",
+      checkoutBtn: "Checkout via WhatsApp",
+      paymentMethods: ["Pilih metode pembayaran", "GoPay", "Dana", "ShopeePay", "QRIS (scan di linktree)", "COD (Cash on Delivery)"],
+      promoInvalid: "Kode promo tidak valid",
+      promoExpired: "Kode promo sudah kadaluarsa.",
+      promoLimitReached: "Kode promo sudah mencapai batas penggunaan.",
+      promoLimitPerUser: (limit) => `Anda sudah menggunakan kode promo ini ${limit} kali.`,
+      promoApplied: "Kode promo berhasil diterapkan!",
+      ratingOptions: ["Pilih rating (opsional)", "1 ★", "2 ★★", "3 ★★★", "4 ★★★★", "5 ★★★★★"],
+      checkoutConfirm: "Apakah Anda yakin ingin checkout?",
+      historyTitle: "Riwayat Pembelian",
+      historyEmpty: "Belum ada riwayat pembelian.",
+      langLabel: "Pilih Bahasa",
+      cartToggleLabel: "Toggle keranjang belanja",
+      historyToggleLabel: "Toggle riwayat pembelian",
+      addToCartSuccess: (itemName) => `${itemName} ditambahkan ke keranjang!`,
+      searchPlaceholder: "Cari pet...",
+      filterAllRarities: "Semua Kelangkaan",
+      faqTitle: "FAQ (Pertanyaan yang Sering Diajukan)",
+      testimonialsTitle: "Testimoni Pelanggan",
+      cartButtonText: "Keranjang",
+      darkModeToggle: "🌙 Dark Mode",
+      lightModeToggle: "☀️ Light Mode",
+
+      pets: {
+        DB: { name: "Disco Bee", rarity: "Divine", desc: "Setiap ~20 menit, memiliki peluang 12.28% untuk mengaktifkan mutasi Disco (nilai 125x) pada buah terdekat." },
+        QB: { name: "Queen Bee", rarity: "Divine", desc: "Setiap ~25 menit, menerapkan mutasi Pollinated pada buah di sekitar dan mengatur ulang cooldown kemampuan pet lain." },
+        Redfox: { name: "Red Fox", rarity: "Mythical", desc: "Mencuri (mendupilasi) benih dari kebun pemain lain (khusus dari Seed Shop)." },
+        Mantis10: { name: "Praying Mantis (10+)", rarity: "Mythical", desc: "Memicu mutasi umum (Gold, Rainbow, Shocked, dll.), membuat hasil panen lebih berharga." },
+        Mantis30: { name: "Praying Mantis (30+)", rarity: "Mythical", desc: "Memicu mutasi umum (Gold, Rainbow, Shocked, dll.), membuat hasil panen lebih berharga." },
+        Seal: { name: "Seal", rarity: "Rare", desc: "Saat menjual pet, memiliki peluang 2% untuk mendapatkan kembali pet tersebut dalam bentuk telur." },
+        Macaw: { name: "Scarlet Macaw", rarity: "Paradise", desc: "Memiliki peluang 15.95% untuk memutasi buah Anda menjadi varian Verdant (nilai 4x) setiap 11.50 menit." },
+        Moon: { name: "Moon Cat", rarity: "Legendary", desc: "Meningkatkan ukuran buah (1.51x) dalam jarak kecil saat tidur setiap 1 menit. Juga membantu buah tipe Moon (Moon Mango, dll.) tetap di pohon setelah dipanen." },
+        Blood: { name: "Blood Owl", rarity: "Mythical", desc: "Membuat semua pet aktif Anda menua lebih cepat (mendapatkan XP lebih banyak)." },
+        Night: { name: "Night Owl", rarity: "Night", desc: "Memberikan tambahan XP kepada semua pet aktif sebesar 0.05 hingga 0.25 per detik." },
+        Owl: { name: "Owl", rarity: "Mythical", desc: "Memberikan tambahan 0.22 XP/detik kepada semua pet." },
+        Peacock: { name: "Peacock", rarity: "Paradise", desc: "Mengurangi cooldown kemampuan pet aktif (info lebih detail belum ditemukan)." },
+        Dragonfly: { name: "Dragonfly", rarity: "Rare", desc: "Memberikan mutasi Gold pada buah acak setiap 5 menit (nilai 20x lebih tinggi)." },
+        Raccoon: { name: "Raccoon", rarity: "Rare", desc: "Memberikan buah gratis setiap 15 menit dengan mengkloning buah dari kebun tetangga." },
+        Butterfly: { name: "Butterfly", rarity: "Rare", desc: "Menerapkan mutasi Rainbow (50x) pada tanaman dengan 5 mutasi setiap 30 menit (melewati yang difavoritkan)." },
+        MimicOctopus: { name: "Mimic Octopus", rarity: "Mythical", desc: "Meniru kemampuan pet aktif lainnya. Terbaik saat dipasangkan dengan pet S-tier lainnya." }
+      },
+      sheckles: {
+        sheckles1_8t: "Sheckles 1.8t",
+        sheckles2_7t: "Sheckles 2.7t",
+        sheckles3_6t: "Sheckles 3.6t",
+        sheckles4_5t: "Sheckles 4.5t"
+      },
+      sprinkler: {
+        sprinklerFullPackage: "Sprinkler Full Package"
+      },
+      bundles: {
+        bundleA: { name: "Bundle A", desc: "1 DB + 1 QB + 1 Redfox" },
+        bundleB: { name: "Bundle B", desc: "2 Mantis (10+) + 1 Seal + 1 Macaw" },
+        bundleC: { name: "Bundle C", desc: "3 Sheckles (3.6t) + 1 Sprinkler" }
+      },
+      faqs: [
+        { q: "Bagaimana cara membeli di sini?", a: "Pilih item yang Anda inginkan, tambahkan ke keranjang, isi detail di formulir checkout, lalu klik tombol WhatsApp untuk melanjutkan pembayaran dan pengiriman." },
+        { q: "Metode pembayaran apa saja yang diterima?", a: "Kami menerima pembayaran melalui GoPay, Dana, ShopeePay, QRIS, dan COD (Cash on Delivery)." },
+        { q: "Berapa lama proses pengiriman item?", a: "Pengiriman item biasanya diproses dalam 5-15 menit setelah pembayaran dikonfirmasi, tergantung antrean." },
+        { q: "Apakah ada garansi jika item tidak diterima?", a: "Tentu, jika ada kendala dalam pengiriman item, kami akan membantu memverifikasi dan memastikan Anda menerima pesanan atau pengembalian dana sesuai kebijakan." }
+      ],
+      testimonials: [
+        { quote: "Pelayanan cepat dan ramah! Pet yang saya beli sesuai deskripsi, sangat direkomendasikan.", author: "Arif, Pembeli Disco Bee" },
+        { quote: "Top up sheckles di sini selalu instan, jadi bisa langsung beli-beli di game.", author: "Budi, Pembeli Sheckles" },
+        { quote: "Awalnya ragu, tapi ternyata prosesnya mudah dan aman. Pasti beli lagi!", author: "Citra, Pembeli Bundle C" }
+      ]
     },
-    QB: {
-      emoji: "👑🐝",
-      name: "Queen Bee",
-      rarity: "Divine",
-      desc: "Pet Divine terbesar. Setiap ~25 menit memberikan mutasi Pollinated pada buah sekitar dan menyegarkan kemampuan pet dengan cooldown tertinggi.",
-      price: "30k"
-    },
-    Redfox: {
-      emoji: "🦊",
-      name: "Red Fox",
-      rarity: "Mythical",
-      desc: "Tiada ~8 menit duplikasi seed player lain.",
-      price: "15k"
-    },
-    Mantis10: {
-      emoji: "🦗",
-      name: "Praying Mantis (10+)",
-      rarity: "Mythical",
-      desc: "Setiap ~80 detik beri ~1.5× chance mutasi.",
-      price: "5k"
-    },
-    Mantis30: {
-      emoji: "🦗",
-      name: "Praying Mantis (30+)",
-      rarity: "Mythical",
-      desc: "Setiap ~80 detik beri ~1.5× chance mutasi.",
-      price: "10k"
-    },
-    Seal: {
-      emoji: "🦭",
-      name: "Seal",
-      rarity: "Rare",
-      desc: "Saat dijual dapat refund pet egg.",
-      price: "10k"
-    },
-    Macaw: {
-      emoji: "🦜❤️",
-      name: "Scarlet Macaw",
-      rarity: "Paradise",
-      desc: "Ada chance apply Verdent mutation.",
-      price: "30k"
-    },
-    Moon: {
-      emoji: "🌕🐱",
-      name: "Moon Cat",
-      rarity: "Legendary",
-      desc: "Boost ukuran buah + replant Moonlit fruits.",
-      price: "5k"
-    },
-    Blood: {
-      emoji: "🦉🩸",
-      name: "Blood Owl",
-      rarity: "Mythical",
-      desc: "Tambahan XP ke semua pet aktif.",
-      price: "15k"
-    },
-    Night: {
-      emoji: "🌙🦉",
-      name: "Night Owl",
-      rarity: "Night",
-      desc: "Tambahan 0.23 XP/s ke semua pet.",
-      price: "10k"
-    },
-    Owl: {
-      emoji: "🦉",
-      name: "Owl",
-      rarity: "Mythical",
-      desc: "Tambahan 0.22 XP/s ke semua pet.",
-      price: "5k"
-    },
-    Peacock: {
-      emoji: "🦚",
-      name: "Peacock",
-      rarity: "Paradise",
-      desc: "Kurangi cooldown pet lain secara acak.",
-      price: "offer"
-    },
-    Capybara: {
-      emoji: "🦫",
-      name: "Capybara",
-      rarity: "Paradise",
-      desc: "Tidak pernah kelaparan + lebih banyak XP.",
-      price: "offer"
-    },
-    Toucan: {
-      emoji: "🦜",
-      name: "Toucan",
-      rarity: "Rare",
-      desc: "Boost ukuran buah tropis dalam radius.",
-      price: "offer"
-    },
-    Orangutan: {
-      emoji: "🦧",
-      name: "Orangutan",
-      rarity: "Rare",
-      desc: "~2.5% refund buah saat dijual.",
-      price: "offer"
-    },
-    Petal: {
-      emoji: "🌸🐝",
-      name: "Petal Bee",
-      rarity: "Event",
-      desc: "Polinasi tiap 25 menit + 1% chance bunga tetap.",
-      price: "5k"
+    en: {
+      petsTitle: "Pets Available",
+      shecklesTitle: "Sheckles Available",
+      sprinklerTitle: "Sprinkler Available",
+      bundleTitle: "Bundle Packages",
+      cartTitle: "Cart",
+      emptyCart: "Cart is empty",
+      totalText: "Total",
+      discountText: "Discount",
+      finalTotalText: "Final Total",
+      buyerNameLabel: "Roblox Username *",
+      paymentMethodLabel: "Payment Method *",
+      promoCodeLabel: "Promo Code",
+      ratingLabel: "Rating",
+      noteLabel: "Note (optional)",
+      checkoutBtn: "Checkout via WhatsApp",
+      paymentMethods: ["Select payment method", "GoPay", "Dana", "ShopeePay", "QRIS (scan on linktree)", "COD (Cash on Delivery)"],
+      promoInvalid: "Invalid promo code",
+      promoExpired: "Promo code has expired.",
+      promoLimitReached: "Promo code has reached its usage limit.",
+      promoLimitPerUser: (limit) => `You have already used this promo code ${limit} times.`,
+      promoApplied: "Promo code applied successfully!",
+      ratingOptions: ["Select rating (optional)", "1 ★", "2 ★★", "3 ★★★", "4 ★★★★", "5 ★★★★★"],
+      checkoutConfirm: "Are you sure you want to checkout?",
+      historyTitle: "Purchase History",
+      historyEmpty: "No purchase history yet.",
+      langLabel: "Choose Language",
+      cartToggleLabel: "Toggle shopping cart",
+      historyToggleLabel: "Toggle purchase history",
+      addToCartSuccess: (itemName) => `${itemName} added to cart!`,
+      searchPlaceholder: "Search pets...",
+      filterAllRarities: "All Rarities",
+      faqTitle: "FAQ (Frequently Asked Questions)",
+      testimonialsTitle: "Customer Testimonials",
+      cartButtonText: "Cart",
+      darkModeToggle: "🌙 Dark Mode",
+      lightModeToggle: "☀️ Light Mode",
+
+      pets: {
+        DB: { name: "Disco Bee", rarity: "Divine", desc: "Every ~20 minutes, has a 12.28% chance to activate a Disco mutation (125x value) on nearby fruits." },
+        QB: { name: "Queen Bee", rarity: "Divine", desc: "Every ~25 minutes, applies Pollinated mutation to surrounding fruits and resets the highest cooldown pet ability." },
+        Redfox: { name: "Red Fox", rarity: "Mythical", desc: "Steals (duplicates) seeds from other players' farms (Seed Shop only)." },
+        Mantis10: { name: "Praying Mantis (10+)", rarity: "Mythical", desc: "Triggers common mutations (Gold, Rainbow, Shocked, etc.), making crops more valuable." },
+        Mantis30: { name: "Praying Mantis (30+)", rarity: "Mythical", desc: "Triggers common mutations (Gold, Rainbow, Shocked, etc.), making crops more valuable." },
+        Seal: { name: "Seal", rarity: "Rare", desc: "When selling a pet, has a 2% chance to get the pet back as an egg." },
+        Macaw: { name: "Scarlet Macaw", rarity: "Paradise", desc: "Has a 15.95% chance to mutate your fruit into a Verdant variant (4x value) every 11.50 minutes." },
+        Moon: { name: "Moon Cat", rarity: "Legendary", desc: "Increases fruit size (1.51x) within a small range while napping every 1 minute. Also helps Moon-type fruits (Moon Mango, etc.) stay on the plant after picking." },
+        Blood: { name: "Blood Owl", rarity: "Mythical", desc: "Makes all your active pets age faster (gain more XP)." },
+        Night: { name: "Night Owl", rarity: "Night", desc: "Grants 0.05 to 0.25 additional XP/second to all active pets." },
+        Owl: { name: "Owl", rarity: "Mythical", desc: "Grants 0.22 additional XP/second to all pets." },
+        Peacock: { name: "Peacock", rarity: "Paradise", desc: "Reduces the cooldown of active pet abilities (more details not found)." },
+        Dragonfly: { name: "Dragonfly", rarity: "Rare", desc: "Gives a guaranteed Gold plant every 5 minutes (worth 20x more)." },
+        Raccoon: { name: "Raccoon", rarity: "Rare", desc: "Gives free fruit every 15 minutes by cloning one from a neighbor's garden." },
+        Butterfly: { name: "Butterfly", rarity: "Rare", desc: "Applies Rainbow mutation (50x) to plants with five mutations every 30 minutes (skips favorited ones)." },
+        MimicOctopus: { name: "Mimic Octopus", rarity: "Mythical", desc: "Mimics the ability of an active pet. Best when paired with other S-tier animals." }
+      },
+      sheckles: {
+        sheckles1_8t: "Sheckles 1.8t",
+        sheckles2_7t: "Sheckles 2.7t",
+        sheckles3_6t: "Sheckles 3.6t",
+        sheckles4_5t: "Sheckles 4.5t"
+      },
+      sprinkler: {
+        sprinklerFullPackage: "Sprinkler Full Package"
+      },
+      bundles: {
+        bundleA: { name: "Bundle A", desc: "1 DB + 1 QB + 1 Redfox" },
+        bundleB: { name: "Bundle B", desc: "2 Mantis (10+) + 1 Seal + 1 Macaw" },
+        bundleC: { name: "Bundle C", desc: "3 Sheckles (3.6t) + 1 Sprinkler" }
+      },
+      faqs: [
+        { q: "How to buy here?", a: "Select the item you want, add it to the cart, fill in the details in the checkout form, then click the WhatsApp button to proceed with payment and delivery." },
+        { q: "What payment methods are accepted?", a: "We accept payments via GoPay, Dana, ShopeePay, QRIS, and COD (Cash on Delivery)." },
+        { q: "How long does it take to deliver items?", a: "Item delivery is usually processed within 5-15 minutes after payment confirmation, depending on the queue." },
+        { q: "Is there a guarantee if the item is not received?", a: "Certainly, if there are issues with item delivery, we will help verify and ensure you receive your order or a refund according to policy." }
+      ],
+      testimonials: [
+        { quote: "Fast and friendly service! The pet I bought matched the description, highly recommended.", author: "Arif, Disco Bee Buyer" },
+        { quote: "Topping up sheckles here is always instant, so I can immediately buy things in-game.", author: "Budi, Sheckles Buyer" },
+        { quote: "Initially hesitant, but it turned out to be an easy and safe process. Will definitely buy again!", author: "Citra, Bundle C Buyer" }
+      ]
     }
   };
 
-  const petList = document.getElementById('petList');
+  const promoCodes = {
+    "SAVE10": {
+      discount: 0.20,
+      expires: "2025-07-31T23:59:59",
+      usageLimit: 5,
+      usedCount: 0,
+      perUserLimit: 1
+    },
+    "HEMAT20": {
+      discount: 0.15,
+      expires: "2025-08-15T23:59:59",
+      usageLimit: 3,
+      usedCount: 0,
+      perUserLimit: 2
+    },
+    "123456": {
+      discount: 0.10,
+      expires: "2025-12-31T23:59:59",
+      usageLimit: 2,
+      usedCount: 0,
+      perUserLimit: 1
+    }
+  };
 
-  // Generate pet items dynamically
-  for (const key in petData) {
-    const pet = petData[key];
-    const div = document.createElement('div');
-    div.className = 'pet-item';
-    div.dataset.key = key;
-    div.setAttribute('tabindex', '0');
-    div.setAttribute('role', 'button');
-    div.setAttribute('aria-label', `${pet.name}, price ${pet.price}`);
-    div.innerHTML = `
-      <div class="pet-icon">${pet.emoji}</div>
-      <div class="pet-info">
-        <strong>${key}</strong>: ${pet.price}
+  let cart = [];
+  let purchaseHistory = [];
+  let promoUsage = {};
+  let darkMode = false;
+
+  const soundAdd = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
+  const soundRemove = new Audio("https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg");
+  const soundCheckout = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
+
+  // Declare DOM elements globally, but assign inside DOMContentLoaded
+  let langSelector, darkModeToggle, cartToggleBtn, historyToggleBtn, cartPanel, historyPanel,
+      checkoutForm, buyerNameInput, paymentMethodSelect, promoCodeInput, checkoutBtn,
+      buyerNameError, paymentMethodError, addToCartPopup, popupMessage, petSearchInput,
+      petRarityFilter, petListContainer, shecklesListContainer, sprinklerListContainer,
+      bundleListContainer, cartItemsContainer, cartTotalDisplay, discountDisplay, promoCodeMessage;
+
+  console.log("Global DOM variables declared. Waiting for DOMContentLoaded...");
+
+  // Load state from localStorage
+  function loadState() {
+    console.log("-> loadState() started.");
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      cart = JSON.parse(savedCart);
+      console.log("Cart loaded:", cart.length, "items.");
+    }
+    const savedHistory = localStorage.getItem('purchaseHistory');
+    if (savedHistory) {
+      purchaseHistory = JSON.parse(savedHistory);
+      console.log("History loaded:", purchaseHistory.length, "entries.");
+    }
+    const savedPromoUsage = localStorage.getItem('promoUsage');
+    if (savedPromoUsage) {
+      promoUsage = JSON.parse(savedPromoUsage);
+      console.log("Promo usage loaded.");
+    }
+    const savedPromoCodes = localStorage.getItem('promoCodes');
+    if (savedPromoCodes) {
+        const loadedPromoCodes = JSON.parse(savedPromoCodes);
+        Object.keys(promoCodes).forEach(code => {
+            if (loadedPromoCodes[code]) {
+                promoCodes[code].usedCount = loadedPromoCodes[code].usedCount;
+            }
+        });
+        console.log("Promo codes usage counts loaded.");
+    }
+
+    const savedLang = localStorage.getItem('currentLang');
+    if (savedLang && translations[savedLang]) {
+        currentLang = savedLang;
+        console.log("Language loaded:", currentLang);
+    }
+
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode === 'true') {
+        darkMode = true;
+        document.body.classList.add('dark-mode');
+        console.log("Dark mode loaded: ON");
+    } else {
+        darkMode = false;
+        document.body.classList.remove('dark-mode');
+        console.log("Dark mode loaded: OFF");
+    }
+    console.log("<- loadState() finished.");
+  }
+
+  // Save state to localStorage
+  function saveState() {
+    console.log("-> saveState() started.");
+    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('purchaseHistory', JSON.stringify(purchaseHistory));
+    localStorage.setItem('promoUsage', JSON.stringify(promoUsage));
+    localStorage.setItem('promoCodes', JSON.stringify(promoCodes));
+    console.log("<- saveState() finished.");
+  }
+
+  // Format price
+  function formatPrice(num) {
+    if (currentLang === 'id') {
+      return 'Rp ' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    } else {
+      const dollar = num / 15000;
+      return '$' + dollar.toFixed(2);
+    }
+  }
+
+  // Populate dynamic content based on selected language
+  function applyTranslations() {
+    console.log("-> applyTranslations() started for language:", currentLang);
+
+    // Explicitly re-get DOM elements, add checks to prevent null errors
+    const petsTitle = document.getElementById('petsTitle');
+    if (petsTitle) petsTitle.textContent = translations[currentLang].petsTitle; else console.warn("Element #petsTitle not found.");
+
+    const shecklesTitle = document.getElementById('shecklesTitle');
+    if (shecklesTitle) shecklesTitle.textContent = translations[currentLang].shecklesTitle; else console.warn("Element #shecklesTitle not found.");
+
+    const sprinklerTitle = document.getElementById('sprinklerTitle');
+    if (sprinklerTitle) sprinklerTitle.textContent = translations[currentLang].sprinklerTitle; else console.warn("Element #sprinklerTitle not found.");
+
+    const bundleTitle = document.getElementById('bundleTitle');
+    if (bundleTitle) bundleTitle.textContent = translations[currentLang].bundleTitle; else console.warn("Element #bundleTitle not found.");
+
+    const cartTitle = document.getElementById('cartTitle');
+    if (cartTitle) cartTitle.textContent = translations[currentLang].cartTitle; else console.warn("Element #cartTitle not found.");
+
+    const labelBuyerName = document.getElementById('labelBuyerName');
+    if (labelBuyerName) labelBuyerName.innerHTML = `${translations[currentLang].buyerNameLabel} <span style="color:red;">*</span>`; else console.warn("Element #labelBuyerName not found.");
+
+    const labelPaymentMethod = document.getElementById('labelPaymentMethod');
+    if (labelPaymentMethod) labelPaymentMethod.innerHTML = `${translations[currentLang].paymentMethodLabel} <span style="color:red;">*</span>`; else console.warn("Element #labelPaymentMethod not found.");
+
+    const labelPromoCode = document.getElementById('labelPromoCode');
+    if (labelPromoCode) labelPromoCode.textContent = translations[currentLang].promoCodeLabel; else console.warn("Element #labelPromoCode not found.");
+
+    const labelRating = document.getElementById('labelRating');
+    if (labelRating) labelRating.textContent = translations[currentLang].ratingLabel; else console.warn("Element #labelRating not found.");
+
+    const labelBuyerNote = document.getElementById('labelBuyerNote');
+    if (labelBuyerNote) labelBuyerNote.textContent = translations[currentLang].noteLabel; else console.warn("Element #labelBuyerNote not found.");
+
+    if (checkoutBtn) checkoutBtn.textContent = translations[currentLang].checkoutBtn; else console.warn("Element #checkoutBtn not found.");
+
+    const historyPanelH3 = document.querySelector('#historyPanel h3'); // Select the h3 inside historyPanel
+    if (historyPanelH3) historyPanelH3.textContent = translations[currentLang].historyTitle; else console.warn("Element #historyPanel h3 not found.");
+
+    if (cartToggleBtn) cartToggleBtn.setAttribute('aria-label', translations[currentLang].cartToggleLabel); else console.warn("Element #cartToggleBtn not found.");
+    if (historyToggleBtn) historyToggleBtn.setAttribute('aria-label', translations[currentLang].historyToggleLabel); else console.warn("Element #historyToggleBtn not found.");
+
+    const cartButtonText = document.getElementById('cartButtonText');
+    if (cartButtonText) cartButtonText.textContent = translations[currentLang].cartButtonText; else console.warn("Element #cartButtonText not found.");
+
+    const faqTitle = document.getElementById('faqTitle');
+    if (faqTitle) faqTitle.textContent = translations[currentLang].faqTitle; else console.warn("Element #faqTitle not found.");
+
+    const testimonialsTitle = document.getElementById('testimonialsTitle');
+    if (testimonialsTitle) testimonialsTitle.textContent = translations[currentLang].testimonialsTitle; else console.warn("Element #testimonialsTitle not found.");
+
+    if (petSearchInput) petSearchInput.placeholder = translations[currentLang].searchPlaceholder; else console.warn("Element #petSearchInput not found.");
+
+    if (petRarityFilter && petRarityFilter.options.length > 0) {
+      petRarityFilter.options[0].textContent = translations[currentLang].filterAllRarities;
+    } else {
+        console.warn("Element #petRarityFilter not found or has no options.");
+    }
+
+    if (darkModeToggle) {
+        darkModeToggle.textContent = darkMode ? translations[currentLang].lightModeToggle : translations[currentLang].darkModeToggle;
+    } else {
+        console.warn("Element #darkModeToggle not found.");
+    }
+
+    // Populate payment methods
+    if (paymentMethodSelect) {
+        paymentMethodSelect.innerHTML = ''; // Clear existing options
+        translations[currentLang].paymentMethods.forEach((method, index) => {
+            const option = document.createElement('option');
+            option.value = index === 0 ? "" : method;
+            option.textContent = method;
+            if (index === 0) { // First option is disabled/selected placeholder
+                option.disabled = true;
+                option.selected = true;
+            }
+            paymentMethodSelect.appendChild(option);
+        });
+    } else {
+        console.warn("Element #paymentMethodSelect not found.");
+    }
+
+    // Populate rating options
+    const ratingSelect = document.getElementById('ratingSelect');
+    if (ratingSelect) {
+        ratingSelect.innerHTML = '';
+        translations[currentLang].ratingOptions.forEach((optionText, index) => {
+            const option = document.createElement('option');
+            option.value = index === 0 ? "" : optionText;
+            option.textContent = optionText;
+            ratingSelect.appendChild(option);
+        });
+    } else {
+        console.warn("Element #ratingSelect not found.");
+    }
+
+
+    renderAllProducts();
+    updateCart();
+    renderHistory();
+    renderFAQ();
+    renderTestimonials();
+    populateRarityFilter();
+    console.log("<- applyTranslations() finished.");
+  }
+
+  function renderAllProducts() {
+      console.log("-> renderAllProducts() started.");
+      if (!petListContainer || !shecklesListContainer || !sprinklerListContainer || !bundleListContainer || !petSearchInput || !petRarityFilter) {
+          console.error("Critical product list containers or filter elements not found. Cannot render products.");
+          return;
+      }
+      showSkeletonLoading();
+
+      if (Object.keys(allProducts).length === 0) {
+          console.warn("No products defined in allProducts object. Displaying fallback messages.");
+          petListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No products to display.</p>`;
+          shecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No sheckles to display.</p>`;
+          sprinklerListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No sprinkler to display.</p>`;
+          bundleListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No bundle packages to display.</p>`;
+          hideSkeletonLoading();
+          return;
+      }
+
+      setTimeout(() => {
+          petListContainer.innerHTML = "";
+          shecklesListContainer.innerHTML = "";
+          sprinklerListContainer.innerHTML = "";
+          bundleListContainer.innerHTML = "";
+
+          const searchTerm = petSearchInput.value.toLowerCase();
+          const filterRarity = petRarityFilter.value;
+
+          let petsFound = false;
+          let shecklesFound = false;
+          let sprinklersFound = false;
+          let bundlesFound = false;
+
+          Object.entries(allProducts).forEach(([id, item]) => {
+              let name = "";
+              let desc = "";
+              let rarity = "";
+              let priceDisplay = formatPrice(item.price);
+              let div = document.createElement('div');
+              div.tabIndex = 0;
+              div.setAttribute('role', 'button');
+
+              const clickHandler = (e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  addToCart(id, name, item.price, item.emoji, rect.left, rect.top);
+              };
+
+              const keyHandler = (e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      addToCart(id, name, item.price, item.emoji, rect.left, rect.top);
+                  }
+              };
+
+              if (item.category === 'pet') {
+                  const petTranslation = translations[currentLang].pets[id];
+                  if (!petTranslation) { console.warn(`Translation missing for pet ID: ${id}`); return; }
+                  name = petTranslation.name;
+                  desc = petTranslation.desc;
+                  rarity = petTranslation.rarity;
+
+                  const matchesSearch = name.toLowerCase().includes(searchTerm) ||
+                                        desc.toLowerCase().includes(searchTerm) ||
+                                        rarity.toLowerCase().includes(searchTerm);
+                  const matchesRarity = filterRarity === "" || rarity === filterRarity;
+
+                  if (matchesSearch && matchesRarity) {
+                      div.className = "pet-item";
+                      div.setAttribute('aria-label', `${name}, ${rarity}, ${desc}, ${priceDisplay}`);
+                      div.innerHTML = `
+                          <div class="pet-icon">${item.emoji}</div>
+                          <div class="pet-info">
+                              <strong>${name} (${rarity})</strong>
+                              <p>${desc}</p>
+                              <p><strong>${priceDisplay}</strong></p>
+                          </div>
+                      `;
+                      div.onclick = clickHandler;
+                      div.onkeypress = keyHandler;
+                      petListContainer.appendChild(div);
+                      petsFound = true;
+                  }
+              } else if (item.category === 'sheckles') {
+                  name = translations[currentLang].sheckles[id];
+                  if (!name) { console.warn(`Translation missing for sheckles ID: ${id}`); return; }
+                  div.className = "pet-item";
+                  div.setAttribute('aria-label', `${name}, ${priceDisplay}`);
+                  div.innerHTML = `
+                      <div class="pet-icon">${item.emoji}</div>
+                      <div class="pet-info">
+                          <strong>${name}</strong>
+                          <p><strong>${priceDisplay}</strong></p>
+                      </div>
+                  `;
+                  div.onclick = clickHandler;
+                  div.onkeypress = keyHandler;
+                  shecklesListContainer.appendChild(div);
+                  shecklesFound = true;
+              } else if (item.category === 'sprinkler') {
+                  name = translations[currentLang].sprinkler[id];
+                  if (!name) { console.warn(`Translation missing for sprinkler ID: ${id}`); return; }
+                  div.className = "pet-item";
+                  div.setAttribute('aria-label', `${name}, ${priceDisplay}`);
+                  div.innerHTML = `
+                      <div class="pet-icon">${item.emoji}</div>
+                      <div class="pet-info">
+                          <strong>${name}</strong>
+                          <p><strong>${priceDisplay}</strong></p>
+                      </div>
+                  `;
+                  div.onclick = clickHandler;
+                  div.onkeypress = keyHandler;
+                  sprinklerListContainer.appendChild(div);
+                  sprinklersFound = true;
+              } else if (item.category === 'bundle') {
+                  const bundleTranslation = translations[currentLang].bundles[id];
+                  if (!bundleTranslation) { console.warn(`Translation missing for bundle ID: ${id}`); return; }
+                  name = bundleTranslation.name;
+                  desc = bundleTranslation.desc;
+                  div.className = "bundle-item";
+                  div.setAttribute('aria-label', `${name}, ${desc}, ${priceDisplay}`);
+                  div.innerHTML = `
+                      <div class="bundle-name">${name}</div>
+                      <div class="bundle-desc">${desc}</div>
+                      <div class="bundle-price">${priceDisplay}</div>
+                  `;
+                  div.onclick = clickHandler;
+                  div.onkeypress = keyHandler;
+                  bundleListContainer.appendChild(div);
+                  bundlesFound = true;
+              }
+          });
+
+          if (!petsFound) {
+              petListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">Tidak ada pet untuk ditampilkan.</p>`;
+          }
+          if (!shecklesFound) {
+              shecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">Tidak ada sheckles untuk ditampilkan.</p>`;
+          }
+          if (!sprinklersFound) {
+              sprinklerListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">Tidak ada sprinkler untuk ditampilkan.</p>`;
+          }
+          if (!bundlesFound) {
+              bundleListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">Tidak ada paket bundling untuk ditampilkan.</p>`;
+          }
+
+          hideSkeletonLoading();
+          console.log("<- renderAllProducts() finished.");
+      }, 500);
+  }
+
+
+  function populateRarityFilter() {
+    console.log("-> populateRarityFilter() started.");
+    if (!petRarityFilter) {
+        console.warn("Element #petRarityFilter not found. Skipping rarity filter population.");
+        return;
+    }
+    const rarities = new Set();
+    Object.values(translations[currentLang].pets).forEach(pet => {
+      if (pet.rarity) {
+        rarities.add(pet.rarity);
+      }
+    });
+
+    petRarityFilter.innerHTML = `<option value="">${translations[currentLang].filterAllRarities}</option>`;
+    Array.from(rarities).sort().forEach(rarity => {
+      const option = document.createElement('option');
+      option.value = rarity;
+      option.textContent = rarity;
+      petRarityFilter.appendChild(option);
+    });
+    console.log("<- populateRarityFilter() finished.");
+  }
+
+  function addToCart(id, name, price, emoji, startX, startY) {
+    console.log("-> addToCart() called for:", name);
+    const existing = cart.find(i => i.id === id);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({id, name, price, qty:1, emoji: emoji});
+    }
+    if (soundAdd) soundAdd.play();
+    showAddToCartPopup(name);
+    if (cartToggleBtn) flyItemToCart(emoji, startX, startY); // Only fly if cart button exists
+    updateCart();
+    saveState();
+    console.log("<- addToCart() finished. Cart:", cart);
+  }
+
+  function removeFromCart(id) {
+    console.log("-> removeFromCart() called for:", id);
+    const index = cart.findIndex(i => i.id === id);
+    if (index !== -1) {
+      if (cart[index].qty > 1) {
+        cart[index].qty--;
+      } else {
+        cart.splice(index, 1);
+      }
+      if (soundRemove) soundRemove.play();
+      updateCart();
+      saveState();
+    }
+    console.log("<- removeFromCart() finished. Cart:", cart);
+  }
+
+  function updateCart() {
+    console.log("-> updateCart() started.");
+    const cartItemCountSpan = document.getElementById('cartItemCount'); // Get it here again for safety
+
+    let totalItemsInCart = cart.reduce((sum, item) => sum + item.qty, 0);
+    if (cartItemCountSpan) cartItemCountSpan.textContent = totalItemsInCart;
+
+    if (cart.length === 0) {
+      if (cartItemsContainer) cartItemsContainer.textContent = translations[currentLang].emptyCart;
+      if (cartTotalDisplay) cartTotalDisplay.textContent = `${translations[currentLang].totalText}: ${formatPrice(0)}`;
+      if (discountDisplay) discountDisplay.style.display = "none";
+      if (promoCodeMessage) promoCodeMessage.style.display = "none";
+      validateForm();
+      console.log("Cart is empty. UI updated.");
+      return;
+    }
+
+    let html = "";
+    let subtotalPrice = 0;
+    cart.forEach(item => {
+      html += `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div>Qty: ${item.qty}</div>
+          <div>${formatPrice(item.price)} / pcs</div>
+        </div>
+        <div class="cart-item-controls">
+          <button aria-label="Kurangi jumlah ${item.name}" title="Kurangi" onclick="removeFromCart('${item.id}')">−</button>
+        </div>
       </div>
-    `;
-    petList.appendChild(div);
+      `;
+      subtotalPrice += item.price * item.qty;
+    });
+
+    let discountAmount = 0;
+    let finalPrice = subtotalPrice;
+    const promoCode = promoCodeInput ? promoCodeInput.value.trim().toUpperCase() : '';
+
+    if (promoCode && promoCodes[promoCode]) {
+      const promo = promoCodes[promoCode];
+      const now = new Date();
+      const expiryDate = new Date(promo.expires);
+      const buyerName = buyerNameInput ? buyerNameInput.value.trim().toLowerCase() : '';
+      const userPromoCount = (promoUsage[buyerName] && promoUsage[buyerName][promoCode]) || 0;
+
+
+      if (now > expiryDate) {
+        if (promoCodeMessage) {
+            promoCodeMessage.style.display = "block";
+            promoCodeMessage.style.color = "red";
+            promoCodeMessage.textContent = translations[currentLang].promoExpired;
+        }
+      } else if (promo.usedCount >= promo.usageLimit) {
+        if (promoCodeMessage) {
+            promoCodeMessage.style.display = "block";
+            promoCodeMessage.style.color = "red";
+            promoCodeMessage.textContent = translations[currentLang].promoLimitReached;
+        }
+      } else if (buyerName && promo.perUserLimit && userPromoCount >= promo.perUserLimit) {
+        if (promoCodeMessage) {
+            promoCodeMessage.style.display = "block";
+            promoCodeMessage.style.color = "red";
+            promoCodeMessage.textContent = translations[currentLang].promoLimitPerUser(promo.perUserLimit);
+        }
+      } else {
+        discountAmount = Math.round(subtotalPrice * promo.discount);
+        finalPrice = subtotalPrice - discountAmount;
+        if (promoCodeMessage) {
+            promoCodeMessage.style.display = "block";
+            promoCodeMessage.style.color = "green";
+            promoCodeMessage.textContent = translations[currentLang].promoApplied;
+        }
+      }
+    } else if (promoCode) {
+      if (promoCodeMessage) {
+        promoCodeMessage.style.display = "block";
+        promoCodeMessage.style.color = "red";
+        promoCodeMessage.textContent = translations[currentLang].promoInvalid;
+      }
+    } else {
+      if (promoCodeMessage) promoCodeMessage.style.display = "none";
+    }
+
+    if (cartItemsContainer) cartItemsContainer.innerHTML = html;
+    if (cartTotalDisplay) cartTotalDisplay.textContent = `${translations[currentLang].totalText}: ${formatPrice(subtotalPrice)}`;
+
+    if (discountAmount > 0) {
+        if (discountDisplay) {
+            discountDisplay.innerHTML = `${translations[currentLang].discountText}: -${formatPrice(discountAmount)}<br>${translations[currentLang].finalTotalText}: ${formatPrice(finalPrice)}`;
+            discountDisplay.style.display = "block";
+        }
+    } else {
+        if (discountDisplay) discountDisplay.style.display = "none";
+    }
+    validateForm();
+    console.log("<- updateCart() finished. Total items:", totalItemsInCart);
   }
 
-  // Modal elements
-  const petModal = document.getElementById('petModal');
-  const modalName = document.getElementById('modalName');
-  const modalDesc = document.getElementById('modalDesc');
-  const modalRarity = document.getElementById('modalRarity');
-  const modalIcon = document.getElementById('modalIcon');
-
-  // Open modal on click or keyboard (Enter, Space)
-  petList.addEventListener('click', e => {
-    openPetModal(e.target);
-  });
-
-  petList.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      openPetModal(e.target);
-      e.preventDefault();
+  function renderHistory() {
+    console.log("-> renderHistory() started.");
+    const historyItems = document.getElementById('historyItems');
+    if (!historyItems) {
+        console.warn("History items container not found for rendering.");
+        return;
     }
-  });
 
-  function openPetModal(target) {
-    while (target && !target.classList.contains('pet-item')) {
-      target = target.parentElement;
+    if (purchaseHistory.length === 0) {
+      historyItems.textContent = translations[currentLang].historyEmpty;
+      return;
     }
-    if (!target) return;
 
-    const key = target.dataset.key;
-    if (petData[key]) {
-      const pet = petData[key];
-      modalName.textContent = pet.name;
-      modalDesc.textContent = pet.desc;
-      modalRarity.textContent = pet.rarity;
-      modalIcon.textContent = pet.emoji;
-      petModal.style.display = 'flex';
-      petModal.focus();
-      document.body.style.overflow = 'hidden';
-    }
+    let html = "";
+    purchaseHistory.forEach((item, index) => {
+      html += `
+        <div class="history-item">
+          <strong>Order #${purchaseHistory.length - index}</strong><br>
+          Tanggal: ${new Date(item.date).toLocaleString(currentLang === 'id' ? 'id-ID' : 'en-US')}<br>
+          Nama ROBLOX: ${item.buyerName}<br>
+          Metode Pembayaran: ${item.paymentMethod}<br>
+          Total: ${formatPrice(item.total)}<br>
+          Items: ${item.items.map(i => {
+              let itemName = i.name;
+              if (allProducts[i.id]) {
+                  if (allProducts[i.id].category === 'pet' && translations[currentLang].pets[i.id]) {
+                      itemName = translations[currentLang].pets[i.id].name;
+                  } else if (allProducts[i.id].category === 'sheckles' && translations[currentLang].sheckles[i.id]) {
+                      itemName = translations[currentLang].sheckles[i.id];
+                  } else if (allProducts[i.id].category === 'sprinkler' && translations[currentLang].sprinkler[i.id]) {
+                      itemName = translations[currentLang].sprinkler[i.id];
+                  } else if (allProducts[i.id].category === 'bundle' && translations[currentLang].bundles[i.id]) {
+                      itemName = translations[currentLang].bundles[i.id].name;
+                  }
+              }
+              return `${itemName} (x${i.qty})`;
+          }).join(', ')}<br>
+          ${item.promoCode ? `Promo: ${item.promoCode} (-${formatPrice(item.discountAmount)})<br>` : ''}
+          ${item.rating ? `Rating: ${item.rating}<br>` : ''}
+          ${item.note ? `Catatan: ${item.note}<br>` : ''}
+        </div>
+      `;
+    });
+    historyItems.innerHTML = html;
+    console.log("<- renderHistory() finished.");
   }
 
-  // Close modal
-  function closeModal() {
-    petModal.style.display = 'none';
-    document.body.style.overflow = '';
+  function renderFAQ() {
+    console.log("-> renderFAQ() started.");
+    const faqList = document.getElementById('faqList');
+    if (!faqList) {
+        console.warn("FAQ list container not found for rendering.");
+        return;
+    }
+    faqList.innerHTML = '';
+    translations[currentLang].faqs.forEach(faq => {
+      const faqItem = document.createElement('div');
+      faqItem.className = 'faq-item';
+      faqItem.innerHTML = `<strong>${faq.q}</strong><p>${faq.a}</p>`;
+      faqList.appendChild(faqItem);
+    });
+    console.log("<- renderFAQ() finished.");
   }
 
-  // Close modal when clicking outside content
-  petModal.addEventListener('click', e => {
-    if (e.target === petModal) closeModal();
+  function renderTestimonials() {
+    console.log("-> renderTestimonials() started.");
+    const testimonialList = document.getElementById('testimonialList');
+    if (!testimonialList) {
+        console.warn("Testimonial list container not found for rendering.");
+        return;
+    }
+    testimonialList.innerHTML = '';
+    translations[currentLang].testimonials.forEach(testimonial => {
+      const testimonialItem = document.createElement('div');
+      testimonialItem.className = 'testimonial-item';
+      testimonialItem.innerHTML = `<blockquote>"${testimonial.quote}"</blockquote><cite>— ${testimonial.author}</cite>`;
+      testimonialList.appendChild(testimonialItem);
+    });
+    console.log("<- renderTestimonials() finished.");
+  }
+
+  function validateForm() {
+    console.log("-> validateForm() started.");
+    const buyerName = buyerNameInput ? buyerNameInput.value.trim() : '';
+    const paymentMethod = paymentMethodSelect ? paymentMethodSelect.value : '';
+    const promoCode = promoCodeInput ? promoCodeInput.value.trim().toUpperCase() : '';
+
+    let isValid = true;
+
+    if (buyerNameInput && buyerNameError) {
+        if (buyerName.length < 3) {
+            buyerNameInput.classList.add('error');
+            buyerNameError.style.display = 'block';
+            isValid = false;
+        } else {
+            buyerNameInput.classList.remove('error');
+            buyerNameError.style.display = 'none';
+        }
+    } else { console.warn("Buyer name input or error element not found for validation."); }
+
+    if (paymentMethodSelect && paymentMethodError) {
+        if (paymentMethod === "" || paymentMethod === translations[currentLang].paymentMethods[0]) { // Check against placeholder value
+            paymentMethodSelect.classList.add('error');
+            paymentMethodError.style.display = 'block';
+            isValid = false;
+        } else {
+            paymentMethodSelect.classList.remove('error');
+            paymentMethodError.style.display = 'none';
+        }
+    } else { console.warn("Payment method select or error element not found for validation."); }
+
+
+    if (promoCodeInput && promoCodeMessage) {
+        if (promoCode) {
+            if (!promoCodes[promoCode]) {
+                promoCodeInput.classList.add('error');
+                promoCodeMessage.style.display = "block";
+                promoCodeMessage.style.color = "red";
+                promoCodeMessage.textContent = translations[currentLang].promoInvalid;
+                isValid = false;
+            } else {
+                const promo = promoCodes[promoCode];
+                const now = new Date();
+                const expiryDate = new Date(promo.expires);
+                const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
+
+                if (now > expiryDate) {
+                    promoCodeInput.classList.add('error');
+                    promoCodeMessage.style.display = "block";
+                    promoCodeMessage.style.color = "red";
+                    promoCodeMessage.textContent = translations[currentLang].promoExpired;
+                    isValid = false;
+                } else if (promo.usedCount >= promo.usageLimit) {
+                    promoCodeInput.classList.add('error');
+                    promoCodeMessage.style.display = "block";
+                    promoCodeMessage.style.color = "red";
+                    promoCodeMessage.textContent = translations[currentLang].promoLimitReached;
+                    isValid = false;
+                } else if (promo.perUserLimit && userPromoCount >= promo.perUserLimit) {
+                    promoCodeInput.classList.add('error');
+                    promoCodeMessage.style.display = "block";
+                    promoCodeMessage.style.color = "red";
+                    promoCodeMessage.textContent = translations[currentLang].promoLimitPerUser(promo.perUserLimit);
+                    isValid = false;
+                } else {
+                    promoCodeInput.classList.remove('error');
+                    promoCodeMessage.style.display = "block";
+                    promoCodeMessage.style.color = "green";
+                    promoCodeMessage.textContent = translations[currentLang].promoApplied;
+                }
+            }
+        } else {
+            promoCodeInput.classList.remove('error');
+            promoCodeMessage.style.display = "none";
+        }
+    } else { console.warn("Promo code input or message element not found for validation."); }
+
+    if (cart.length === 0) {
+      isValid = false;
+      console.log("Cart is empty, form invalid.");
+    }
+
+    if (checkoutBtn) checkoutBtn.disabled = !isValid; else console.warn("Checkout button not found for disabling.");
+    console.log("<- validateForm() finished. Form valid:", isValid);
+    return isValid;
+  }
+
+  function checkout(event) {
+    event.preventDefault();
+    console.log("-> checkout() initiated.");
+
+    if (!validateForm()) {
+      alert("Harap lengkapi semua bidang yang wajib diisi dan perbaiki kesalahan.");
+      console.log("Checkout aborted due to validation errors.");
+      return;
+    }
+
+    if (!confirm(translations[currentLang].checkoutConfirm)) {
+      console.log("Checkout aborted by user confirmation.");
+      return;
+    }
+
+    if (soundCheckout) soundCheckout.play();
+
+    const buyerName = buyerNameInput ? buyerNameInput.value.trim() : '';
+    const paymentMethod = paymentMethodSelect ? paymentMethodSelect.value : '';
+    const promoCode = promoCodeInput ? promoCodeInput.value.trim().toUpperCase() : '';
+    const ratingElement = document.getElementById('ratingSelect');
+    const rating = ratingElement ? ratingElement.value : '';
+    const buyerNoteElement = document.getElementById('buyerNote');
+    const buyerNote = buyerNoteElement ? buyerNoteElement.value.trim() : '';
+
+    let subtotalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    let discountAmount = 0;
+
+    if (promoCode && promoCodes[promoCode]) {
+      const promo = promoCodes[promoCode];
+      const now = new Date();
+      const expiryDate = new Date(promo.expires);
+      const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
+
+      if (now <= expiryDate && promo.usedCount < promo.usageLimit && (!promo.perUserLimit || userPromoCount < promo.perUserLimit)) {
+        discountAmount = Math.round(subtotalPrice * promo.discount);
+
+        promoCodes[promoCode].usedCount++;
+        if (!promoUsage[buyerName.toLowerCase()]) {
+            promoUsage[buyerName.toLowerCase()] = {};
+        }
+        promoUsage[buyerName.toLowerCase()][promoCode] = (promoUsage[buyerName.toLowerCase()][promoCode] || 0) + 1;
+
+        console.log(`Promo code ${promoCode} applied. Discount: ${discountAmount}. New usage count: ${promoCodes[promoCode].usedCount}`);
+      } else {
+          alert("Kode promo tidak dapat digunakan. Harap periksa kembali.");
+          updateCart();
+          console.log("Promo code deemed invalid during final checkout check.");
+          return;
+      }
+    }
+
+    const finalPrice = subtotalPrice - discountAmount;
+
+    let message = `Halo, saya ingin memesan:\n\n`;
+    cart.forEach(item => {
+      let translatedName = item.name;
+      if (allProducts[item.id]) {
+          if (allProducts[item.id].category === 'pet' && translations[currentLang].pets[item.id]) {
+              translatedName = translations[currentLang].pets[item.id].name;
+          } else if (allProducts[item.id].category === 'sheckles' && translations[currentLang].sheckles[item.id]) {
+              translatedName = translations[currentLang].sheckles[item.id];
+          } else if (allProducts[item.id].category === 'sprinkler' && translations[currentLang].sprinkler[item.id]) {
+              translatedName = translations[currentLang].sprinkler[item.id];
+          } else if (allProducts[item.id].category === 'bundle' && translations[currentLang].bundles[item.id]) {
+              translatedName = translations[currentLang].bundles[item.id].name;
+          }
+      }
+      message += `- ${translatedName} (x${item.qty}) - ${formatPrice(item.price * item.qty)}\n`;
+    });
+    message += `\nSubtotal: ${formatPrice(subtotalPrice)}\n`;
+
+    if (discountAmount > 0) {
+      message += `Diskon Promo (${promoCode}): -${formatPrice(discountAmount)}\n`;
+      message += `Total Akhir: ${formatPrice(finalPrice)}\n`;
+    } else {
+      message += `Total: ${formatPrice(finalPrice)}\n`;
+    }
+
+    message += `\nNama ROBLOX: ${buyerName}\n`;
+    message += `Metode Pembayaran: ${paymentMethod}\n`;
+    if (rating) {
+      message += `Rating: ${rating}\n`;
+    }
+    if (buyerNote) {
+      message += `Catatan: ${buyerNote}\n`;
+    }
+    message += `\nMohon diproses segera. Terima kasih!`;
+
+    const whatsappUrl = `https://wa.me/6285651205765?text=${encodeURIComponent(message)}`;
+
+    purchaseHistory.unshift({
+      date: new Date().toISOString(),
+      buyerName: buyerName,
+      paymentMethod: paymentMethod,
+      total: finalPrice,
+      items: cart.map(item => ({ id: item.id, name: item.name, qty: item.qty })),
+      promoCode: promoCode || null,
+      discountAmount: discountAmount,
+      rating: rating || null,
+      note: buyerNote || null
+    });
+
+    cart = [];
+    if (checkoutForm) checkoutForm.reset();
+    updateCart();
+    renderHistory();
+    saveState();
+
+    window.open(whatsappUrl, '_blank');
+    console.log("<- Checkout complete, WhatsApp opened.");
+  }
+
+  // Add to cart popup animation
+  let popupTimeout;
+  function showAddToCartPopup(itemName) {
+      if (!addToCartPopup || !popupMessage) {
+          console.warn("Add to cart popup elements not found for display.");
+          return;
+      }
+      popupMessage.textContent = translations[currentLang].addToCartSuccess(itemName);
+      addToCartPopup.classList.add('show');
+      clearTimeout(popupTimeout);
+      popupTimeout = setTimeout(() => {
+          addToCartPopup.classList.remove('show');
+      }, 3000);
+  }
+
+  // Flying item animation
+  function flyItemToCart(emoji, startX, startY) {
+    if (!cartToggleBtn) {
+        console.warn("Cart toggle button not found for flying animation.");
+        return;
+    }
+    const flyingItem = document.createElement('div');
+    flyingItem.className = 'flying-item';
+    flyingItem.textContent = emoji;
+    document.body.appendChild(flyingItem);
+
+    const cartBtnRect = cartToggleBtn.getBoundingClientRect();
+    const endX = cartBtnRect.left + (cartBtnRect.width / 2) - 15;
+    const endY = cartBtnRect.top + (cartBtnRect.height / 2) - 15;
+
+    flyingItem.style.left = `${startX}px`;
+    flyingItem.style.top = `${startY}px`;
+
+    setTimeout(() => {
+        flyingItem.style.transform = `translate(${endX - startX}px, ${endY - startY}px) scale(0.5)`;
+        flyingItem.style.opacity = '0';
+    }, 10);
+
+    flyingItem.addEventListener('transitionend', () => {
+        flyingItem.remove();
+    });
+  }
+
+  // Skeleton Loading functions
+  function showSkeletonLoading() {
+      console.log("-> showSkeletonLoading() started.");
+      // Clear existing content immediately to show skeletons
+      // Ensure containers exist before clearing
+      if (petListContainer) petListContainer.innerHTML = '';
+      if (shecklesListContainer) shecklesListContainer.innerHTML = '';
+      if (sprinklerListContainer) sprinklerListContainer.innerHTML = '';
+      if (bundleListContainer) bundleListContainer.innerHTML = '';
+
+      // Only inject skeleton if the container exists
+      if (petListContainer) petListContainer.innerHTML = Array(6).fill().map(() => `
+          <div class="skeleton-item">
+              <div class="skeleton-icon"></div>
+              <div class="skeleton-line title"></div>
+              <div class="skeleton-line desc" style="width: 90%;"></div>
+              <div class="skeleton-line desc" style="width: 70%;"></div>
+              <div class="skeleton-line price"></div>
+          </div>
+      `).join('');
+
+      if (shecklesListContainer) shecklesListContainer.innerHTML = Array(4).fill().map(() => `
+          <div class="skeleton-item">
+              <div class="skeleton-icon"></div>
+              <div class="skeleton-line title"></div>
+              <div class="skeleton-line price"></div>
+          </div>
+      `).join('');
+
+      if (sprinklerListContainer) sprinklerListContainer.innerHTML = `
+          <div class="skeleton-item">
+              <div class="skeleton-icon"></div>
+              <div class="skeleton-line title"></div>
+              <div class="skeleton-line price"></div>
+          </div>
+      `;
+
+      if (bundleListContainer) bundleListContainer.innerHTML = Array(3).fill().map(() => `
+          <div class="skeleton-item bundle">
+              <div class="skeleton-line title" style="height: 1.5em; width: 60%;"></div>
+              <div class="skeleton-line desc" style="height: 3em; width: 95%;"></div>
+              <div class="skeleton-line price" style="margin-top: auto;"></div>
+          </div>
+      `).join('');
+      console.log("<- showSkeletonLoading() finished.");
+  }
+
+  function hideSkeletonLoading() {
+      // console.log("Hiding skeleton loading (implicitly handled by re-rendering content).");
+  }
+
+  // Event Listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("-> DOMContentLoaded event fired. Initializing main script logic.");
+
+    try {
+        // Assign DOM elements to global variables after DOM is ready
+        // This is crucial for fixing 'null' errors if elements weren't ready before.
+        langSelector = document.getElementById('langSelector');
+        darkModeToggle = document.getElementById('darkModeToggle');
+        cartToggleBtn = document.getElementById('cartToggleBtn');
+        historyToggleBtn = document.getElementById('historyToggleBtn');
+        cartPanel = document.getElementById('cartPanel');
+        historyPanel = document.getElementById('historyPanel');
+        checkoutForm = document.getElementById('checkoutForm');
+        buyerNameInput = document.getElementById('buyerName');
+        paymentMethodSelect = document.getElementById('paymentMethod');
+        promoCodeInput = document.getElementById('promoCode');
+        checkoutBtn = document.getElementById('checkoutBtn');
+        buyerNameError = document.getElementById('buyerNameError');
+        paymentMethodError = document.getElementById('paymentMethodError');
+        addToCartPopup = document.getElementById('addToCartPopup');
+        popupMessage = document.getElementById('popupMessage');
+        petSearchInput = document.getElementById('petSearchInput');
+        petRarityFilter = document.getElementById('petRarityFilter');
+        petListContainer = document.getElementById('petList');
+        shecklesListContainer = document.getElementById('shecklesList');
+        sprinklerListContainer = document.getElementById('sprinklerList');
+        bundleListContainer = document.getElementById('bundleList');
+        cartItemsContainer = document.getElementById('cartItems');
+        cartTotalDisplay = document.getElementById('cartTotal');
+        discountDisplay = document.getElementById('discountDisplay');
+        promoCodeMessage = document.getElementById('promoCodeMessage');
+
+        console.log("All DOM elements reassigned after DOMContentLoaded.");
+
+        loadState();
+        applyTranslations();
+        updateCart(); // Initial update of cart display and checkout button state
+        renderHistory();
+        renderFAQ();
+        renderTestimonials();
+        populateRarityFilter(); // Ensure rarity filter is populated
+
+        // Attach event listeners only after elements are confirmed to exist
+        if (langSelector) langSelector.addEventListener('change', (event) => {
+          currentLang = event.target.value;
+          localStorage.setItem('currentLang', currentLang);
+          applyTranslations();
+        });
+
+        if (darkModeToggle) darkModeToggle.addEventListener('click', () => {
+          darkMode = !darkMode;
+          document.body.classList.toggle('dark-mode', darkMode);
+          localStorage.setItem('darkMode', darkMode);
+          // Update text immediately without relying solely on applyTranslations for speed
+          darkModeToggle.textContent = darkMode ? translations[currentLang].lightModeToggle : translations[currentLang].darkModeToggle;
+        });
+
+        if (cartToggleBtn) cartToggleBtn.addEventListener('click', () => {
+          if (cartPanel) cartPanel.classList.toggle('open');
+          if (cartToggleBtn && cartPanel) cartToggleBtn.setAttribute('aria-expanded', cartPanel.classList.contains('open'));
+          if (historyPanel && historyPanel.classList.contains('open')) {
+            historyPanel.classList.remove('open');
+            if (historyToggleBtn) historyToggleBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        if (historyToggleBtn) historyToggleBtn.addEventListener('click', () => {
+          if (historyPanel) historyPanel.classList.toggle('open');
+          if (historyToggleBtn && historyPanel) historyToggleBtn.setAttribute('aria-expanded', historyPanel.classList.contains('open'));
+          if (cartPanel && cartPanel.classList.contains('open')) {
+            cartPanel.classList.remove('open');
+            if (cartToggleBtn) cartToggleBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        if (checkoutForm) checkoutForm.addEventListener('submit', checkout);
+
+        if (buyerNameInput) buyerNameInput.addEventListener('input', () => {
+            validateForm();
+            updateCart();
+        });
+
+        if (paymentMethodSelect) paymentMethodSelect.addEventListener('change', () => {
+            validateForm();
+            updateCart();
+        });
+
+        if (promoCodeInput) promoCodeInput.addEventListener('input', () => {
+            updateCart();
+            validateForm();
+        });
+
+        if (petSearchInput) petSearchInput.addEventListener('input', renderAllProducts);
+        if (petRarityFilter) petRarityFilter.addEventListener('change', renderAllProducts);
+
+        console.log("All event listeners attached.");
+    } catch (e) {
+        console.error("Error during DOMContentLoaded initialization:", e);
+        alert("Terjadi kesalahan saat memuat halaman: " + e.message + "\nSilakan periksa konsol browser untuk detail lebih lanjut.");
+    }
+    console.log("<- DOMContentLoaded event finished.");
   });
 
-  // Close modal on ESC key
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && petModal.style.display === 'flex') {
-      closeModal();
-    }
-  });
 </script>
 </body>
 </html>
