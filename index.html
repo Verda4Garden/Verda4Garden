@@ -676,40 +676,33 @@
 
 <div class="container">
 
-  <!-- Pet Section with Search & Filter -->
   <div class="product-section-header">
     <h3 id="petsTitle">Pets Available</h3>
     <div class="filter-controls">
       <input type="text" id="petSearchInput" placeholder="Cari pet..." aria-label="Cari pet">
       <select id="petRarityFilter" aria-label="Filter berdasarkan kelangkaan">
         <option value="">Semua Kelangkaan</option>
-        <!-- Options populated by JS -->
-      </select>
+        </select>
     </div>
   </div>
   <div class="pet-list" id="petList"></div>
 
-  <!-- Sheckles Section -->
   <h3 id="shecklesTitle">Sheckles Available</h3>
   <div class="sheckles-list" id="shecklesList"></div>
 
-  <!-- Sprinkler Section -->
   <h3 id="sprinklerTitle">Sprinkler Available</h3>
   <div class="sprinkler-list" id="sprinklerList"></div>
 
-  <!-- Bundle Section -->
   <h3 id="bundleTitle">Bundle Packages</h3>
   <div class="bundle-list" id="bundleList"></div>
 
   ---
 
-  <!-- FAQ Section -->
   <h3 id="faqTitle">FAQ (Pertanyaan yang Sering Diajukan)</h3>
   <div id="faqList"></div>
 
   ---
 
-  <!-- Testimonial Section -->
   <h3 id="testimonialsTitle">Testimoni Pelanggan</h3>
   <div id="testimonialList"></div>
 
@@ -720,7 +713,6 @@
 </button>
 <button id="historyToggleBtn" aria-expanded="false" aria-controls="historyPanel" aria-label="Toggle riwayat pembelian">📜 Riwayat</button>
 
-<!-- Cart Panel -->
 <aside id="cartPanel" role="region" aria-label="Keranjang belanja">
   <h3 id="cartTitle">Keranjang</h3>
   <div id="cartItems">Keranjang kosong</div>
@@ -735,8 +727,7 @@
     <label for="paymentMethod" id="labelPaymentMethod">Metode Pembayaran <span style="color:red;">*</span></label>
     <select id="paymentMethod" name="paymentMethod" required>
       <option value="" disabled selected>Pilih metode pembayaran</option>
-      <!-- Options populated by JS -->
-    </select>
+      </select>
     <div id="paymentMethodError" class="error-message">Pilih metode pembayaran.</div>
 
     <label for="promoCode" id="labelPromoCode">Kode Promo</label>
@@ -746,8 +737,7 @@
     <label for="ratingSelect" id="labelRating">Rating</label>
     <select id="ratingSelect" name="ratingSelect">
       <option value="">Pilih rating (opsional)</option>
-      <!-- Options populated by JS -->
-    </select>
+      </select>
 
     <label for="buyerNote" id="labelBuyerNote">Catatan (opsional)</label>
     <textarea id="buyerNote" name="buyerNote" rows="2" placeholder="Contoh: minta yang gemuk kak"></textarea>
@@ -756,13 +746,11 @@
   </form>
 </aside>
 
-<!-- History Panel -->
 <aside id="historyPanel" role="region" aria-label="Riwayat pembelian">
   <h3>Riwayat Pembelian</h3>
   <div id="historyItems">Belum ada riwayat pembelian.</div>
 </aside>
 
-<!-- Add to Cart Confirmation Pop-up -->
 <div id="addToCartPopup" class="add-to-cart-popup">
   <span class="icon">✅</span> <span id="popupMessage"></span>
 </div>
@@ -814,8 +802,8 @@
       bundleTitle: "Paket Bundling",
       cartTitle: "Keranjang",
       emptyCart: "Keranjang kosong",
-      totalText: "Total",
-      discountText: "Diskon",
+      totalText: "Subtotal",
+      discountText: "Diskon Promo",
       finalTotalText: "Total Akhir",
       buyerNameLabel: "Nama ROBLOX *",
       paymentMethodLabel: "Metode Pembayaran *",
@@ -896,8 +884,8 @@
       bundleTitle: "Bundle Packages",
       cartTitle: "Cart",
       emptyCart: "Cart is empty",
-      totalText: "Total",
-      discountText: "Discount",
+      totalText: "Subtotal",
+      discountText: "Promo Discount",
       finalTotalText: "Final Total",
       buyerNameLabel: "Roblox Username *",
       paymentMethodLabel: "Payment Method *",
@@ -975,23 +963,23 @@
 
   const promoCodes = {
     "SAVE10": {
-      discount: 0.20,
+      discount: 0.10,
       expires: "2025-07-31T23:59:59",
-      usageLimit: 5,
+      usageLimit: 50,
       usedCount: 0,
       perUserLimit: 1
     },
     "HEMAT20": {
-      discount: 0.15,
+      discount: 0.20,
       expires: "2025-08-15T23:59:59",
-      usageLimit: 3,
+      usageLimit: 100,
       usedCount: 0,
       perUserLimit: 2
     },
     "123456": {
-      discount: 0.10,
+      discount: 0.15,
       expires: "2025-12-31T23:59:59",
-      usageLimit: 2,
+      usageLimit: 200,
       usedCount: 0,
       perUserLimit: 1
     }
@@ -1201,7 +1189,7 @@
       if (Object.keys(allProducts).length === 0) {
           console.warn("No products defined in allProducts object. Displaying fallback messages.");
           petListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No products to display.</p>`;
-          shecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No sheckles to display.</p>`;
+          shecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No sheckles to display.</p手間`;
           sprinklerListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No sprinkler to display.</p>`;
           bundleListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No bundle packages to display.</p>`;
           hideSkeletonLoading();
@@ -1481,10 +1469,12 @@
     }
 
     if (cartItemsContainer) cartItemsContainer.innerHTML = html;
+    // Tampilkan subtotal dulu
     if (cartTotalDisplay) cartTotalDisplay.textContent = `${translations[currentLang].totalText}: ${formatPrice(subtotalPrice)}`;
 
     if (discountAmount > 0) {
         if (discountDisplay) {
+            // Tampilkan diskon dan total akhir terpisah
             discountDisplay.innerHTML = `${translations[currentLang].discountText}: -${formatPrice(discountAmount)}<br>${translations[currentLang].finalTotalText}: ${formatPrice(finalPrice)}`;
             discountDisplay.style.display = "block";
         }
@@ -1578,103 +1568,113 @@
 
   function validateForm() {
     console.log("-> validateForm() started.");
-    const buyerName = buyerNameInput ? buyerNameInput.value.trim() : '';
-    const paymentMethod = paymentMethodSelect ? paymentMethodSelect.value : '';
-    const promoCode = promoCodeInput ? promoCodeInput.value.trim().toUpperCase() : '';
+    // Pastikan semua elemen DOM yang dibutuhkan ada sebelum diakses
+    if (!buyerNameInput || !paymentMethodSelect || !promoCodeInput || !buyerNameError || !paymentMethodError || !promoCodeMessage || !checkoutBtn) {
+        console.error("One or more required form elements are missing. Cannot validate form.");
+        return false; // Kembali false jika elemen penting tidak ditemukan
+    }
+
+    const buyerName = buyerNameInput.value.trim();
+    const paymentMethod = paymentMethodSelect.value;
+    const promoCode = promoCodeInput.value.trim().toUpperCase();
 
     let isValid = true;
 
-    if (buyerNameInput && buyerNameError) {
-        if (buyerName.length < 3) {
-            buyerNameInput.classList.add('error');
-            buyerNameError.style.display = 'block';
+    // Validasi Nama ROBLOX
+    if (buyerName.length < 3) {
+        buyerNameInput.classList.add('error');
+        buyerNameError.style.display = 'block';
+        isValid = false;
+    } else {
+        buyerNameInput.classList.remove('error');
+        buyerNameError.style.display = 'none';
+    }
+
+    // Validasi Metode Pembayaran
+    if (paymentMethod === "" || paymentMethod === translations[currentLang].paymentMethods[0]) {
+        paymentMethodSelect.classList.add('error');
+        paymentMethodError.style.display = 'block';
+        isValid = false;
+    } else {
+        paymentMethodSelect.classList.remove('error');
+        paymentMethodError.style.display = 'none';
+    }
+
+    // Validasi Kode Promo
+    if (promoCode) {
+        if (!promoCodes[promoCode]) {
+            promoCodeInput.classList.add('error');
+            promoCodeMessage.style.display = "block";
+            promoCodeMessage.style.color = "red";
+            promoCodeMessage.textContent = translations[currentLang].promoInvalid;
             isValid = false;
         } else {
-            buyerNameInput.classList.remove('error');
-            buyerNameError.style.display = 'none';
-        }
-    } else { console.warn("Buyer name input or error element not found for validation."); }
+            const promo = promoCodes[promoCode];
+            const now = new Date();
+            const expiryDate = new Date(promo.expires);
+            const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
 
-    if (paymentMethodSelect && paymentMethodError) {
-        if (paymentMethod === "" || paymentMethod === translations[currentLang].paymentMethods[0]) { // Check against placeholder value
-            paymentMethodSelect.classList.add('error');
-            paymentMethodError.style.display = 'block';
-            isValid = false;
-        } else {
-            paymentMethodSelect.classList.remove('error');
-            paymentMethodError.style.display = 'none';
-        }
-    } else { console.warn("Payment method select or error element not found for validation."); }
-
-
-    if (promoCodeInput && promoCodeMessage) {
-        if (promoCode) {
-            if (!promoCodes[promoCode]) {
+            if (now > expiryDate) {
                 promoCodeInput.classList.add('error');
                 promoCodeMessage.style.display = "block";
                 promoCodeMessage.style.color = "red";
-                promoCodeMessage.textContent = translations[currentLang].promoInvalid;
+                promoCodeMessage.textContent = translations[currentLang].promoExpired;
+                isValid = false;
+            } else if (promo.usedCount >= promo.usageLimit) {
+                promoCodeInput.classList.add('error');
+                promoCodeMessage.style.display = "block";
+                promoCodeMessage.style.color = "red";
+                promoCodeMessage.textContent = translations[currentLang].promoLimitReached;
+                isValid = false;
+            } else if (promo.perUserLimit && userPromoCount >= promo.perUserLimit) {
+                promoCodeInput.classList.add('error');
+                promoCodeMessage.style.display = "block";
+                promoCodeMessage.style.color = "red";
+                promoCodeMessage.textContent = translations[currentLang].promoLimitPerUser(promo.perUserLimit);
                 isValid = false;
             } else {
-                const promo = promoCodes[promoCode];
-                const now = new Date();
-                const expiryDate = new Date(promo.expires);
-                const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
-
-                if (now > expiryDate) {
-                    promoCodeInput.classList.add('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "red";
-                    promoCodeMessage.textContent = translations[currentLang].promoExpired;
-                    isValid = false;
-                } else if (promo.usedCount >= promo.usageLimit) {
-                    promoCodeInput.classList.add('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "red";
-                    promoCodeMessage.textContent = translations[currentLang].promoLimitReached;
-                    isValid = false;
-                } else if (promo.perUserLimit && userPromoCount >= promo.perUserLimit) {
-                    promoCodeInput.classList.add('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "red";
-                    promoCodeMessage.textContent = translations[currentLang].promoLimitPerUser(promo.perUserLimit);
-                    isValid = false;
-                } else {
-                    promoCodeInput.classList.remove('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "green";
-                    promoCodeMessage.textContent = translations[currentLang].promoApplied;
-                }
+                // Promo valid, hapus kelas error dan tampilkan pesan sukses
+                promoCodeInput.classList.remove('error');
+                promoCodeMessage.style.display = "block";
+                promoCodeMessage.style.color = "green"; // Warna hijau untuk promo berhasil
+                promoCodeMessage.textContent = translations[currentLang].promoApplied;
             }
-        } else {
-            promoCodeInput.classList.remove('error');
-            promoCodeMessage.style.display = "none";
         }
-    } else { console.warn("Promo code input or message element not found for validation."); }
-
-    if (cart.length === 0) {
-      isValid = false;
-      console.log("Cart is empty, form invalid.");
+    } else {
+        // Jika promoCode kosong, hapus error dan sembunyikan pesan
+        promoCodeInput.classList.remove('error');
+        promoCodeMessage.style.display = "none";
     }
 
-    if (checkoutBtn) checkoutBtn.disabled = !isValid; else console.warn("Checkout button not found for disabling.");
+    // Pastikan keranjang tidak kosong
+    if (cart.length === 0) {
+        isValid = false;
+        console.log("Cart is empty, form invalid.");
+        // Anda bisa tambahkan pesan visual di sini jika mau, misal:
+        // if (cartItemsContainer) cartItemsContainer.textContent = "Keranjang kosong, tidak bisa checkout.";
+    }
+
+    // Atur status tombol checkout
+    checkoutBtn.disabled = !isValid;
     console.log("<- validateForm() finished. Form valid:", isValid);
     return isValid;
   }
 
   function checkout(event) {
+    // Pastikan event.preventDefault() selalu dipanggil untuk mencegah pengiriman form standar
     event.preventDefault();
     console.log("-> checkout() initiated.");
 
+    // Panggil validateForm() untuk memastikan semua input valid sebelum melanjutkan
     if (!validateForm()) {
-      alert("Harap lengkapi semua bidang yang wajib diisi dan perbaiki kesalahan.");
-      console.log("Checkout aborted due to validation errors.");
-      return;
+        alert("Harap lengkapi semua bidang yang wajib diisi dan perbaiki kesalahan yang ada.");
+        console.log("Checkout aborted due to validation errors.");
+        return; // Hentikan proses jika validasi gagal
     }
 
     if (!confirm(translations[currentLang].checkoutConfirm)) {
-      console.log("Checkout aborted by user confirmation.");
-      return;
+        console.log("Checkout aborted by user confirmation.");
+        return;
     }
 
     if (soundCheckout) soundCheckout.play();
@@ -1689,56 +1689,59 @@
 
     let subtotalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
     let discountAmount = 0;
+    let finalPrice = subtotalPrice; // Initialize finalPrice here
 
     if (promoCode && promoCodes[promoCode]) {
-      const promo = promoCodes[promoCode];
-      const now = new Date();
-      const expiryDate = new Date(promo.expires);
-      const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
+        const promo = promoCodes[promoCode];
+        const now = new Date();
+        const expiryDate = new Date(promo.expires);
+        const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
 
-      if (now <= expiryDate && promo.usedCount < promo.usageLimit && (!promo.perUserLimit || userPromoCount < promo.perUserLimit)) {
-        discountAmount = Math.round(subtotalPrice * promo.discount);
+        // Double-check promo validity here again, as validateForm() might not prevent all edge cases
+        if (now <= expiryDate && promo.usedCount < promo.usageLimit && (!promo.perUserLimit || userPromoCount < promo.perUserLimit)) {
+            discountAmount = Math.round(subtotalPrice * promo.discount);
+            finalPrice = subtotalPrice - discountAmount; // Calculate final price after discount
 
-        promoCodes[promoCode].usedCount++;
-        if (!promoUsage[buyerName.toLowerCase()]) {
-            promoUsage[buyerName.toLowerCase()] = {};
+            promoCodes[promoCode].usedCount++;
+            if (!promoUsage[buyerName.toLowerCase()]) {
+                promoUsage[buyerName.toLowerCase()] = {};
+            }
+            promoUsage[buyerName.toLowerCase()][promoCode] = (promoUsage[buyerName.toLowerCase()][promoCode] || 0) + 1;
+
+            console.log(`Promo code ${promoCode} applied. Discount: ${discountAmount}. New usage count: ${promoCodes[promoCode].usedCount}`);
+        } else {
+            // This case should ideally be caught by validateForm, but as a fallback
+            alert("Kode promo tidak dapat digunakan. Harap periksa kembali.");
+            updateCart(); // Update UI if promo becomes invalid during checkout
+            console.log("Promo code deemed invalid during final checkout check.");
+            return;
         }
-        promoUsage[buyerName.toLowerCase()][promoCode] = (promoUsage[buyerName.toLowerCase()][promoCode] || 0) + 1;
-
-        console.log(`Promo code ${promoCode} applied. Discount: ${discountAmount}. New usage count: ${promoCodes[promoCode].usedCount}`);
-      } else {
-          alert("Kode promo tidak dapat digunakan. Harap periksa kembali.");
-          updateCart();
-          console.log("Promo code deemed invalid during final checkout check.");
-          return;
-      }
     }
-
-    const finalPrice = subtotalPrice - discountAmount;
 
     let message = `Halo, saya ingin memesan:\n\n`;
     cart.forEach(item => {
-      let translatedName = item.name;
-      if (allProducts[item.id]) {
-          if (allProducts[item.id].category === 'pet' && translations[currentLang].pets[item.id]) {
-              translatedName = translations[currentLang].pets[item.id].name;
-          } else if (allProducts[item.id].category === 'sheckles' && translations[currentLang].sheckles[item.id]) {
-              translatedName = translations[currentLang].sheckles[item.id];
-          } else if (allProducts[item.id].category === 'sprinkler' && translations[currentLang].sprinkler[item.id]) {
-              translatedName = translations[currentLang].sprinkler[item.id];
-          } else if (allProducts[item.id].category === 'bundle' && translations[currentLang].bundles[item.id]) {
-              translatedName = translations[currentLang].bundles[item.id].name;
-          }
-      }
-      message += `- ${translatedName} (x${item.qty}) - ${formatPrice(item.price * item.qty)}\n`;
+        let translatedName = item.name;
+        // Logic untuk translasi nama item
+        if (allProducts[item.id]) {
+            if (allProducts[item.id].category === 'pet' && translations[currentLang].pets[item.id]) {
+                translatedName = translations[currentLang].pets[item.id].name;
+            } else if (allProducts[item.id].category === 'sheckles' && translations[currentLang].sheckles[item.id]) {
+                translatedName = translations[currentLang].sheckles[item.id];
+            } else if (allProducts[item.id].category === 'sprinkler' && translations[currentLang].sprinkler[item.id]) {
+                translatedName = translations[currentLang].sprinkler[item.id];
+            } else if (allProducts[item.id].category === 'bundle' && translations[currentLang].bundles[item.id]) {
+                translatedName = translations[currentLang].bundles[item.id].name;
+            }
+        }
+        message += `- ${translatedName} (x${item.qty}) - ${formatPrice(item.price * item.qty)}\n`;
     });
     message += `\nSubtotal: ${formatPrice(subtotalPrice)}\n`;
 
     if (discountAmount > 0) {
-      message += `Diskon Promo (${promoCode}): -${formatPrice(discountAmount)}\n`;
-      message += `Total Akhir: ${formatPrice(finalPrice)}\n`;
+      message += `${translations[currentLang].discountText}: -${formatPrice(discountAmount)}\n`;
+      message += `${translations[currentLang].finalTotalText}: ${formatPrice(finalPrice)}\n`;
     } else {
-      message += `Total: ${formatPrice(finalPrice)}\n`;
+      message += `${translations[currentLang].totalText}: ${formatPrice(finalPrice)}\n`; // Use finalPrice here
     }
 
     message += `\nNama ROBLOX: ${buyerName}\n`;
@@ -1757,7 +1760,7 @@
       date: new Date().toISOString(),
       buyerName: buyerName,
       paymentMethod: paymentMethod,
-      total: finalPrice,
+      total: finalPrice, // Store final price in history
       items: cart.map(item => ({ id: item.id, name: item.name, qty: item.qty })),
       promoCode: promoCode || null,
       discountAmount: discountAmount,
@@ -1961,9 +1964,6 @@
             updateCart();
             validateForm();
         });
-
-        if (petSearchInput) petSearchInput.addEventListener('input', renderAllProducts);
-        if (petRarityFilter) petRarityFilter.addEventListener('change', renderAllProducts);
 
         console.log("All event listeners attached.");
     } catch (e) {
