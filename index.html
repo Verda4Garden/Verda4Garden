@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Verda4Garden – Pets, Sheckles & Sprinkler Available</title>
 <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
   /* Base & Layout Styles */
   body {
@@ -30,12 +31,12 @@
   body.dark-mode h3 {
     color: #a0a0a0;
   }
-  body.dark-mode .pet-item, body.dark-mode .bundle-item {
+  body.dark-mode .pet-item, body.dark-mode .bundle-item, body.dark-mode .recommended-item {
     background: #444;
     color: #ddd;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
-  body.dark-mode .pet-item:hover {
+  body.dark-mode .pet-item:hover, body.dark-mode .recommended-item:hover {
     background-color: #555; /* Darker hover for dark mode */
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   }
@@ -90,7 +91,77 @@
   body.dark-mode .cart-item-controls button:disabled {
     background: #888;
   }
-
+  body.dark-mode .faq-item, body.dark-mode .testimonial-item {
+    background: #444;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  body.dark-mode .faq-question { /* FIX: FAQ question text in dark mode */
+    color: #eee;
+    background-color: #555;
+  }
+  body.dark-mode .faq-answer { /* FIX: FAQ answer text in dark mode */
+    background-color: #4a4a4a;
+    color: #ddd;
+  }
+  body.dark-mode .social-media a, body.dark-mode .footer-section a {
+    color: #eee;
+  }
+  body.dark-mode .skeleton-item {
+    background-color: #4a4a4a;
+  }
+  body.dark-mode .skeleton-item .skeleton-line,
+  body.dark-mode .skeleton-item .skeleton-icon {
+    background-color: #666666;
+  }
+  body.dark-mode .modal-content {
+    background-color: #333;
+    color: #eee;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
+  body.dark-mode .modal-content h2 {
+    color: #eee;
+  }
+  body.dark-mode .modal-content p {
+    color: #ddd;
+  }
+  body.dark-mode .modal-content button {
+    background-color: #666;
+    color: #eee;
+  }
+  body.dark-mode .modal-content button:hover {
+    background-color: #777;
+  }
+  body.dark-mode .rarity-buttons button {
+    background-color: #555;
+    color: #eee;
+    border: 1px solid #666;
+  }
+  body.dark-mode .rarity-buttons button.active {
+    background-color: #2a6b2a;
+    border-color: #2a6b2a;
+    color: white;
+  }
+  body.dark-mode .toast-notification {
+    background-color: #4a4a4a;
+    color: #eee;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  body.dark-mode .footer-section {
+    background-color: #2a2a2a;
+    color: #bbb;
+    border-top: 1px solid #555;
+  }
+  body.dark-mode .footer-section h4 {
+    color: #eee;
+  }
+  body.dark-mode #backToTopBtn {
+    background-color: #555;
+    color: #eee;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  body.dark-mode #backToTopBtn:hover {
+    background-color: #666;
+  }
 
   header {
     background: linear-gradient(to right, #e8dcc9, #f4ede3);
@@ -140,29 +211,61 @@
   }
   .product-section-header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Changed to column for better mobile layout */
     align-items: center;
+    gap: 15px; /* Spacing between title and filters */
     margin-bottom: 20px;
   }
   .product-section-header h3 {
-    margin: 0;
+    margin: 0; /* Reset margin from general h3 rule */
   }
   .filter-controls {
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping for rarity buttons */
     gap: 10px;
+    justify-content: center;
   }
   .filter-controls input, .filter-controls select {
     padding: 8px;
     border-radius: 8px;
     border: 1px solid #ccc;
   }
-  .pet-list, .sheckles-list, .sprinkler-list, .bundle-list {
+  .rarity-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .rarity-buttons button {
+    padding: 8px 12px;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    color: #555;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  .rarity-buttons button:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+  }
+  .rarity-buttons button.active {
+    background-color: #25d366;
+    color: white;
+    border-color: #25d366;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(37, 211, 102, 0.3);
+  }
+
+  .pet-list, .sheckles-list, .sprinkler-list, .bundle-list, .recommended-list {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
   }
-  .pet-item {
+  .pet-item, .recommended-item {
     background: #fef7ee;
     padding: 18px 22px;
     border-radius: 12px;
@@ -181,7 +284,7 @@
     align-items: center;
     text-align: center;
   }
-  .pet-item:hover {
+  .pet-item:hover, .recommended-item:hover {
     transform: translateY(-6px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     background-color: #fcefdc;
@@ -217,6 +320,25 @@
     margin: 0;
     line-height: 1.4;
   }
+  .rarity-label { /* Styling for pet rarity labels */
+    font-size: 0.9em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* Rarity Colors (adjust as needed) */
+  .rarity-Divine { background-color: #ffc107; color: #8B4513; } /* Gold */
+  .rarity-Mythical { background-color: #9c27b0; } /* Purple */
+  .rarity-Legendary { background-color: #2196f3; } /* Blue */
+  .rarity-Rare { background-color: #4caf50; } /* Green */
+  .rarity-Night { background-color: #616161; } /* Dark Gray */
+  .rarity-Paradise { background-color: #ff9800; } /* Orange */
+
   /* Cart Panel */
   #cartPanel {
     position: fixed;
@@ -458,17 +580,56 @@
   }
 
   /* FAQ & Testimonials */
-  .faq-item, .testimonial-item {
+  .faq-item {
+    background: #fef7ee;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden; /* Ensure content is hidden when collapsed */
+  }
+  .faq-question {
+    padding: 15px 20px;
+    font-weight: 700;
+    color: #7a614c;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fef7ee;
+    transition: background-color 0.2s ease;
+  }
+  .faq-question:hover {
+    background-color: #fcefdc;
+  }
+  .faq-question .toggle-icon {
+    font-size: 1.2em;
+    transition: transform 0.2s ease;
+  }
+  .faq-question.active .toggle-icon {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px; /* Initial padding, will be animated */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    background-color: #fffaf3;
+  }
+  .faq-answer.open {
+    max-height: 200px; /* Adjust as needed for max content */
+    padding: 15px 20px;
+  }
+  .faq-answer p {
+    margin: 0;
+    color: #5a4b3b;
+  }
+
+  .testimonial-item {
     background: #fef7ee;
     padding: 15px 20px;
     border-radius: 10px;
     margin-bottom: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-  .faq-item strong {
-    color: #7a614c;
-    display: block;
-    margin-bottom: 5px;
   }
   .testimonial-item blockquote {
     margin: 0 0 10px 0;
@@ -481,18 +642,31 @@
     font-size: 0.9em;
     color: #888;
   }
-  body.dark-mode .faq-item, body.dark-mode .testimonial-item {
-    background: #444;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+  /* Social Media Section */
+  .social-media {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e0d4c2;
   }
-  body.dark-mode .faq-item strong {
-    color: #ccc;
+  .social-media h3 {
+    margin-bottom: 20px;
   }
-  body.dark-mode .testimonial-item blockquote {
-    color: #ddd;
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
   }
-  body.dark-mode .testimonial-item cite {
-    color: #bbb;
+  .social-media a {
+    color: #7a614c;
+    font-size: 36px;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  .social-media a:hover {
+    color: #a0683c;
+    transform: translateY(-3px);
   }
 
   /* Add to Cart Confirmation Pop-up */
@@ -575,18 +749,223 @@
     height: 1.2em;
     margin: 0 auto;
   }
-  body.dark-mode .skeleton-item {
-    background-color: #4a4a4a;
-  }
-  body.dark-mode .skeleton-item .skeleton-line,
-  body.dark-mode .skeleton-item .skeleton-icon {
-    background-color: #666666;
-  }
+
 
   @keyframes pulse {
     0% { opacity: 0.7; }
     50% { opacity: 1; }
     100% { opacity: 0.7; }
+  }
+
+  /* Modal (Product Detail Pop-up) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .modal.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-content {
+    background-color: #fef7ee;
+    margin: auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+  .modal.show .modal-content {
+    transform: scale(1);
+  }
+
+  .modal-content .close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .modal-content .close-button:hover,
+  .modal-content .close-button:focus {
+    color: #777;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .modal-content h2 {
+    margin-top: 0;
+    color: #7a614c;
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  .modal-content .modal-icon {
+    font-size: 70px;
+    margin-bottom: 15px;
+  }
+  .modal-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #5a4b3b;
+  }
+  .modal-content .modal-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #a0683c;
+    margin-bottom: 25px;
+  }
+  .modal-content button {
+    background-color: #25d366;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .modal-content button:hover {
+    background-color: #20b858;
+  }
+
+  /* Checkout progress */
+  .checkout-progress {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #1890ff;
+    display: none; /* Hidden by default */
+  }
+  .checkout-progress.show {
+    display: block;
+  }
+  body.dark-mode .checkout-progress {
+    background-color: #1f3a4d;
+    border-color: #3b749e;
+    color: #8ac0e2;
+  }
+
+  /* Toast Notification */
+  .toast-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 100001;
+    min-width: 200px;
+    text-align: center;
+    transform: translateY(20px);
+  }
+  .toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Footer */
+  .footer-section {
+    background-color: #f4ede3;
+    padding: 40px 20px;
+    margin-top: 50px;
+    border-top: 1px solid #e1d4be;
+    color: #5a4b3b;
+    text-align: center;
+  }
+  .footer-section .footer-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 30px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .footer-column {
+    flex: 1 1 250px;
+    min-width: 200px;
+  }
+  .footer-column h4 {
+    color: #7a614c;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+  }
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-column ul li {
+    margin-bottom: 8px;
+  }
+  .footer-column ul li a {
+    color: #5a4b3b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .footer-column ul li a:hover {
+    color: #a0683c;
+  }
+  .footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0d4c2;
+    font-size: 0.9em;
+    color: #888;
+  }
+
+  /* Back to Top Button */
+  #backToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 30px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button at the right of the page */
+    z-index: 9999; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #a0683c; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 12px 16px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s, transform 0.2s ease;
+  }
+
+  #backToTopBtn:hover {
+    background-color: #855b33; /* Darker background on hover */
+    transform: translateY(-2px);
   }
 
 
@@ -642,7 +1021,7 @@
     }
 
     /* Adjust pet item layout for smaller screens */
-    .pet-item, .bundle-item {
+    .pet-item, .bundle-item, .recommended-item {
         flex-direction: column;
         text-align: center;
         align-items: center;
@@ -660,6 +1039,46 @@
     .filter-controls input, .filter-controls select {
         width: calc(100% - 18px);
     }
+    .rarity-buttons {
+        flex-direction: row; /* Keep as row but wrap */
+        justify-content: center;
+    }
+    .modal-content {
+      width: 90%;
+      padding: 20px;
+    }
+    .modal-content .close-button {
+      top: 10px;
+      right: 15px;
+      font-size: 30px;
+    }
+    .modal-content h2 {
+      font-size: 24px;
+    }
+    .modal-content .modal-icon {
+      font-size: 60px;
+    }
+    .modal-content .modal-price {
+      font-size: 20px;
+    }
+    .modal-content button {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+    .toast-notification {
+      bottom: 10px;
+      right: 10px;
+      left: 10px; /* Stretch across the bottom */
+      transform: translateY(20px);
+    }
+    .footer-columns {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .footer-column {
+        min-width: unset;
+        flex: 1 1 auto;
+    }
   }
 </style>
 </head>
@@ -676,42 +1095,51 @@
 
 <div class="container">
 
-  <!-- Pet Section with Search & Filter -->
   <div class="product-section-header">
     <h3 id="petsTitle">Pets Available</h3>
     <div class="filter-controls">
       <input type="text" id="petSearchInput" placeholder="Cari pet..." aria-label="Cari pet">
-      <select id="petRarityFilter" aria-label="Filter berdasarkan kelangkaan">
-        <option value="">Semua Kelangkaan</option>
-        <!-- Options populated by JS -->
-      </select>
-    </div>
+      </div>
+    <div class="rarity-buttons" id="rarityFilterButtons">
+      </div>
   </div>
   <div class="pet-list" id="petList"></div>
 
-  <!-- Sheckles Section -->
   <h3 id="shecklesTitle">Sheckles Available</h3>
   <div class="sheckles-list" id="shecklesList"></div>
 
-  <!-- Sprinkler Section -->
+  ---
+  <h3 id="recommendedShecklesTitle">Sheckles Rekomendasi</h3>
+  <div class="recommended-list" id="recommendedShecklesList"></div>
+
+  ---
   <h3 id="sprinklerTitle">Sprinkler Available</h3>
   <div class="sprinkler-list" id="sprinklerList"></div>
 
-  <!-- Bundle Section -->
-  <h3 id="bundleTitle">Bundle Packages</h3>
+  ---
+  <h3 id="bundleTitle">Paket Bundling</h3>
   <div class="bundle-list" id="bundleList"></div>
 
   ---
 
-  <!-- FAQ Section -->
   <h3 id="faqTitle">FAQ (Pertanyaan yang Sering Diajukan)</h3>
   <div id="faqList"></div>
 
   ---
 
-  <!-- Testimonial Section -->
   <h3 id="testimonialsTitle">Testimoni Pelanggan</h3>
   <div id="testimonialList"></div>
+
+  ---
+
+  <section class="social-media">
+    <h3 id="socialMediaTitle">Ikuti Kami!</h3>
+    <div class="social-icons">
+        <a href="https://discord.gg/r8sQKnmdtg" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/growagardenrblx" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+  </section>
 
 </div>
 
@@ -720,7 +1148,6 @@
 </button>
 <button id="historyToggleBtn" aria-expanded="false" aria-controls="historyPanel" aria-label="Toggle riwayat pembelian">📜 Riwayat</button>
 
-<!-- Cart Panel -->
 <aside id="cartPanel" role="region" aria-label="Keranjang belanja">
   <h3 id="cartTitle">Keranjang</h3>
   <div id="cartItems">Keranjang kosong</div>
@@ -735,8 +1162,7 @@
     <label for="paymentMethod" id="labelPaymentMethod">Metode Pembayaran <span style="color:red;">*</span></label>
     <select id="paymentMethod" name="paymentMethod" required>
       <option value="" disabled selected>Pilih metode pembayaran</option>
-      <!-- Options populated by JS -->
-    </select>
+      </select>
     <div id="paymentMethodError" class="error-message">Pilih metode pembayaran.</div>
 
     <label for="promoCode" id="labelPromoCode">Kode Promo</label>
@@ -746,8 +1172,7 @@
     <label for="ratingSelect" id="labelRating">Rating</label>
     <select id="ratingSelect" name="ratingSelect">
       <option value="">Pilih rating (opsional)</option>
-      <!-- Options populated by JS -->
-    </select>
+      </select>
 
     <label for="buyerNote" id="labelBuyerNote">Catatan (opsional)</label>
     <textarea id="buyerNote" name="buyerNote" rows="2" placeholder="Contoh: minta yang gemuk kak"></textarea>
@@ -756,38 +1181,87 @@
   </form>
 </aside>
 
-<!-- History Panel -->
 <aside id="historyPanel" role="region" aria-label="Riwayat pembelian">
   <h3>Riwayat Pembelian</h3>
   <div id="historyItems">Belum ada riwayat pembelian.</div>
 </aside>
 
-<!-- Add to Cart Confirmation Pop-up -->
 <div id="addToCartPopup" class="add-to-cart-popup">
   <span class="icon">✅</span> <span id="popupMessage"></span>
 </div>
+
+<div id="productDetailModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <div class="modal-icon"></div>
+    <h2 class="modal-name"></h2>
+    <p class="modal-description"></p>
+    <div class="modal-price"></div>
+    <button class="add-to-cart-modal-btn"></button>
+  </div>
+</div>
+
+<div id="checkoutProgress" class="checkout-progress">
+  Proses checkout akan dialihkan ke WhatsApp. Mohon tunggu...
+</div>
+
+<div id="toastNotification" class="toast-notification"></div>
+
+<button onclick="topFunction()" id="backToTopBtn" title="Kembali ke Atas">↑ Atas</button>
+
+<footer class="footer-section">
+  <div class="footer-columns">
+    <div class="footer-column">
+      <h4>Kontak Kami</h4>
+      <ul>
+        <li><i class="fab fa-whatsapp"></i> WhatsApp: +62 85651205765</li>
+        <li><i class="fas fa-envelope"></i> Email: verda4garden@email.com</li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Jam Operasional</h4>
+      <ul>
+        <li>Senin - Minggu: 08.00 - 22.00 WITA</li>
+        <li>(Terkadang bisa lebih cepat atau lambat)</li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Informasi</h4>
+      <ul>
+        <li><a href="#faqList">FAQ</a></li>
+        <li><a href="#">Kebijakan Privasi</a></li>
+        <li><a href="#">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; <span id="currentYear"></span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
 
 <script>
   console.log("Script initiated."); // First log in the script
 
   const allProducts = {
     // Pets
-    DB: { emoji: "🐝🎉", price: 80000, category: "pet" },
-    QB: { emoji: "👑🐝", price: 30000, category: "pet" },
-    Redfox: { emoji: "🦊", price: 15000, category: "pet" },
-    Mantis10: { emoji: "🦗", price: 5000, category: "pet" },
-    Mantis30: { emoji: "🦗", price: 10000, category: "pet" },
-    Seal: { emoji: "🦭", price: 10000, category: "pet" },
-    Macaw: { emoji: "🦜❤️", price: 30000, category: "pet" },
-    Moon: { emoji: "🌕🐱", price: 5000, category: "pet" },
-    Blood: { emoji: "🦉🩸", price: 15000, category: "pet" },
-    Night: { emoji: "🌙🦉", price: 10000, category: "pet" },
-    Owl: { emoji: "🦉", price: 10000, category: "pet" },
-    Peacock: { emoji: "🦚", price: 15000, category: "pet" },
-    Dragonfly: { emoji: "🐉🪰", price: 55000, category: "pet" },
-    Raccoon: { emoji: "🦝", price: 85000, category: "pet" },
-    Butterfly: { emoji: "🦋", price: 70000, category: "pet" },
-    MimicOctopus: { emoji: "🐙", price: 100000, category: "pet" },
+    DB: { emoji: "🐝🎉", price: 80000, category: "pet", rarity: "Divine" },
+    QB: { emoji: "👑🐝", price: 30000, category: "pet", rarity: "Divine" },
+    Redfox: { emoji: "🦊", price: 15000, category: "pet", rarity: "Mythical" },
+    "Red Fox (Random)": { emoji: "🦊", price: 10000, category: "pet", rarity: "Mythical" },
+    Mantis10: { emoji: "🦗", price: 5000, category: "pet", rarity: "Mythical" },
+    Mantis30: { emoji: "🦗", price: 10000, category: "pet", rarity: "Mythical" },
+    Seal: { emoji: "🦭", price: 10000, category: "pet", rarity: "Rare" },
+    Macaw: { emoji: "🦜❤️", price: 30000, category: "pet", rarity: "Paradise" },
+    Moon: { emoji: "🌕🐱", price: 5000, category: "pet", rarity: "Legendary" },
+    Blood: { emoji: "🦉🩸", price: 15000, category: "pet", rarity: "Mythical" },
+    Night: { emoji: "🌙🦉", price: 10000, category: "pet", rarity: "Night" },
+    Owl: { emoji: "🦉", price: 10000, category: "pet", rarity: "Mythical" },
+    Peacock: { emoji: "🦚", price: 15000, category: "pet", rarity: "Paradise" },
+    Dragonfly: { emoji: "🐉🪰", price: 55000, category: "pet", rarity: "Rare" },
+    Raccoon: { emoji: "🦝", price: 85000, category: "pet", rarity: "Rare" },
+    Butterfly: { emoji: "🦋", price: 70000, category: "pet", rarity: "Rare" },
+    MimicOctopus: { emoji: "🐙", price: 100000, category: "pet", rarity: "Mythical" },
 
     // Sheckles
     sheckles1_8t: { emoji: "💰", price: 3000, category: "sheckles" },
@@ -804,21 +1278,26 @@
     bundleC: { price: 22000, category: "bundle" }
   };
 
+  // Define recommended sheckles
+  const recommendedSheckles = ["sheckles4_5t", "sheckles3_6t"];
+
+
   let currentLang = 'id';
 
   const translations = {
     id: {
       petsTitle: "Pets Tersedia",
       shecklesTitle: "Sheckles Tersedia",
+      recommendedShecklesTitle: "Sheckles Rekomendasi",
       sprinklerTitle: "Sprinkler Tersedia",
       bundleTitle: "Paket Bundling",
       cartTitle: "Keranjang",
       emptyCart: "Keranjang kosong",
-      totalText: "Total",
-      discountText: "Diskon",
+      totalText: "Subtotal",
+      discountText: "Diskon Promo",
       finalTotalText: "Total Akhir",
-      buyerNameLabel: "Nama ROBLOX *",
-      paymentMethodLabel: "Metode Pembayaran *",
+      buyerNameLabel: "Nama ROBLOX",
+      paymentMethodLabel: "Metode Pembayaran",
       promoCodeLabel: "Kode Promo",
       ratingLabel: "Rating",
       noteLabel: "Catatan (opsional)",
@@ -841,14 +1320,26 @@
       filterAllRarities: "Semua Kelangkaan",
       faqTitle: "FAQ (Pertanyaan yang Sering Diajukan)",
       testimonialsTitle: "Testimoni Pelanggan",
+      socialMediaTitle: "Ikuti Kami!",
       cartButtonText: "Keranjang",
       darkModeToggle: "🌙 Dark Mode",
       lightModeToggle: "☀️ Light Mode",
+      modalAddToCartBtn: "Tambah ke Keranjang",
+      modalCloseBtn: "Tutup",
+      checkoutProgress: "Proses checkout akan dialihkan ke WhatsApp. Mohon tunggu...",
+      toastSuccess: (msg) => `✅ ${msg}`,
+      toastError: (msg) => `❌ ${msg}`,
+      toastInfo: (msg) => `ℹ️ ${msg}`,
+      footerContact: "Kontak Kami",
+      footerHours: "Jam Operasional",
+      footerInfo: "Informasi",
+      footerHoursDetail: "Senin - Minggu: 08.00 - 22.00 WITA (Terkadang bisa lebih cepat atau lambat)",
 
       pets: {
         DB: { name: "Disco Bee", rarity: "Divine", desc: "Setiap ~20 menit, memiliki peluang 12.28% untuk mengaktifkan mutasi Disco (nilai 125x) pada buah terdekat." },
         QB: { name: "Queen Bee", rarity: "Divine", desc: "Setiap ~25 menit, menerapkan mutasi Pollinated pada buah di sekitar dan mengatur ulang cooldown kemampuan pet lain." },
         Redfox: { name: "Red Fox", rarity: "Mythical", desc: "Mencuri (mendupilasi) benih dari kebun pemain lain (khusus dari Seed Shop)." },
+        "Red Fox (Random)": { name: "Red Fox (Random)", rarity: "Mythical", desc: "Mencuri (mendupilasi) benih dari kebun pemain lain (khusus dari Seed Shop)." },
         Mantis10: { name: "Praying Mantis (10+)", rarity: "Mythical", desc: "Memicu mutasi umum (Gold, Rainbow, Shocked, dll.), membuat hasil panen lebih berharga." },
         Mantis30: { name: "Praying Mantis (30+)", rarity: "Mythical", desc: "Memicu mutasi umum (Gold, Rainbow, Shocked, dll.), membuat hasil panen lebih berharga." },
         Seal: { name: "Seal", rarity: "Rare", desc: "Saat menjual pet, memiliki peluang 2% untuk mendapatkan kembali pet tersebut dalam bentuk telur." },
@@ -875,7 +1366,7 @@
       bundles: {
         bundleA: { name: "Bundle A", desc: "1 DB + 1 QB + 1 Redfox" },
         bundleB: { name: "Bundle B", desc: "2 Mantis (10+) + 1 Seal + 1 Macaw" },
-        bundleC: { name: "Bundle C", desc: "3 Sheckles (3.6t) + 1 Sprinkler" }
+        bundleC: { name: "Bundle B", desc: "3 Sheckles (3.6t) + 1 Sprinkler" }
       },
       faqs: [
         { q: "Bagaimana cara membeli di sini?", a: "Pilih item yang Anda inginkan, tambahkan ke keranjang, isi detail di formulir checkout, lalu klik tombol WhatsApp untuk melanjutkan pembayaran dan pengiriman." },
@@ -892,15 +1383,16 @@
     en: {
       petsTitle: "Pets Available",
       shecklesTitle: "Sheckles Available",
+      recommendedShecklesTitle: "Recommended Sheckles",
       sprinklerTitle: "Sprinkler Available",
       bundleTitle: "Bundle Packages",
       cartTitle: "Cart",
       emptyCart: "Cart is empty",
-      totalText: "Total",
-      discountText: "Discount",
+      totalText: "Subtotal",
+      discountText: "Promo Discount",
       finalTotalText: "Final Total",
-      buyerNameLabel: "Roblox Username *",
-      paymentMethodLabel: "Payment Method *",
+      buyerNameLabel: "Roblox Username",
+      paymentMethodLabel: "Payment Method",
       promoCodeLabel: "Promo Code",
       ratingLabel: "Rating",
       noteLabel: "Note (optional)",
@@ -909,10 +1401,10 @@
       promoInvalid: "Invalid promo code",
       promoExpired: "Promo code has expired.",
       promoLimitReached: "Promo code has reached its usage limit.",
-      promoLimitPerUser: (limit) => `You have already used this promo code ${limit} times.`,
-      promoApplied: "Promo code applied successfully!",
-      ratingOptions: ["Select rating (optional)", "1 ★", "2 ★★", "3 ★★★", "4 ★★★★", "5 ★★★★★"],
-      checkoutConfirm: "Are you sure you want to checkout?",
+     promoLimitPerUser: (limit) => `You have already used this promo code ${limit} times.`,
+promoApplied: "Promo code applied successfully!",
+ratingOptions: ["Select rating (optional)", "1 ★", "2 ★★", "3 ★★★", "4 ★★★★", "5 ★★★★★"],
+checkoutConfirm: "Are you sure you want to checkout?",
       historyTitle: "Purchase History",
       historyEmpty: "No purchase history yet.",
       langLabel: "Choose Language",
@@ -923,14 +1415,26 @@
       filterAllRarities: "All Rarities",
       faqTitle: "FAQ (Frequently Asked Questions)",
       testimonialsTitle: "Customer Testimonials",
+      socialMediaTitle: "Follow Us!",
       cartButtonText: "Cart",
       darkModeToggle: "🌙 Dark Mode",
       lightModeToggle: "☀️ Light Mode",
+      modalAddToCartBtn: "Add to Cart",
+      modalCloseBtn: "Close",
+      checkoutProgress: "Checkout process will redirect to WhatsApp. Please wait...",
+      toastSuccess: (msg) => `✅ ${msg}`,
+      toastError: (msg) => `❌ ${msg}`,
+      toastInfo: (msg) => `ℹ️ ${msg}`,
+      footerContact: "Contact Us",
+      footerHours: "Operating Hours",
+      footerInfo: "Information",
+      footerHoursDetail: "Monday - Sunday: 08:00 AM - 10:00 PM WITA (Sometimes earlier or later)",
 
       pets: {
         DB: { name: "Disco Bee", rarity: "Divine", desc: "Every ~20 minutes, has a 12.28% chance to activate a Disco mutation (125x value) on nearby fruits." },
         QB: { name: "Queen Bee", rarity: "Divine", desc: "Every ~25 minutes, applies Pollinated mutation to surrounding fruits and resets the highest cooldown pet ability." },
         Redfox: { name: "Red Fox", rarity: "Mythical", desc: "Steals (duplicates) seeds from other players' farms (Seed Shop only)." },
+        "Red Fox (Random)": { name: "Red Fox (Random)", rarity: "Mythical", desc: "Steals (duplicates) seeds from other players' farms (Seed Shop only)." },
         Mantis10: { name: "Praying Mantis (10+)", rarity: "Mythical", desc: "Triggers common mutations (Gold, Rainbow, Shocked, etc.), making crops more valuable." },
         Mantis30: { name: "Praying Mantis (30+)", rarity: "Mythical", desc: "Triggers common mutations (Gold, Rainbow, Shocked, etc.), making crops more valuable." },
         Seal: { name: "Seal", rarity: "Rare", desc: "When selling a pet, has a 2% chance to get the pet back as an egg." },
@@ -977,16 +1481,16 @@
     "SAVE10": {
       discount: 0.20,
       expires: "2025-07-31T23:59:59",
-      usageLimit: 5,
+      usageLimit: 50,
       usedCount: 0,
       perUserLimit: 1
     },
     "HEMAT20": {
-      discount: 0.15,
+      discount: 0.10,
       expires: "2025-08-15T23:59:59",
       usageLimit: 3,
       usedCount: 0,
-      perUserLimit: 2
+      perUserLimit: 1
     },
     "123456": {
       discount: 0.10,
@@ -1001,17 +1505,24 @@
   let purchaseHistory = [];
   let promoUsage = {};
   let darkMode = false;
+  let currentFilterRarity = ""; // For rarity filter buttons
 
   const soundAdd = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
   const soundRemove = new Audio("https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg");
   const soundCheckout = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
+  const soundToast = new Audio("https://actions.google.com/sounds/v1/ui/nudge.ogg");
+
 
   // Declare DOM elements globally, but assign inside DOMContentLoaded
   let langSelector, darkModeToggle, cartToggleBtn, historyToggleBtn, cartPanel, historyPanel,
       checkoutForm, buyerNameInput, paymentMethodSelect, promoCodeInput, checkoutBtn,
       buyerNameError, paymentMethodError, addToCartPopup, popupMessage, petSearchInput,
       petRarityFilter, petListContainer, shecklesListContainer, sprinklerListContainer,
-      bundleListContainer, cartItemsContainer, cartTotalDisplay, discountDisplay, promoCodeMessage;
+      bundleListContainer, recommendedShecklesListContainer, cartItemsContainer, cartTotalDisplay,
+      discountDisplay, promoCodeMessage, socialMediaTitle, productDetailModal, modalCloseButton,
+      modalIcon, modalName, modalDescription, modalPrice, modalAddToCartBtn, checkoutProgress,
+      toastNotification, rarityFilterButtons, backToTopBtn;
+
 
   console.log("Global DOM variables declared. Waiting for DOMContentLoaded...");
 
@@ -1078,7 +1589,7 @@
     if (currentLang === 'id') {
       return 'Rp ' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     } else {
-      const dollar = num / 15000;
+      const dollar = num / 15000; // Assuming 1 USD = 15000 IDR
       return '$' + dollar.toFixed(2);
     }
   }
@@ -1087,88 +1598,83 @@
   function applyTranslations() {
     console.log("-> applyTranslations() started for language:", currentLang);
 
-    // Explicitly re-get DOM elements, add checks to prevent null errors
-    const petsTitle = document.getElementById('petsTitle');
-    if (petsTitle) petsTitle.textContent = translations[currentLang].petsTitle; else console.warn("Element #petsTitle not found.");
+    // Update static text content
+    const elementsToTranslate = [
+      { id: 'petsTitle', text: 'petsTitle' },
+      { id: 'shecklesTitle', text: 'shecklesTitle' },
+      { id: 'recommendedShecklesTitle', text: 'recommendedShecklesTitle' },
+      { id: 'sprinklerTitle', text: 'sprinklerTitle' },
+      { id: 'bundleTitle', text: 'bundleTitle' },
+      { id: 'cartTitle', text: 'cartTitle' },
+      { id: 'labelBuyerName', html: true, text: 'buyerNameLabel' },
+      { id: 'labelPaymentMethod', html: true, text: 'paymentMethodLabel' },
+      { id: 'labelPromoCode', text: 'promoCodeLabel' },
+      { id: 'labelRating', text: 'ratingLabel' },
+      { id: 'labelBuyerNote', text: 'noteLabel' },
+      { id: 'checkoutBtn', text: 'checkoutBtn' },
+      { id: 'historyPanel', selector: 'h3', text: 'historyTitle' },
+      { id: 'faqTitle', text: 'faqTitle' },
+      { id: 'testimonialsTitle', text: 'testimonialsTitle' },
+      { id: 'socialMediaTitle', text: 'socialMediaTitle' },
+      { id: 'cartButtonText', text: 'cartButtonText' },
+      { id: 'checkoutProgress', text: 'checkoutProgress' },
+      { id: 'currentYear', text: new Date().getFullYear().toString() }
+    ];
 
-    const shecklesTitle = document.getElementById('shecklesTitle');
-    if (shecklesTitle) shecklesTitle.textContent = translations[currentLang].shecklesTitle; else console.warn("Element #shecklesTitle not found.");
+    elementsToTranslate.forEach(item => {
+      let element;
+      if (item.selector) {
+        element = document.querySelector(`#${item.id} ${item.selector}`);
+      } else {
+        element = document.getElementById(item.id);
+      }
+      if (element) {
+        if (item.html) {
+          element.innerHTML = `${translations[currentLang][item.text]} <span style="color:red;">*</span>`;
+        } else {
+          element.textContent = translations[currentLang][item.text];
+        }
+      } else {
+        // console.warn(`Element ${item.id} (selector: ${item.selector}) not found for translation.`);
+      }
+    });
 
-    const sprinklerTitle = document.getElementById('sprinklerTitle');
-    if (sprinklerTitle) sprinklerTitle.textContent = translations[currentLang].sprinklerTitle; else console.warn("Element #sprinklerTitle not found.");
+    // Update aria labels
+    if (cartToggleBtn) cartToggleBtn.setAttribute('aria-label', translations[currentLang].cartToggleLabel);
+    if (historyToggleBtn) historyToggleBtn.setAttribute('aria-label', translations[currentLang].historyToggleLabel);
 
-    const bundleTitle = document.getElementById('bundleTitle');
-    if (bundleTitle) bundleTitle.textContent = translations[currentLang].bundleTitle; else console.warn("Element #bundleTitle not found.");
+    // Update placeholder text
+    if (petSearchInput) petSearchInput.placeholder = translations[currentLang].searchPlaceholder;
 
-    const cartTitle = document.getElementById('cartTitle');
-    if (cartTitle) cartTitle.textContent = translations[currentLang].cartTitle; else console.warn("Element #cartTitle not found.");
-
-    const labelBuyerName = document.getElementById('labelBuyerName');
-    if (labelBuyerName) labelBuyerName.innerHTML = `${translations[currentLang].buyerNameLabel} <span style="color:red;">*</span>`; else console.warn("Element #labelBuyerName not found.");
-
-    const labelPaymentMethod = document.getElementById('labelPaymentMethod');
-    if (labelPaymentMethod) labelPaymentMethod.innerHTML = `${translations[currentLang].paymentMethodLabel} <span style="color:red;">*</span>`; else console.warn("Element #labelPaymentMethod not found.");
-
-    const labelPromoCode = document.getElementById('labelPromoCode');
-    if (labelPromoCode) labelPromoCode.textContent = translations[currentLang].promoCodeLabel; else console.warn("Element #labelPromoCode not found.");
-
-    const labelRating = document.getElementById('labelRating');
-    if (labelRating) labelRating.textContent = translations[currentLang].ratingLabel; else console.warn("Element #labelRating not found.");
-
-    const labelBuyerNote = document.getElementById('labelBuyerNote');
-    if (labelBuyerNote) labelBuyerNote.textContent = translations[currentLang].noteLabel; else console.warn("Element #labelBuyerNote not found.");
-
-    if (checkoutBtn) checkoutBtn.textContent = translations[currentLang].checkoutBtn; else console.warn("Element #checkoutBtn not found.");
-
-    const historyPanelH3 = document.querySelector('#historyPanel h3'); // Select the h3 inside historyPanel
-    if (historyPanelH3) historyPanelH3.textContent = translations[currentLang].historyTitle; else console.warn("Element #historyPanel h3 not found.");
-
-    if (cartToggleBtn) cartToggleBtn.setAttribute('aria-label', translations[currentLang].cartToggleLabel); else console.warn("Element #cartToggleBtn not found.");
-    if (historyToggleBtn) historyToggleBtn.setAttribute('aria-label', translations[currentLang].historyToggleLabel); else console.warn("Element #historyToggleBtn not found.");
-
-    const cartButtonText = document.getElementById('cartButtonText');
-    if (cartButtonText) cartButtonText.textContent = translations[currentLang].cartButtonText; else console.warn("Element #cartButtonText not found.");
-
-    const faqTitle = document.getElementById('faqTitle');
-    if (faqTitle) faqTitle.textContent = translations[currentLang].faqTitle; else console.warn("Element #faqTitle not found.");
-
-    const testimonialsTitle = document.getElementById('testimonialsTitle');
-    if (testimonialsTitle) testimonialsTitle.textContent = translations[currentLang].testimonialsTitle; else console.warn("Element #testimonialsTitle not found.");
-
-    if (petSearchInput) petSearchInput.placeholder = translations[currentLang].searchPlaceholder; else console.warn("Element #petSearchInput not found.");
-
-    if (petRarityFilter && petRarityFilter.options.length > 0) {
-      petRarityFilter.options[0].textContent = translations[currentLang].filterAllRarities;
-    } else {
-        console.warn("Element #petRarityFilter not found or has no options.");
-    }
-
+    // Update dark mode button text
     if (darkModeToggle) {
         darkModeToggle.textContent = darkMode ? translations[currentLang].lightModeToggle : translations[currentLang].darkModeToggle;
-    } else {
-        console.warn("Element #darkModeToggle not found.");
     }
 
     // Populate payment methods
     if (paymentMethodSelect) {
-        paymentMethodSelect.innerHTML = ''; // Clear existing options
+        const originalValue = paymentMethodSelect.value; // Keep selected value
+        paymentMethodSelect.innerHTML = '';
         translations[currentLang].paymentMethods.forEach((method, index) => {
             const option = document.createElement('option');
             option.value = index === 0 ? "" : method;
             option.textContent = method;
-            if (index === 0) { // First option is disabled/selected placeholder
+            if (index === 0) {
                 option.disabled = true;
-                option.selected = true;
             }
             paymentMethodSelect.appendChild(option);
         });
-    } else {
-        console.warn("Element #paymentMethodSelect not found.");
+        if (originalValue) {
+            paymentMethodSelect.value = originalValue; // Restore selected value
+        } else {
+            paymentMethodSelect.value = ""; // Ensure placeholder is selected
+        }
     }
 
     // Populate rating options
     const ratingSelect = document.getElementById('ratingSelect');
     if (ratingSelect) {
+        const originalRatingValue = ratingSelect.value; // Keep selected rating
         ratingSelect.innerHTML = '';
         translations[currentLang].ratingOptions.forEach((optionText, index) => {
             const option = document.createElement('option');
@@ -1176,9 +1682,29 @@
             option.textContent = optionText;
             ratingSelect.appendChild(option);
         });
-    } else {
-        console.warn("Element #ratingSelect not found.");
+        if (originalRatingValue) {
+            ratingSelect.value = originalRatingValue; // Restore selected rating
+        } else {
+            ratingSelect.value = ""; // Ensure placeholder is selected
+        }
     }
+
+    // Update modal button text
+    if (modalAddToCartBtn) modalAddToCartBtn.textContent = translations[currentLang].modalAddToCartBtn;
+    if (modalCloseButton) modalCloseButton.title = translations[currentLang].modalCloseBtn;
+
+    // Update footer text
+    const footerContact = document.querySelector('.footer-column:nth-child(1) h4');
+    if (footerContact) footerContact.textContent = translations[currentLang].footerContact;
+    const footerHours = document.querySelector('.footer-column:nth-child(2) h4');
+    if (footerHours) footerHours.textContent = translations[currentLang].footerHours;
+    const footerHoursDetail = document.querySelector('.footer-column:nth-child(2) ul li:nth-child(1)');
+    if (footerHoursDetail) footerHoursDetail.textContent = translations[currentLang].footerHoursDetail.split('(')[0].trim(); // Get only the first part
+    const footerHoursNote = document.querySelector('.footer-column:nth-child(2) ul li:nth-child(2)');
+    if (footerHoursNote) footerHoursNote.textContent = `(${translations[currentLang].footerHoursDetail.split('(')[1] || ''}`.replace(')', ''); // Get the note part
+
+    const footerInfo = document.querySelector('.footer-column:nth-child(3) h4');
+    if (footerInfo) footerInfo.textContent = translations[currentLang].footerInfo;
 
 
     renderAllProducts();
@@ -1186,13 +1712,18 @@
     renderHistory();
     renderFAQ();
     renderTestimonials();
-    populateRarityFilter();
+    populateRarityFilterButtons();
     console.log("<- applyTranslations() finished.");
+  }
+
+  function getRarityClassName(rarity) {
+    if (!rarity) return '';
+    return `rarity-${rarity.replace(/\s/g, '')}`;
   }
 
   function renderAllProducts() {
       console.log("-> renderAllProducts() started.");
-      if (!petListContainer || !shecklesListContainer || !sprinklerListContainer || !bundleListContainer || !petSearchInput || !petRarityFilter) {
+      if (!petListContainer || !shecklesListContainer || !sprinklerListContainer || !bundleListContainer || !petSearchInput || !recommendedShecklesListContainer) {
           console.error("Critical product list containers or filter elements not found. Cannot render products.");
           return;
       }
@@ -1202,6 +1733,7 @@
           console.warn("No products defined in allProducts object. Displaying fallback messages.");
           petListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No products to display.</p>`;
           shecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No sheckles to display.</p>`;
+          recommendedShecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No recommended sheckles to display.</p>`;
           sprinklerListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No sprinkler to display.</p>`;
           bundleListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">No bundle packages to display.</p>`;
           hideSkeletonLoading();
@@ -1211,21 +1743,23 @@
       setTimeout(() => {
           petListContainer.innerHTML = "";
           shecklesListContainer.innerHTML = "";
+          recommendedShecklesListContainer.innerHTML = "";
           sprinklerListContainer.innerHTML = "";
           bundleListContainer.innerHTML = "";
 
           const searchTerm = petSearchInput.value.toLowerCase();
-          const filterRarity = petRarityFilter.value;
+          const filterRarity = currentFilterRarity; // Use currentFilterRarity from buttons
 
           let petsFound = false;
           let shecklesFound = false;
+          let recommendedShecklesFound = false;
           let sprinklersFound = false;
           let bundlesFound = false;
 
           Object.entries(allProducts).forEach(([id, item]) => {
               let name = "";
               let desc = "";
-              let rarity = "";
+              let rarity = item.rarity; // Get rarity from allProducts data
               let priceDisplay = formatPrice(item.price);
               let div = document.createElement('div');
               div.tabIndex = 0;
@@ -1234,21 +1768,17 @@
               const clickHandler = (e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   addToCart(id, name, item.price, item.emoji, rect.left, rect.top);
+                  showToast(translations[currentLang].toastSuccess(translations[currentLang].addToCartSuccess(name)), 'success');
               };
+              const modalHandler = () => showProductDetail(id, name, desc, item.emoji, item.price, rarity, item.category);
 
-              const keyHandler = (e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      addToCart(id, name, item.price, item.emoji, rect.left, rect.top);
-                  }
-              };
 
               if (item.category === 'pet') {
                   const petTranslation = translations[currentLang].pets[id];
                   if (!petTranslation) { console.warn(`Translation missing for pet ID: ${id}`); return; }
                   name = petTranslation.name;
                   desc = petTranslation.desc;
-                  rarity = petTranslation.rarity;
+                  rarity = petTranslation.rarity; // Rarity from translation might be more descriptive
 
                   const matchesSearch = name.toLowerCase().includes(searchTerm) ||
                                         desc.toLowerCase().includes(searchTerm) ||
@@ -1257,17 +1787,22 @@
 
                   if (matchesSearch && matchesRarity) {
                       div.className = "pet-item";
-                      div.setAttribute('aria-label', `${name}, ${rarity}, ${desc}, ${priceDisplay}`);
+                      div.setAttribute('aria-label', `${name}, ${rarity}, ${desc}, ${priceDisplay}. Klik untuk detail.`);
                       div.innerHTML = `
                           <div class="pet-icon">${item.emoji}</div>
                           <div class="pet-info">
-                              <strong>${name} (${rarity})</strong>
+                              <strong>${name} <span class="rarity-label ${getRarityClassName(rarity)}">${rarity}</span></strong>
                               <p>${desc}</p>
                               <p><strong>${priceDisplay}</strong></p>
                           </div>
                       `;
-                      div.onclick = clickHandler;
-                      div.onkeypress = keyHandler;
+                      div.onclick = modalHandler; // Open modal on click
+                      div.onkeypress = (e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              modalHandler();
+                          }
+                      };
                       petListContainer.appendChild(div);
                       petsFound = true;
                   }
@@ -1275,7 +1810,7 @@
                   name = translations[currentLang].sheckles[id];
                   if (!name) { console.warn(`Translation missing for sheckles ID: ${id}`); return; }
                   div.className = "pet-item";
-                  div.setAttribute('aria-label', `${name}, ${priceDisplay}`);
+                  div.setAttribute('aria-label', `${name}, ${priceDisplay}. Klik untuk detail.`);
                   div.innerHTML = `
                       <div class="pet-icon">${item.emoji}</div>
                       <div class="pet-info">
@@ -1283,15 +1818,43 @@
                           <p><strong>${priceDisplay}</strong></p>
                       </div>
                   `;
-                  div.onclick = clickHandler;
-                  div.onkeypress = keyHandler;
+                  div.onclick = modalHandler;
+                  div.onkeypress = (e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          modalHandler();
+                      }
+                  };
                   shecklesListContainer.appendChild(div);
                   shecklesFound = true;
+
+                  if (recommendedSheckles.includes(id)) {
+                      const recommendedDiv = document.createElement('div');
+                      recommendedDiv.className = "recommended-item pet-item";
+                      recommendedDiv.setAttribute('aria-label', `${name}, ${priceDisplay} (Rekomendasi). Klik untuk detail.`);
+                      recommendedDiv.innerHTML = `
+                          <div class="pet-icon">${item.emoji}</div>
+                          <div class="pet-info">
+                              <strong>${name}</strong>
+                              <p><strong>${priceDisplay}</strong></p>
+                          </div>
+                      `;
+                      recommendedDiv.onclick = modalHandler;
+                      recommendedDiv.onkeypress = (e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              modalHandler();
+                          }
+                      };
+                      recommendedShecklesListContainer.appendChild(recommendedDiv);
+                      recommendedShecklesFound = true;
+                  }
+
               } else if (item.category === 'sprinkler') {
                   name = translations[currentLang].sprinkler[id];
                   if (!name) { console.warn(`Translation missing for sprinkler ID: ${id}`); return; }
                   div.className = "pet-item";
-                  div.setAttribute('aria-label', `${name}, ${priceDisplay}`);
+                  div.setAttribute('aria-label', `${name}, ${priceDisplay}. Klik untuk detail.`);
                   div.innerHTML = `
                       <div class="pet-icon">${item.emoji}</div>
                       <div class="pet-info">
@@ -1299,8 +1862,13 @@
                           <p><strong>${priceDisplay}</strong></p>
                       </div>
                   `;
-                  div.onclick = clickHandler;
-                  div.onkeypress = keyHandler;
+                  div.onclick = modalHandler;
+                  div.onkeypress = (e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          modalHandler();
+                      }
+                  };
                   sprinklerListContainer.appendChild(div);
                   sprinklersFound = true;
               } else if (item.category === 'bundle') {
@@ -1309,14 +1877,19 @@
                   name = bundleTranslation.name;
                   desc = bundleTranslation.desc;
                   div.className = "bundle-item";
-                  div.setAttribute('aria-label', `${name}, ${desc}, ${priceDisplay}`);
+                  div.setAttribute('aria-label', `${name}, ${desc}, ${priceDisplay}. Klik untuk detail.`);
                   div.innerHTML = `
                       <div class="bundle-name">${name}</div>
                       <div class="bundle-desc">${desc}</div>
                       <div class="bundle-price">${priceDisplay}</div>
                   `;
-                  div.onclick = clickHandler;
-                  div.onkeypress = keyHandler;
+                  div.onclick = modalHandler;
+                  div.onkeypress = (e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          modalHandler();
+                      }
+                  };
                   bundleListContainer.appendChild(div);
                   bundlesFound = true;
               }
@@ -1327,6 +1900,9 @@
           }
           if (!shecklesFound) {
               shecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">Tidak ada sheckles untuk ditampilkan.</p>`;
+          }
+          if (!recommendedShecklesFound) {
+              recommendedShecklesListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">Tidak ada sheckles rekomendasi untuk ditampilkan.</p>`;
           }
           if (!sprinklersFound) {
               sprinklerListContainer.innerHTML = `<p style="text-align: center; color: ${darkMode ? '#aaa' : '#777'};">Tidak ada sprinkler untuk ditampilkan.</p>`;
@@ -1340,29 +1916,59 @@
       }, 500);
   }
 
-
-  function populateRarityFilter() {
-    console.log("-> populateRarityFilter() started.");
-    if (!petRarityFilter) {
-        console.warn("Element #petRarityFilter not found. Skipping rarity filter population.");
-        return;
-    }
-    const rarities = new Set();
-    Object.values(translations[currentLang].pets).forEach(pet => {
-      if (pet.rarity) {
-        rarities.add(pet.rarity);
+  function populateRarityFilterButtons() {
+      console.log("-> populateRarityFilterButtons() started.");
+      if (!rarityFilterButtons) {
+          console.warn("Rarity filter buttons container not found. Skipping population.");
+          return;
       }
-    });
+      const rarities = new Set();
+      Object.values(translations[currentLang].pets).forEach(pet => {
+          if (pet.rarity) {
+              rarities.add(pet.rarity);
+          }
+      });
 
-    petRarityFilter.innerHTML = `<option value="">${translations[currentLang].filterAllRarities}</option>`;
-    Array.from(rarities).sort().forEach(rarity => {
-      const option = document.createElement('option');
-      option.value = rarity;
-      option.textContent = rarity;
-      petRarityFilter.appendChild(option);
-    });
-    console.log("<- populateRarityFilter() finished.");
+      rarityFilterButtons.innerHTML = ''; // Clear existing buttons
+
+      const allButton = document.createElement('button');
+      allButton.textContent = translations[currentLang].filterAllRarities;
+      allButton.classList.add('all-rarities-btn');
+      if (currentFilterRarity === "") {
+          allButton.classList.add('active');
+      }
+      allButton.onclick = () => {
+          currentFilterRarity = "";
+          renderAllProducts();
+          highlightActiveRarityButton(allButton);
+      };
+      rarityFilterButtons.appendChild(allButton);
+
+      Array.from(rarities).sort().forEach(rarity => {
+          const button = document.createElement('button');
+          button.textContent = rarity;
+          button.classList.add(getRarityClassName(rarity));
+          if (currentFilterRarity === rarity) {
+              button.classList.add('active');
+          }
+          button.onclick = () => {
+              currentFilterRarity = rarity;
+              renderAllProducts();
+              highlightActiveRarityButton(button);
+          };
+          rarityFilterButtons.appendChild(button);
+      });
+      console.log("<- populateRarityFilterButtons() finished.");
   }
+
+  function highlightActiveRarityButton(activeButton) {
+      if (!rarityFilterButtons) return;
+      Array.from(rarityFilterButtons.children).forEach(button => {
+          button.classList.remove('active');
+      });
+      activeButton.classList.add('active');
+  }
+
 
   function addToCart(id, name, price, emoji, startX, startY) {
     console.log("-> addToCart() called for:", name);
@@ -1481,10 +2087,12 @@
     }
 
     if (cartItemsContainer) cartItemsContainer.innerHTML = html;
+    // Tampilkan subtotal dulu
     if (cartTotalDisplay) cartTotalDisplay.textContent = `${translations[currentLang].totalText}: ${formatPrice(subtotalPrice)}`;
 
     if (discountAmount > 0) {
         if (discountDisplay) {
+            // Tampilkan diskon dan total akhir terpisah
             discountDisplay.innerHTML = `${translations[currentLang].discountText}: -${formatPrice(discountAmount)}<br>${translations[currentLang].finalTotalText}: ${formatPrice(finalPrice)}`;
             discountDisplay.style.display = "block";
         }
@@ -1550,11 +2158,37 @@
         return;
     }
     faqList.innerHTML = '';
-    translations[currentLang].faqs.forEach(faq => {
+    translations[currentLang].faqs.forEach((faq, index) => {
       const faqItem = document.createElement('div');
       faqItem.className = 'faq-item';
-      faqItem.innerHTML = `<strong>${faq.q}</strong><p>${faq.a}</p>`;
+      faqItem.innerHTML = `
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false" aria-controls="faq-answer-${index}">
+            <span>${faq.q}</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div id="faq-answer-${index}" class="faq-answer" role="region" aria-hidden="true">
+            <p>${faq.a}</p>
+        </div>
+      `;
       faqList.appendChild(faqItem);
+
+      const questionDiv = faqItem.querySelector('.faq-question');
+      const answerDiv = faqItem.querySelector('.faq-answer');
+
+      const toggleFaq = () => {
+          const isActive = questionDiv.classList.toggle('active');
+          answerDiv.classList.toggle('open', isActive);
+          questionDiv.setAttribute('aria-expanded', isActive);
+          answerDiv.setAttribute('aria-hidden', !isActive);
+      };
+
+      questionDiv.addEventListener('click', toggleFaq);
+      questionDiv.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleFaq();
+          }
+      });
     });
     console.log("<- renderFAQ() finished.");
   }
@@ -1578,103 +2212,113 @@
 
   function validateForm() {
     console.log("-> validateForm() started.");
-    const buyerName = buyerNameInput ? buyerNameInput.value.trim() : '';
-    const paymentMethod = paymentMethodSelect ? paymentMethodSelect.value : '';
-    const promoCode = promoCodeInput ? promoCodeInput.value.trim().toUpperCase() : '';
+    // Pastikan semua elemen DOM yang dibutuhkan ada sebelum diakses
+    if (!buyerNameInput || !paymentMethodSelect || !promoCodeInput || !buyerNameError || !paymentMethodError || !promoCodeMessage || !checkoutBtn) {
+        console.error("One or more required form elements are missing. Cannot validate form.");
+        return false; // Kembali false jika elemen penting tidak ditemukan
+    }
+
+    const buyerName = buyerNameInput.value.trim();
+    const paymentMethod = paymentMethodSelect.value;
+    const promoCode = promoCodeInput.value.trim().toUpperCase();
 
     let isValid = true;
 
-    if (buyerNameInput && buyerNameError) {
-        if (buyerName.length < 3) {
-            buyerNameInput.classList.add('error');
-            buyerNameError.style.display = 'block';
+    // Validasi Nama ROBLOX
+    if (buyerName.length < 3) {
+        buyerNameInput.classList.add('error');
+        buyerNameError.style.display = 'block';
+        isValid = false;
+    } else {
+        buyerNameInput.classList.remove('error');
+        buyerNameError.style.display = 'none';
+    }
+
+    // Validasi Metode Pembayaran
+    if (paymentMethod === "" || paymentMethod === translations[currentLang].paymentMethods[0]) {
+        paymentMethodSelect.classList.add('error');
+        paymentMethodError.style.display = 'block';
+        isValid = false;
+    } else {
+        paymentMethodSelect.classList.remove('error');
+        paymentMethodError.style.display = 'none';
+    }
+
+    // Validasi Kode Promo
+    if (promoCode) {
+        if (!promoCodes[promoCode]) {
+            promoCodeInput.classList.add('error');
+            promoCodeMessage.style.display = "block";
+            promoCodeMessage.style.color = "red";
+            promoCodeMessage.textContent = translations[currentLang].promoInvalid;
             isValid = false;
         } else {
-            buyerNameInput.classList.remove('error');
-            buyerNameError.style.display = 'none';
-        }
-    } else { console.warn("Buyer name input or error element not found for validation."); }
+            const promo = promoCodes[promoCode];
+            const now = new Date();
+            const expiryDate = new Date(promo.expires);
+            const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
 
-    if (paymentMethodSelect && paymentMethodError) {
-        if (paymentMethod === "" || paymentMethod === translations[currentLang].paymentMethods[0]) { // Check against placeholder value
-            paymentMethodSelect.classList.add('error');
-            paymentMethodError.style.display = 'block';
-            isValid = false;
-        } else {
-            paymentMethodSelect.classList.remove('error');
-            paymentMethodError.style.display = 'none';
-        }
-    } else { console.warn("Payment method select or error element not found for validation."); }
-
-
-    if (promoCodeInput && promoCodeMessage) {
-        if (promoCode) {
-            if (!promoCodes[promoCode]) {
+            if (now > expiryDate) {
                 promoCodeInput.classList.add('error');
                 promoCodeMessage.style.display = "block";
                 promoCodeMessage.style.color = "red";
-                promoCodeMessage.textContent = translations[currentLang].promoInvalid;
+                promoCodeMessage.textContent = translations[currentLang].promoExpired;
                 isValid = false;
+            } else if (promo.usedCount >= promo.usageLimit) {
+                promoCodeInput.classList.add('error');
+                promoCodeMessage.style.display = "block";
+                promoCodeMessage.style.color = "red";
+                promoCodeMessage.textContent = translations[currentLang].promoLimitReached;
+                isValid = false;
+            } else if (promo.perUserLimit && userPromoCount >= promo.perUserLimit) {
+                promoCodeInput.classList.add('error');
+                promoCodeMessage.style.display = "block";
+                promoCodeMessage.style.color = "red";
+                promoCodeMessage.textContent = translations[currentLang].promoLimitPerUser(promo.perUserLimit);
+                isValid = false; // Mark as invalid if per-user limit reached
             } else {
-                const promo = promoCodes[promoCode];
-                const now = new Date();
-                const expiryDate = new Date(promo.expires);
-                const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
-
-                if (now > expiryDate) {
-                    promoCodeInput.classList.add('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "red";
-                    promoCodeMessage.textContent = translations[currentLang].promoExpired;
-                    isValid = false;
-                } else if (promo.usedCount >= promo.usageLimit) {
-                    promoCodeInput.classList.add('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "red";
-                    promoCodeMessage.textContent = translations[currentLang].promoLimitReached;
-                    isValid = false;
-                } else if (promo.perUserLimit && userPromoCount >= promo.perUserLimit) {
-                    promoCodeInput.classList.add('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "red";
-                    promoCodeMessage.textContent = translations[currentLang].promoLimitPerUser(promo.perUserLimit);
-                    isValid = false;
-                } else {
-                    promoCodeInput.classList.remove('error');
-                    promoCodeMessage.style.display = "block";
-                    promoCodeMessage.style.color = "green";
-                    promoCodeMessage.textContent = translations[currentLang].promoApplied;
-                }
+                // Promo valid, hapus kelas error dan tampilkan pesan sukses
+                promoCodeInput.classList.remove('error');
+                promoCodeMessage.style.display = "block";
+                promoCodeMessage.style.color = "green"; // Warna hijau untuk promo berhasil
+                promoCodeMessage.textContent = translations[currentLang].promoApplied;
             }
-        } else {
-            promoCodeInput.classList.remove('error');
-            promoCodeMessage.style.display = "none";
         }
-    } else { console.warn("Promo code input or message element not found for validation."); }
-
-    if (cart.length === 0) {
-      isValid = false;
-      console.log("Cart is empty, form invalid.");
+    } else {
+        // Jika promoCode kosong, hapus error dan sembunyikan pesan
+        promoCodeInput.classList.remove('error');
+        promoCodeMessage.style.display = "none";
     }
 
-    if (checkoutBtn) checkoutBtn.disabled = !isValid; else console.warn("Checkout button not found for disabling.");
+    // Pastikan keranjang tidak kosong
+    if (cart.length === 0) {
+        isValid = false;
+        console.log("Cart is empty, form invalid.");
+        // Anda bisa tambahkan pesan visual di sini jika mau, misal:
+        // if (cartItemsContainer) cartItemsContainer.textContent = "Keranjang kosong, tidak bisa checkout.";
+    }
+
+    // Atur status tombol checkout
+    checkoutBtn.disabled = !isValid;
     console.log("<- validateForm() finished. Form valid:", isValid);
     return isValid;
   }
 
   function checkout(event) {
+    // Pastikan event.preventDefault() selalu dipanggil untuk mencegah pengiriman form standar
     event.preventDefault();
     console.log("-> checkout() initiated.");
 
+    // Panggil validateForm() untuk memastikan semua input valid sebelum melanjutkan
     if (!validateForm()) {
-      alert("Harap lengkapi semua bidang yang wajib diisi dan perbaiki kesalahan.");
-      console.log("Checkout aborted due to validation errors.");
-      return;
+        showToast(translations[currentLang].toastError("Harap lengkapi semua bidang yang wajib diisi dan perbaiki kesalahan yang ada."), 'error');
+        console.log("Checkout aborted due to validation errors.");
+        return; // Hentikan proses jika validasi gagal
     }
 
     if (!confirm(translations[currentLang].checkoutConfirm)) {
-      console.log("Checkout aborted by user confirmation.");
-      return;
+        console.log("Checkout aborted by user confirmation.");
+        return;
     }
 
     if (soundCheckout) soundCheckout.play();
@@ -1689,56 +2333,59 @@
 
     let subtotalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
     let discountAmount = 0;
+    let finalPrice = subtotalPrice; // Initialize finalPrice here
 
     if (promoCode && promoCodes[promoCode]) {
-      const promo = promoCodes[promoCode];
-      const now = new Date();
-      const expiryDate = new Date(promo.expires);
-      const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
+        const promo = promoCodes[promoCode];
+        const now = new Date();
+        const expiryDate = new Date(promo.expires);
+        const userPromoCount = (promoUsage[buyerName.toLowerCase()] && promoUsage[buyerName.toLowerCase()][promoCode]) || 0;
 
-      if (now <= expiryDate && promo.usedCount < promo.usageLimit && (!promo.perUserLimit || userPromoCount < promo.perUserLimit)) {
-        discountAmount = Math.round(subtotalPrice * promo.discount);
+        // Double-check promo validity here again, as validateForm() might not prevent all edge cases
+        if (now <= expiryDate && promo.usedCount < promo.usageLimit && (!promo.perUserLimit || userPromoCount < promo.perUserLimit)) {
+            discountAmount = Math.round(subtotalPrice * promo.discount);
+            finalPrice = subtotalPrice - discountAmount; // Calculate final price after discount
 
-        promoCodes[promoCode].usedCount++;
-        if (!promoUsage[buyerName.toLowerCase()]) {
-            promoUsage[buyerName.toLowerCase()] = {};
+            promoCodes[promoCode].usedCount++;
+            if (!promoUsage[buyerName.toLowerCase()]) {
+                promoUsage[buyerName.toLowerCase()] = {};
+            }
+            promoUsage[buyerName.toLowerCase()][promoCode] = (promoUsage[buyerName.toLowerCase()][promoCode] || 0) + 1;
+
+            console.log(`Promo code ${promoCode} applied. Discount: ${discountAmount}. New usage count: ${promoCodes[promoCode].usedCount}`);
+        } else {
+            // This case should ideally be caught by validateForm, but as a fallback
+            showToast(translations[currentLang].toastError("Kode promo tidak dapat digunakan. Harap periksa kembali."), 'error');
+            updateCart(); // Update UI if promo becomes invalid during checkout
+            console.log("Promo code deemed invalid during final checkout check.");
+            return;
         }
-        promoUsage[buyerName.toLowerCase()][promoCode] = (promoUsage[buyerName.toLowerCase()][promoCode] || 0) + 1;
-
-        console.log(`Promo code ${promoCode} applied. Discount: ${discountAmount}. New usage count: ${promoCodes[promoCode].usedCount}`);
-      } else {
-          alert("Kode promo tidak dapat digunakan. Harap periksa kembali.");
-          updateCart();
-          console.log("Promo code deemed invalid during final checkout check.");
-          return;
-      }
     }
-
-    const finalPrice = subtotalPrice - discountAmount;
 
     let message = `Halo, saya ingin memesan:\n\n`;
     cart.forEach(item => {
-      let translatedName = item.name;
-      if (allProducts[item.id]) {
-          if (allProducts[item.id].category === 'pet' && translations[currentLang].pets[item.id]) {
-              translatedName = translations[currentLang].pets[item.id].name;
-          } else if (allProducts[item.id].category === 'sheckles' && translations[currentLang].sheckles[item.id]) {
-              translatedName = translations[currentLang].sheckles[item.id];
-          } else if (allProducts[item.id].category === 'sprinkler' && translations[currentLang].sprinkler[item.id]) {
-              translatedName = translations[currentLang].sprinkler[item.id];
-          } else if (allProducts[item.id].category === 'bundle' && translations[currentLang].bundles[item.id]) {
-              translatedName = translations[currentLang].bundles[item.id].name;
-          }
-      }
-      message += `- ${translatedName} (x${item.qty}) - ${formatPrice(item.price * item.qty)}\n`;
+        let translatedName = item.name;
+        // Logic untuk translasi nama item
+        if (allProducts[item.id]) {
+            if (allProducts[item.id].category === 'pet' && translations[currentLang].pets[item.id]) {
+                translatedName = translations[currentLang].pets[item.id].name;
+            } else if (allProducts[item.id].category === 'sheckles' && translations[currentLang].sheckles[item.id]) {
+                translatedName = translations[currentLang].sheckles[item.id];
+            } else if (allProducts[item.id].category === 'sprinkler' && translations[currentLang].sprinkler[item.id]) {
+                translatedName = translations[currentLang].sprinkler[item.id];
+            } else if (allProducts[item.id].category === 'bundle' && translations[currentLang].bundles[item.id]) {
+                translatedName = translations[currentLang].bundles[item.id].name;
+            }
+        }
+        message += `- ${translatedName} (x${item.qty}) - ${formatPrice(item.price * item.qty)}\n`;
     });
     message += `\nSubtotal: ${formatPrice(subtotalPrice)}\n`;
 
     if (discountAmount > 0) {
-      message += `Diskon Promo (${promoCode}): -${formatPrice(discountAmount)}\n`;
-      message += `Total Akhir: ${formatPrice(finalPrice)}\n`;
+      message += `${translations[currentLang].discountText}: -${formatPrice(discountAmount)}\n`;
+      message += `${translations[currentLang].finalTotalText}: ${formatPrice(finalPrice)}\n`;
     } else {
-      message += `Total: ${formatPrice(finalPrice)}\n`;
+      message += `${translations[currentLang].totalText}: ${formatPrice(finalPrice)}\n`; // Use finalPrice here
     }
 
     message += `\nNama ROBLOX: ${buyerName}\n`;
@@ -1751,13 +2398,17 @@
     }
     message += `\nMohon diproses segera. Terima kasih!`;
 
+    // Show checkout progress message
+    if (checkoutProgress) checkoutProgress.classList.add('show');
+    showToast(translations[currentLang].toastInfo(translations[currentLang].checkoutProgress), 'info', 5000);
+
     const whatsappUrl = `https://wa.me/6285651205765?text=${encodeURIComponent(message)}`;
 
     purchaseHistory.unshift({
       date: new Date().toISOString(),
       buyerName: buyerName,
       paymentMethod: paymentMethod,
-      total: finalPrice,
+      total: finalPrice, // Store final price in history
       items: cart.map(item => ({ id: item.id, name: item.name, qty: item.qty })),
       promoCode: promoCode || null,
       discountAmount: discountAmount,
@@ -1771,8 +2422,12 @@
     renderHistory();
     saveState();
 
-    window.open(whatsappUrl, '_blank');
-    console.log("<- Checkout complete, WhatsApp opened.");
+    // Delay opening WhatsApp slightly to allow toast to appear
+    setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+        if (checkoutProgress) checkoutProgress.classList.remove('show');
+        console.log("<- Checkout complete, WhatsApp opened.");
+    }, 1500); // 1.5 second delay
   }
 
   // Add to cart popup animation
@@ -1825,6 +2480,7 @@
       // Ensure containers exist before clearing
       if (petListContainer) petListContainer.innerHTML = '';
       if (shecklesListContainer) shecklesListContainer.innerHTML = '';
+      if (recommendedShecklesListContainer) recommendedShecklesListContainer.innerHTML = '';
       if (sprinklerListContainer) sprinklerListContainer.innerHTML = '';
       if (bundleListContainer) bundleListContainer.innerHTML = '';
 
@@ -1840,6 +2496,14 @@
       `).join('');
 
       if (shecklesListContainer) shecklesListContainer.innerHTML = Array(4).fill().map(() => `
+          <div class="skeleton-item">
+              <div class="skeleton-icon"></div>
+              <div class="skeleton-line title"></div>
+              <div class="skeleton-line price"></div>
+          </div>
+      `).join('');
+
+      if (recommendedShecklesListContainer) recommendedShecklesListContainer.innerHTML = Array(2).fill().map(() => `
           <div class="skeleton-item">
               <div class="skeleton-icon"></div>
               <div class="skeleton-line title"></div>
@@ -1869,6 +2533,84 @@
       // console.log("Hiding skeleton loading (implicitly handled by re-rendering content).");
   }
 
+  // Product Detail Modal functions
+  function showProductDetail(id, name, desc, emoji, price, rarity, category) {
+      if (!productDetailModal || !modalIcon || !modalName || !modalDescription || !modalPrice || !modalAddToCartBtn) {
+          console.error("Modal elements not found. Cannot show product detail.");
+          return;
+      }
+      modalIcon.textContent = emoji;
+      modalName.textContent = name;
+      modalDescription.textContent = desc || "No description available.";
+      modalPrice.textContent = formatPrice(price);
+
+      // Set up "Add to Cart" button in modal
+      modalAddToCartBtn.textContent = translations[currentLang].modalAddToCartBtn;
+      modalAddToCartBtn.onclick = () => {
+          const rect = modalAddToCartBtn.getBoundingClientRect();
+          addToCart(id, name, price, emoji, rect.left, rect.top);
+          closeProductDetailModal();
+      };
+      modalAddToCartBtn.setAttribute('data-product-id', id); // Store ID for easy access
+
+      // Add rarity label for pets
+      if (category === 'pet' && rarity) {
+          modalName.innerHTML = `${name} <span class="rarity-label ${getRarityClassName(rarity)}">${rarity}</span>`;
+      } else {
+          modalName.innerHTML = name;
+      }
+
+
+      productDetailModal.classList.add('show');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling background
+  }
+
+  function closeProductDetailModal() {
+      if (productDetailModal) {
+          productDetailModal.classList.remove('show');
+          document.body.style.overflow = ''; // Restore scrolling
+      }
+  }
+
+  // Toast notification function
+  let toastTimeout;
+  function showToast(message, type = 'info', duration = 3000) {
+      if (!toastNotification) {
+          console.warn("Toast notification element not found.");
+          return;
+      }
+      clearTimeout(toastTimeout);
+      toastNotification.textContent = message;
+      toastNotification.className = 'toast-notification show'; // Reset classes
+      toastNotification.classList.add(type); // Add type class for styling
+
+      // Play sound
+      if (soundToast) soundToast.play();
+
+      toastTimeout = setTimeout(() => {
+          toastNotification.classList.remove('show');
+      }, duration);
+  }
+
+  // Back to Top functionality
+  function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+
+  window.onscroll = function() { scrollFunction() };
+
+  function scrollFunction() {
+    if (backToTopBtn) {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    }
+  }
+
+
   // Event Listeners
   document.addEventListener('DOMContentLoaded', () => {
     console.log("-> DOMContentLoaded event fired. Initializing main script logic.");
@@ -1892,15 +2634,35 @@
         addToCartPopup = document.getElementById('addToCartPopup');
         popupMessage = document.getElementById('popupMessage');
         petSearchInput = document.getElementById('petSearchInput');
-        petRarityFilter = document.getElementById('petRarityFilter');
+        // petRarityFilter = document.getElementById('petRarityFilter'); // No longer needed
+        rarityFilterButtons = document.getElementById('rarityFilterButtons'); // New rarity filter buttons container
         petListContainer = document.getElementById('petList');
         shecklesListContainer = document.getElementById('shecklesList');
+        recommendedShecklesListContainer = document.getElementById('recommendedShecklesList'); // Assign recommended container
         sprinklerListContainer = document.getElementById('sprinklerList');
         bundleListContainer = document.getElementById('bundleList');
         cartItemsContainer = document.getElementById('cartItems');
         cartTotalDisplay = document.getElementById('cartTotal');
         discountDisplay = document.getElementById('discountDisplay');
         promoCodeMessage = document.getElementById('promoCodeMessage');
+        socialMediaTitle = document.getElementById('socialMediaTitle');
+        productDetailModal = document.getElementById('productDetailModal');
+        modalCloseButton = document.querySelector('#productDetailModal .close-button');
+        modalIcon = document.querySelector('#productDetailModal .modal-icon');
+        modalName = document.querySelector('#productDetailModal .modal-name');
+        modalDescription = document.querySelector('#productDetailModal .modal-description');
+        modalPrice = document.querySelector('#productDetailModal .modal-price');
+        modalAddToCartBtn = document.querySelector('#productDetailModal .add-to-cart-modal-btn');
+        checkoutProgress = document.getElementById('checkoutProgress');
+        toastNotification = document.getElementById('toastNotification');
+        backToTopBtn = document.getElementById('backToTopBtn');
+
+
+        // Set current year in footer
+        const currentYearSpan = document.getElementById('currentYear');
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
 
         console.log("All DOM elements reassigned after DOMContentLoaded.");
 
@@ -1910,7 +2672,7 @@
         renderHistory();
         renderFAQ();
         renderTestimonials();
-        populateRarityFilter(); // Ensure rarity filter is populated
+        populateRarityFilterButtons(); // Use new rarity filter buttons
 
         // Attach event listeners only after elements are confirmed to exist
         if (langSelector) langSelector.addEventListener('change', (event) => {
@@ -1962,8 +2724,23 @@
             validateForm();
         });
 
-        if (petSearchInput) petSearchInput.addEventListener('input', renderAllProducts);
-        if (petRarityFilter) petRarityFilter.addEventListener('change', renderAllProducts);
+        // Modal event listeners
+        if (modalCloseButton) modalCloseButton.addEventListener('click', closeProductDetailModal);
+        if (productDetailModal) productDetailModal.addEventListener('click', (event) => {
+            if (event.target === productDetailModal) {
+                closeProductDetailModal();
+            }
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && productDetailModal && productDetailModal.classList.contains('show')) {
+                closeProductDetailModal();
+            }
+        });
+
+        // Pet search input listener
+        if (petSearchInput) petSearchInput.addEventListener('input', () => {
+            renderAllProducts();
+        });
 
         console.log("All event listeners attached.");
     } catch (e) {
