@@ -1,0 +1,207 @@
+/* General Mobile Styles */
+:root {
+    --background-primary: #1a1a2e;
+    --background-secondary: #16213e;
+    --background-tertiary: #0f3460;
+    --primary-text: #e94560;
+    --secondary-text: #dcdcdc;
+    --card-background: #2a2a4a;
+    --border-color: #4a4a6a;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--background-primary);
+    color: var(--secondary-text);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* --- MODAL STYLES (Unchanged) --- */
+#device-choice-modal{display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.8);justify-content:center;align-items:center;}
+.modal-content{background-color:var(--card-background);padding:30px;border-radius:12px;text-align:center;width:85%;max-width:350px;}
+.modal-content h2{color:var(--primary-text);margin-top:0;}
+.modal-buttons{display:flex;flex-direction:column;gap:15px;margin-top:20px;}
+.choice-btn{padding:15px;font-size:1.1em;font-weight:bold;border:none;border-radius:8px;cursor:pointer;}
+#choice-mobile{background-color:var(--primary-text);color:white;}
+#choice-computer{background-color:var(--background-secondary);color:var(--secondary-text);border:1px solid var(--border-color);}
+
+/* --- MOBILE-OPTIMIZED LAYOUT (REFINED) --- */
+
+/* Header */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    gap: 15px;
+    background-color: var(--background-secondary);
+}
+.header-right { display: flex; flex-direction: column; width: 100%; gap: 10px; }
+.header-link { color: var(--secondary-text); text-decoration: none; padding: 12px; border-radius: 8px; background-color: var(--card-background); text-align: center; }
+
+/* Main Content Layout */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px; /* Increased gap for better spacing */
+}
+.left-column, .right-column {
+    flex: none;
+    position: static;
+    height: auto;
+    overflow-y: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Added gap here too */
+}
+
+/* Universal Card Style */
+.product-header, .checkout-step, .ratings-card, .help-card, .cart-summary-card {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 12px; /* Slightly more rounded */
+}
+
+/* Typography */
+.checkout-step h3, .product-header h1, .ratings-card h3, .help-card h3, .cart-summary-card h3 {
+    font-size: 1.25em;
+    color: var(--primary-text);
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+.product-header h1 { font-size: 1.5em; }
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+.product-item {
+    background-color: var(--background-secondary);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}
+.product-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary-text);
+}
+.product-item.selected {
+    border-color: var(--primary-text);
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+}
+.product-item strong { font-size: 0.9em; }
+.product-item span { font-size: 0.9em; }
+.product-item .pet-icon { font-size: 1.8em; margin-bottom: 5px; }
+
+/* Hide description and button by default on mobile */
+.product-item .product-description,
+.product-item .add-to-cart-btn {
+    display: none;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Show them when the item is expanded */
+.product-item.expanded .product-description,
+.product-item.expanded .add-to-cart-btn {
+    display: block;
+}
+
+.product-description {
+    font-size: 0.85em;
+}
+
+.add-to-cart-btn {
+    background-color: var(--primary-text);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* Form Elements */
+input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--background-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--secondary-text);
+    box-sizing: border-box;
+    font-size: 1em;
+}
+#checkoutBtn, .auth-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-text);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Footer */
+.footer-container { display: flex; flex-direction: column; text-align: center; gap: 25px; }
+.footer-section { padding: 30px 15px; margin-top: 20px; }
+.footer-socials { justify-content: center; }
+.footer-links ul { list-style: none; padding: 0; margin: 0; }
+.footer-links ul li { margin-bottom: 10px; }
+.footer-links ul a { color: var(--secondary-text); text-decoration: none; }
+.footer-links h4 { color: var(--primary-text); margin-bottom: 15px; }
+
+/* Modal Styles (for transaction, etc.) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+.modal.active {
+    display: flex;
+}
+
+/* View Switcher Button */
+.view-switcher { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+#switch-view-btn {
+    background-color: var(--background-tertiary);
+    color: var(--secondary-text);
+    border: 1px solid var(--border-color);
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+#switch-view-btn:hover { background-color: var(--primary-text); color: white; }
