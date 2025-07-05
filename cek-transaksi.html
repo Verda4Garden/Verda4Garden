@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cek Transaksi – Verda4Garden</title>
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="cek-transaksi.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+      <img src="logo.jpg" alt="Verda4Garden Logo" id="headerLogo">
+      <span class="header-title">Verda4Garden</span>
+    </a>
+  </div>
+  <div class="header-right">
+    <a href="index.html" class="header-link"><i class="fas fa-shopping-cart"></i> Topup</a>
+    <a href="cek-transaksi.html" class="header-link active"><i class="fas fa-receipt"></i> Cek Transaksi</a>
+    <div id="user-auth-links" class="header-right">
+        <a href="login.html" class="header-link"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+        <a href="register.html" class="header-link primary"><i class="fas fa-user-plus"></i> Daftar</a>
+    </div>
+    <div id="user-profile" style="display:none;" class="header-right">
+        <span id="usernameDisplay"></span>
+        <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+    </div>
+  </div>
+</header>
+
+<main class="main-content-centered">
+  <div class="invoice-checker">
+    <h1>Cek Invoice Kamu 🧾</h1>
+    <p>Lihat detail pembelian kamu menggunakan nomor Invoice dengan cepat dan mudah.</p>
+    <div class="invoice-form-container">
+      <form id="invoiceSearchForm">
+        <input type="text" id="invoiceIdInput" placeholder="Masukkan nomor Invoice Kamu (Contoh: V4G-XXXXXXXXXXXXX)" required>
+        <button type="submit">
+          <i class="fas fa-search"></i> Cari Invoice
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="transactionResult" class="transaction-result-container" style="display: none;">
+    <h2>Hasil Pencarian</h2>
+    <div id="resultDetails"></div>
+  </div>
+</main>
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="logo.jpg" alt="Verda4Garden Logo" class="footer-logo">
+      <p>Top up game murah, cepat, dan terpercaya. Proses instan 24/7 dengan pembayaran lengkap.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@fahril29124?_t=ZS-8xm7Utsr1sO&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:verda4garden@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Peta Situs</h4>
+      <ul>
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="login.html">Masuk</a></li>
+        <li><a href="register.html">Daftar</a></li>
+        <li><a href="cek-transaksi.html">Cek Transaksi</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Dukungan</h4>
+      <ul>
+        <li><a href="hubungi-kami.html">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legalitas</h4>
+      <ul>
+        <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; <span id="currentYear"></span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
+<script src="cek-transaksi.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>
