@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Daftar – Verda4Garden</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="style.css" id="main-stylesheet" />
+<link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+
+<div id="device-choice-modal">
+  <div class="modal-content">
+    <h2>Pilih Tampilan</h2>
+    <p>Untuk pengalaman terbaik, silakan pilih tampilan yang sesuai dengan perangkat Anda.</p>
+    <div class="modal-buttons">
+      <button id="choice-mobile" class="choice-btn">📱 Tampilan Mobile</button>
+      <button id="choice-computer" class="choice-btn">💻 Tampilan Komputer</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-left">
+    <a href="home.html" style="display: flex; align-items: center; text-decoration: none;">
+      <img src="logo.jpg" alt="Verda4Garden Logo" id="headerLogo">
+      <span class="header-title">Verda4Garden</span>
+    </a>
+  </div>
+  <div class="header-right">
+    <a href="home.html" class="header-link"><i class="fas fa-home"></i> Beranda</a>
+    <a href="cek-transaksi.html" class="header-link"><i class="fas fa-receipt"></i> Cek Transaksi</a>
+    <a href="login.html" class="header-link"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+  </div>
+</header>
+
+<main class="main-content-centered">
+  <div class="auth-container">
+    <h1>Buat Akun Baru ✨</h1>
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="username"><i class="fas fa-user"></i> Username</label>
+        <input type="text" id="username" required placeholder="Pilih username unik">
+      </div>
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> Password</label>
+        <input type="password" id="password" required placeholder="Minimal 6 karakter">
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword"><i class="fas fa-lock"></i> Konfirmasi Password</label>
+        <input type="password" id="confirmPassword" required placeholder="Ulangi password">
+      </div>
+      <button type="submit" class="auth-button">Buat Akun</button>
+    </form>
+    <p id="errorMessage" class="error-message" style="display:none;"></p>
+    <p class="switch-auth">Sudah punya akun? <a href="login.html">Masuk di sini</a></p>
+  </div>
+</main>
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="logo.jpg" alt="Verda4Garden Logo" class="footer-logo">
+      <p>Top up game murah, cepat, dan terpercaya. Proses instan 24/7 dengan pembayaran lengkap.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@fahril29124?_t=ZS-8xm7Utsr1sO&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:verda4garden@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Peta Situs</h4>
+      <ul>
+        <li><a href="home.html">Beranda</a></li>
+        <li><a href="login.html">Masuk</a></li>
+        <li><a href="register.html">Daftar</a></li>
+        <li><a href="cek-transaksi.html">Cek Transaksi</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Dukungan</h4>
+      <ul>
+        <li><a href="mailto:verda4garden@gmail.com">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legalitas</h4>
+      <ul>
+        <li><a href="#">Kebijakan Privasi</a></li>
+        <li><a href="#">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="view-switcher">
+      <button id="switch-view-btn">Ubah Tampilan</button>
+    </div>
+    &copy; <span id="currentYear">2024</span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+<script src="auth.js"></script>
+<script src="device-selector.js"></script>
+</body>
+</html>
