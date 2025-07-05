@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verda4Garden – Beli Kebutuhan Game Anda</title>
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="style.css" id="main-stylesheet" />
+</head>
+<body>
+
+<div id="device-choice-modal">
+  <div class="modal-content">
+    <h2>Pilih Tampilan</h2>
+    <p>Untuk pengalaman terbaik, silakan pilih tampilan yang sesuai dengan perangkat Anda.</p>
+    <div class="modal-buttons">
+      <button id="choice-mobile" class="choice-btn">📱 Tampilan Mobile</button>
+      <button id="choice-computer" class="choice-btn">💻 Tampilan Komputer</button>
+    </div>
+  </div>
+</div>
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<header>
+  <div class="header-left">
+    <img src="logo.jpg" alt="Verda4Garden Logo" id="headerLogo">
+    <span class="header-title">Verda4Garden</span>
+  </div>
+  <div class="header-right">
+    <select id="langSelector" aria-label="Pilih Bahasa / Choose Language">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+    </select>
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+    <a href="cek-transaksi.html" class="header-link"><i class="fas fa-receipt"></i> Cek Transaksi</a>
+    <div id="user-auth-links" class="header-right">
+        <a href="login.html" class="header-link"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+        <a href="register.html" class="header-link primary"><i class="fas fa-user-plus"></i> Daftar</a>
+    </div>
+    <div id="user-profile" style="display:none;" class="header-right">
+        <span id="usernameDisplay"></span>
+        <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="left-column">
+    <div class="product-header">
+      <img src="noFilter.webp" alt="Grow A Garden" class="product-banner">
+      <h1>GROW A GARDEN (ROBLOX)</h1>
+      <p>The Garden Game</p>
+      <div class="product-tags">
+        <span><i class="fas fa-check-circle"></i> Proses Cepat</span>
+        <span><i class="fas fa-headset"></i> Layanan Chat 24/7</span>
+        <span><i class="fas fa-shield-alt"></i> Pembayaran Aman!</span>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">1</div>
+      <h3 id="labelBuyerName">Masukkan Data Akun</h3>
+      <input type="text" id="buyerName" name="buyerName" required placeholder="Username Roblox" autocomplete="name" />
+      <small>Please make sure you fill the correct account data</small>
+      <div id="buyerNameError" class="error-message">Nama minimal 3 karakter.</div>
+    </div>
+
+    <div class="checkout-step">
+        <div class="step-number">2</div>
+        <h3 id="petsTitle">Pilih Nominal - Pets</h3>
+        <div id="petList" class="product-grid"></div>
+    </div>
+    
+    <div class="checkout-step">
+        <h3 id="shecklesTitle">Pilih Nominal - Sheckles</h3>
+        <div id="shecklesList" class="product-grid"></div>
+    </div>
+
+    <div class="checkout-step">
+        <h3 id="sprinklerTitle">Pilih Nominal - Sprinkler</h3>
+        <div id="sprinklerList" class="product-grid"></div>
+    </div>
+
+    <div class="checkout-step">
+        <h3 id="bundleTitle">Pilih Nominal - Bundles</h3>
+        <div id="bundleList" class="product-grid"></div>
+    </div>
+
+
+    <div class="checkout-step">
+      <div class="step-number">3</div>
+      <h3 id="labelPaymentMethod">Pilih Pembayaran</h3>
+      <select id="paymentMethod" name="paymentMethod" required>
+        <option value="" disabled selected>Pilih metode pembayaran</option>
+      </select>
+      <div id="paymentMethodError" class="error-message">Pilih metode pembayaran.</div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">4</div>
+      <h3>Beli!</h3>
+      <form id="checkoutForm" aria-label="Formulir checkout">
+        <label for="promoCode" id="labelPromoCode">Kode Promo</label>
+        <input type="text" id="promoCode" name="promoCode" placeholder="Masukkan kode promo" autocomplete="off" />
+        <div id="promoCodeMessage" class="error-message" style="display:none;"></div>
+        <button type="submit" id="checkoutBtn" disabled>Pesan Sekarang!</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="right-column">
+    <div class="ratings-card">
+      <h3>Ulasan dan rating</h3>
+      <div class="rating-summary">
+        <span class="rating-score">5.00</span>
+        <div class="rating-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+      </div>
+      <small>Berdasarkan total 4 rating</small>
+    </div>
+
+    <div class="help-card">
+      <h3>Butuh Bantuan?</h3>
+      <p>Kamu bisa hubungi admin di sini:</p>
+      <div class="admin-links">
+        <a href="https://wa.me/6285651205765" target="_blank" class="admin-link">Admin 1</a>
+        <a href="https://wa.me/6281545733412" target="_blank" class="admin-link">Admin 2</a>
+      </div>
+    </div>
+
+    <div class="cart-summary-card">
+        <h3 id="cartTitle">Keranjang</h3>
+        <div id="cartItems">Belum ada item yang dipilih.</div>
+        <div id="discountDisplay" style="display:none;"></div>
+        <div id="cartTotal">Total: Rp 0</div>
+    </div>
+  </div>
+</main>
+
+<div class="main-content" style="flex-direction: column; padding-top: 0;">
+    <div class="review-section">
+        <h2>Beri Ulasan Anda</h2>
+        <form id="reviewForm">
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
+                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
+            </div>
+            <textarea id="reviewText" placeholder="Tulis ulasan Anda di sini..." required></textarea>
+            <label for="reviewImage" class="file-upload-label">
+                <i class="fas fa-camera"></i> Unggah Foto
+            </label>
+            <input type="file" id="reviewImage" accept="image/*">
+            <img id="imagePreview" src="" alt="Pratinjau Gambar" style="display:none; max-width: 100px; margin-top: 10px;"/>
+            <button type="submit" class="auth-button">Kirim Ulasan</button>
+        </form>
+    </div>
+
+    <div class="review-display-section">
+        <h2>Testimoni Pelanggan</h2>
+        <div id="review-list">
+            <!-- Ulasan akan ditampilkan di sini oleh JavaScript -->
+        </div>
+    </div>
+</div>
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="logo.jpg" alt="Verda4Garden Logo" class="footer-logo">
+      <p>Top up game murah, cepat, dan terpercaya. Proses instan 24/7 dengan pembayaran lengkap.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@fahril29124?_t=ZS-8xm7Utsr1sO&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:verda4garden@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Peta Situs</h4>
+      <ul>
+        <li><a href="home.html">Beranda</a></li>
+        <li><a href="login.html">Masuk</a></li>
+        <li><a href="register.html">Daftar</a></li>
+        <li><a href="cek-transaksi.html">Cek Transaksi</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Dukungan</h4>
+      <ul>
+        <li><a href="hubungi-kami.html">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legalitas</h4>
+      <ul>
+        <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="view-switcher">
+      <button id="switch-view-btn">Ubah Tampilan</button>
+    </div>
+    &copy; <span id="currentYear"></span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
+<div id="transactionModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <h3 id="modalTitle">Detail Transaksi Terakhir</h3>
+    <div id="transactionDetails">
+      <p>Belum ada transaksi yang dilakukan.</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="device-selector.js"></script>
+<audio id="cart-sound" src="add-to-cart.mp3" preload="auto"></audio>
+</body>
+</html>
