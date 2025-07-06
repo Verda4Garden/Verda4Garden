@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verda4Garden – Beli Kebutuhan Game Anda</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg">
+<meta http-equiv="refresh" content="0; url=home.html">
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+    .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #ffbe0b;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    h2 {
+        margin-bottom: 10px;
+    }
+    p {
+        margin-top: 0;
+        color: #666;
+    }
+</style>
+</head>
+<body>
+    <div class="loader"></div>
+    <h2>Mengalihkan ke Beranda...</h2>
+    <p>Jika Anda tidak dialihkan secara otomatis, <a href="home.html">klik di sini</a>.</p>
+    <script>
+        window.location.href = "home.html";
+    </script>
+</body>
+</html>

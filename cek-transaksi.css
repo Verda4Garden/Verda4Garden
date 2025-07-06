@@ -1,0 +1,334 @@
+.main-content-centered {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.invoice-checker {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.invoice-checker h1 {
+    color: var(--primary-text);
+    margin-bottom: 10px;
+}
+
+.invoice-checker p {
+    margin-bottom: 25px;
+    color: var(--secondary-text);
+}
+
+.invoice-form-container {
+    display: flex;
+    justify-content: center;
+}
+
+#invoiceSearchForm {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+}
+
+#invoiceIdInput {
+    flex-grow: 1;
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+}
+
+#invoiceSearchForm button {
+    padding: 12px 20px;
+    background-color: var(--primary-text);
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#invoiceSearchForm button:hover {
+    background-color: #d43a50;
+}
+
+.transaction-result-container {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.tx-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.tx-header h3 {
+    margin: 0;
+    color: var(--secondary-text);
+}
+
+.status-success {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.tx-info {
+    margin-bottom: 20px;
+}
+
+.tx-info p {
+    margin: 8px 0;
+}
+
+.tx-items-container {
+    margin-bottom: 20px;
+}
+
+.tx-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.tx-item:last-child {
+    border-bottom: none;
+}
+
+.tx-item-icon {
+    font-size: 1.5em;
+    margin-right: 15px;
+}
+
+.tx-item-details {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.invoice-success-banner {
+    background-color: #28a745;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+.invoice-highlight-box {
+    background-color: #f8f9fa;
+    border: 2px dashed #6c757d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.invoice-id-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.invoice-label {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.invoice-id-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--primary-text);
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    margin: 10px 0;
+    user-select: all;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.invoice-id-value:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02);
+}
+
+.copy-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.copy-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.tx-summary {
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+    margin-top: 20px;
+}
+
+.tx-summary p {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+.tx-summary p.discount span:last-child {
+    color: #28a745;
+}
+
+.tx-summary p.total {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--primary-text);
+}
+
+.tx-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.print-button, .copy-button, .continue-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1.05em;
+}
+
+.print-button {
+    background-color: var(--background-tertiary);
+    color: var(--secondary-text);
+    border: 1px solid var(--border-color);
+}
+
+.copy-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.continue-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.print-button:hover, .copy-button:hover, .continue-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.print-button:hover {
+    background-color: #0f3460;
+}
+
+.copy-button:hover {
+    background-color: #5a6268;
+}
+
+.continue-button:hover {
+    background-color: #0069d9;
+}
+
+.copy-button:active, .continue-button:active, .print-button:active {
+    transform: translateY(1px);
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    font-size: 18px;
+    color: #777;
+}
+
+.loading-spinner i {
+    margin-right: 10px;
+    font-size: 24px;
+    color: var(--primary-text);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.not-found-message {
+    text-align: center;
+    padding: 30px 0;
+    color: #555;
+}
+
+.not-found-message .small-text {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Animation for transaction result */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.transaction-result-container {
+    animation: fadeIn 0.5s ease-out;
+}

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verda4Garden – Beli Kebutuhan Game Anda</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="style.css" id="main-stylesheet" />
+<style>
+    .card-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: #ffbe0b;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transform: scale(0);
+        animation: badge-pop 0.5s forwards 0.3s;
+    }
+    
+    @keyframes badge-pop {
+        0% { transform: scale(0); }
+        70% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    
+    .product-card-home {
+        position: relative;
+        transition: transform 0.3s, box-shadow 0.3s;
+        overflow: hidden;
+    }
+    
+    .product-card-home:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .product-card-home::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+    }
+    
+    .product-card-home:hover::before {
+        left: 100%;
+    }
+    
+    .animate-card {
+        animation: card-appear 0.5s forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    @keyframes card-appear {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .product-card-home:nth-child(1) { animation-delay: 0.1s; }
+    .product-card-home:nth-child(2) { animation-delay: 0.2s; }
+    .product-card-home:nth-child(3) { animation-delay: 0.3s; }
+    .product-card-home:nth-child(4) { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<header>
+  <div class="header-left">
+    <img src="logo.jpg" alt="Verda4Garden Logo" id="headerLogo">
+    <span class="header-title">Verda4Garden</span>
+  </div>
+  <div class="header-right">
+    <select id="langSelector" aria-label="Pilih Bahasa / Choose Language">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+    </select>
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+    
+    <!-- Hamburger Menu for Mobile -->
+    <button id="hamburgerMenu" class="hamburger-menu" aria-label="Menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    
+    <!-- Desktop Links (will be hidden on mobile) -->
+    <div class="desktop-links">
+      <a href="cek-transaksi.html" class="header-link"><i class="fas fa-receipt"></i> Cek Transaksi</a>
+      <div id="user-auth-links" class="header-right">
+          <a href="login.html" class="header-link"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+          <a href="register.html" class="header-link primary"><i class="fas fa-user-plus"></i> Daftar</a>
+          <a href="#" class="header-link" id="topUpBtn"><i class="fas fa-gem"></i> Top Up</a>
+      </div>
+      <div id="user-profile" style="display:none;" class="header-right">
+          <span id="usernameDisplay"></span>
+          <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu (initially hidden) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="cek-transaksi.html" class="mobile-menu-item"><i class="fas fa-receipt"></i> Cek Transaksi</a>
+      <a href="login.html" class="mobile-menu-item"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+      <a href="register.html" class="mobile-menu-item"><i class="fas fa-user-plus"></i> Daftar</a>
+      <a href="#" class="mobile-menu-item" id="mobileMenuTopUpBtn"><i class="fas fa-gem"></i> Top Up</a>
+    </div>
+  </div>
+</header>
+
+<main class="main-content" style="justify-content: center;">
+    <div class="product-selection-container">
+        <h2>Pilih Game</h2>
+        <div class="product-grid-home">
+            <a href="garden.html" class="product-card-home animate-card">
+                <div class="card-badge">🌱</div>
+                <img src="noFilter.webp" alt="Grow A Garden">
+                <div class="product-info-home">
+                    <h3>GROW A GARDEN (ROBLOX)</h3>
+                    <p>The Garden Game</p>
+                </div>
+            </a>
+            
+            <a href="freefire.html" class="product-card-home animate-card">
+                <div class="card-badge">💎</div>
+                <img src="unnamed.png" alt="Free Fire">
+                <div class="product-info-home">
+                    <h3>FREE FIRE</h3>
+                    <p>Battle Royale Game</p>
+                </div>
+            </a>
+            
+            <a href="pubg.html" class="product-card-home animate-card">
+                <div class="card-badge">💰</div>
+                <img src="https://play-lh.googleusercontent.com/JRd05pyBH41qjgsJuWduRJpDeZG0Hnb0yjf2nWqO7VaGKL10-G5UIygxED-WNOc3pg" alt="PUBG Mobile">
+                <div class="product-info-home">
+                    <h3>PUBG MOBILE</h3>
+                    <p>Battle Royale Game</p>
+                </div>
+            </a>
+            
+            <a href="mlbb.html" class="product-card-home animate-card">
+                <div class="card-badge">💎</div>
+                <img src="mobilelegends-1696089976653.jpg" alt="Mobile Legends">
+                <div class="product-info-home">
+                    <h3>MOBILE LEGENDS</h3>
+                    <p>MOBA Game</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Mobile Navigation Bar -->
+<div class="mobile-nav">
+  <a href="home.html" class="nav-item active">
+    <i class="fas fa-home"></i>
+    <span>Beranda</span>
+  </a>
+  <a href="#" class="nav-item" id="mobileTopUpBtn">
+    <i class="fas fa-gem"></i>
+    <span>Top Up</span>
+  </a>
+  <a href="cek-transaksi.html" class="nav-item">
+    <i class="fas fa-receipt"></i>
+    <span>Transaksi</span>
+  </a>
+  <a href="login.html" class="nav-item">
+    <i class="fas fa-user"></i>
+    <span>Akun</span>
+  </a>
+</div>
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="logo.jpg" alt="Verda4Garden Logo" class="footer-logo">
+      <p>Top up game murah, cepat, dan terpercaya. Proses instan 24/7 dengan pembayaran lengkap.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@fahril29124?_t=ZS-8xm7Utsr1sO&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:verda4garden@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Peta Situs</h4>
+      <ul>
+        <li><a href="home.html">Beranda</a></li>
+        <li><a href="login.html">Masuk</a></li>
+        <li><a href="register.html">Daftar</a></li>
+        <li><a href="cek-transaksi.html">Cek Transaksi</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Dukungan</h4>
+      <ul>
+        <li><a href="hubungi-kami.html">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legalitas</h4>
+      <ul>
+        <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; <span id="currentYear"></span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+<script src="device-selector.js"></script>
+<script src="auth.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.style.display = 'none';
+        }
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Language switcher functionality
+        const langSelector = document.getElementById('langSelector');
+        if (langSelector) {
+            langSelector.addEventListener('change', function() {
+                const lang = this.value;
+                localStorage.setItem('language', lang);
+                updateLanguage(lang);
+            });
+            
+            // Set initial language from localStorage or default to 'id'
+            const savedLang = localStorage.getItem('language') || 'id';
+            langSelector.value = savedLang;
+            updateLanguage(savedLang);
+        }
+        
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+                darkModeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+                
+                // Add animation effect
+                darkModeToggle.classList.add('animate-toggle');
+                setTimeout(() => {
+                    darkModeToggle.classList.remove('animate-toggle');
+                }, 500);
+                
+                // Play a subtle sound effect
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.3;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+            });
+            
+            // Set initial dark mode from localStorage
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '☀️';
+            }
+        }
+        
+        // Top Up button functionality (desktop)
+        const topUpBtn = document.getElementById('topUpBtn');
+        if (topUpBtn) {
+            topUpBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const gameCards = document.querySelectorAll('.product-card-home');
+                gameCards.forEach(card => {
+                    card.classList.add('highlight-pulse');
+                    setTimeout(() => {
+                        card.classList.remove('highlight-pulse');
+                    }, 2000);
+                });
+                alert('Silakan pilih game untuk melakukan top up!');
+            });
+        }
+        
+        // Mobile Top Up button functionality
+        const mobileTopUpBtn = document.getElementById('mobileTopUpBtn');
+        if (mobileTopUpBtn) {
+            mobileTopUpBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const gameCards = document.querySelectorAll('.product-card-home');
+                gameCards.forEach(card => {
+                    card.classList.add('highlight-pulse');
+                    setTimeout(() => {
+                        card.classList.remove('highlight-pulse');
+                    }, 2000);
+                });
+                
+                // Smooth scroll to game selection
+                const productSelection = document.querySelector('.product-selection-container');
+                if (productSelection) {
+                    productSelection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Show tooltip instead of alert for better mobile experience
+                const tooltip = document.createElement('div');
+                tooltip.className = 'mobile-tooltip';
+                tooltip.textContent = 'Silakan pilih game untuk melakukan top up!';
+                document.body.appendChild(tooltip);
+                
+                setTimeout(() => {
+                    tooltip.classList.add('show');
+                }, 100);
+                
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(tooltip);
+                    }, 300);
+                }, 3000);
+            });
+        }
+        
+        // Add animation to product cards
+        const productCards = document.querySelectorAll('.product-card-home');
+        productCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('animate-card');
+            }, index * 100);
+        });
+        
+        // Hamburger menu functionality
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (hamburgerMenu && mobileMenu) {
+            hamburgerMenu.addEventListener('click', function() {
+                hamburgerMenu.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!hamburgerMenu.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    hamburgerMenu.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+            
+            // Mobile menu top up button
+            const mobileMenuTopUpBtn = document.getElementById('mobileMenuTopUpBtn');
+            if (mobileMenuTopUpBtn) {
+                mobileMenuTopUpBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    hamburgerMenu.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    
+                    const gameCards = document.querySelectorAll('.product-card-home');
+                    gameCards.forEach(card => {
+                        card.classList.add('highlight-pulse');
+                        setTimeout(() => {
+                            card.classList.remove('highlight-pulse');
+                        }, 2000);
+                    });
+                    
+                    // Smooth scroll to game selection
+                    const productSelection = document.querySelector('.product-selection-container');
+                    if (productSelection) {
+                        productSelection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    
+                    // Show tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'mobile-tooltip';
+                    tooltip.textContent = 'Silakan pilih game untuk melakukan top up!';
+                    document.body.appendChild(tooltip);
+                    
+                    setTimeout(() => {
+                        tooltip.classList.add('show');
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        tooltip.classList.remove('show');
+                        setTimeout(() => {
+                            document.body.removeChild(tooltip);
+                        }, 300);
+                    }, 3000);
+                });
+            }
+        }
+    });
+    
+    // Function to update language
+    function updateLanguage(lang) {
+        const translations = {
+            'id': {
+                'Masuk': 'Masuk',
+                'Daftar': 'Daftar',
+                'Top Up': 'Top Up',
+                'Cek Transaksi': 'Cek Transaksi',
+                'Pilih Game': 'Pilih Game',
+                'Beranda': 'Beranda',
+                'Dukungan': 'Dukungan',
+                'Legalitas': 'Legalitas',
+                'Hubungi Kami': 'Hubungi Kami',
+                'Kebijakan Privasi': 'Kebijakan Privasi',
+                'Syarat & Ketentuan': 'Syarat & Ketentuan',
+                'Ubah Tampilan': 'Ubah Tampilan',
+                'Transaksi': 'Transaksi',
+                'Akun': 'Akun'
+            },
+            'en': {
+                'Masuk': 'Login',
+                'Daftar': 'Register',
+                'Top Up': 'Top Up',
+                'Cek Transaksi': 'Check Transaction',
+                'Pilih Game': 'Select Game',
+                'Beranda': 'Home',
+                'Dukungan': 'Support',
+                'Legalitas': 'Legal',
+                'Hubungi Kami': 'Contact Us',
+                'Kebijakan Privasi': 'Privacy Policy',
+                'Syarat & Ketentuan': 'Terms & Conditions',
+                'Ubah Tampilan': 'Switch View',
+                'Transaksi': 'Transactions',
+                'Akun': 'Account'
+            }
+        };
+        
+        // Update text content based on selected language
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                element.textContent = translations[lang][key];
+            }
+        });
+        
+        // For elements without data-translate attribute, try to match by text content
+        document.querySelectorAll('a, h1, h2, h3, h4, button, span, p').forEach(element => {
+            const text = element.textContent.trim();
+            if (translations[lang] && translations[lang][text]) {
+                element.textContent = translations[lang][text];
+            }
+        });
+    }
+</script>
+</body>
+</html>

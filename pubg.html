@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PUBG Mobile – Verda4Garden</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="style.css" id="main-stylesheet" />
+</head>
+<body>
+
+<div id="device-choice-modal">
+  <div class="modal-content">
+    <h2>Pilih Tampilan</h2>
+    <p>Untuk pengalaman terbaik, silakan pilih tampilan yang sesuai dengan perangkat Anda.</p>
+    <div class="modal-buttons">
+      <button id="choice-mobile" class="choice-btn">📱 Tampilan Mobile</button>
+      <button id="choice-computer" class="choice-btn">💻 Tampilan Komputer</button>
+    </div>
+  </div>
+</div>
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<header>
+  <div class="header-left">
+    <img src="logo.jpg" alt="Verda4Garden Logo" id="headerLogo">
+    <span class="header-title">Verda4Garden</span>
+  </div>
+  <div class="header-right">
+    <select id="langSelector" aria-label="Pilih Bahasa">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+    </select>
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+    <a href="cek-transaksi.html" class="header-link"><i class="fas fa-receipt"></i> 🧾 Cek Transaksi</a>
+    <div id="user-auth-links" class="header-right">
+        <a href="login.html" class="header-link"><i class="fas fa-sign-in-alt"></i> 🔑 Masuk</a>
+        <a href="register.html" class="header-link primary"><i class="fas fa-user-plus"></i> 📝 Daftar</a>
+        <a href="#" class="header-link" id="topUpBtn"><i class="fas fa-gem"></i> 💎 Top Up</a>
+    </div>
+    <div id="user-profile" style="display:none;" class="header-right">
+        <span id="usernameDisplay"></span>
+        <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="left-column">
+    <div class="product-header" style="display: flex; align-items: center; gap: 20px;">
+      <img src="https://play-lh.googleusercontent.com/JRd05pyBH41qjgsJuWduRJpDeZG0Hnb0yjf2nWqO7VaGKL10-G5UIygxED-WNOc3pg" alt="PUBG Mobile" class="product-banner" style="max-width: 150px; border-radius: 10px;">
+      <div>
+        <h1>PUBG MOBILE</h1>
+        <p>Battle Royale Game</p>
+        <div class="product-tags">
+          <span><i class="fas fa-check-circle"></i> Proses Cepat</span>
+          <span><i class="fas fa-headset"></i> Layanan Chat 24/7</span>
+          <span><i class="fas fa-shield-alt"></i> Pembayaran Aman!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">1</div>
+      <h3 id="labelBuyerName">Masukkan Data Akun</h3>
+      <input type="text" id="buyerName" name="buyerName" required placeholder="ID PUBG Mobile" autocomplete="name" />
+      <small>Pastikan data akun yang diisi sudah benar</small>
+      <div id="buyerNameError" class="error-message">ID minimal 3 karakter.</div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">2</div>
+      <h3 id="ucTitle">Pilih Nominal - UC</h3>
+      <div id="ucList" class="product-grid">
+        <div class="product-item" data-product-id="pubg-60" data-price="15714">
+          <div class="pet-icon">💰</div>
+          <div class="product-name">60 UC</div>
+          <div class="product-price">Rp 15.714 <span class="usd-price">($1.01)</span></div>
+        </div>
+        <div class="product-item" data-product-id="pubg-325" data-price="70876">
+          <div class="pet-icon">💰</div>
+          <div class="product-name">325 UC</div>
+          <div class="product-price">Rp 70.876</div>
+        </div>
+        <div class="product-item" data-product-id="pubg-660" data-price="140011">
+          <div class="pet-icon">💰</div>
+          <div class="product-name">660 UC</div>
+          <div class="product-price">Rp 140.011</div>
+        </div>
+        <div class="product-item" data-product-id="pubg-1800" data-price="355052">
+          <div class="pet-icon">💰</div>
+          <div class="product-name">1800 UC</div>
+          <div class="product-price">Rp 355.052</div>
+        </div>
+        <div class="product-item" data-product-id="pubg-3850" data-price="689721">
+          <div class="pet-icon">💰</div>
+          <div class="product-name">3850 UC</div>
+          <div class="product-price">Rp 689.721</div>
+        </div>
+        <div class="product-item" data-product-id="pubg-8100" data-price="1377584">
+          <div class="pet-icon">💰</div>
+          <div class="product-name">8100 UC</div>
+          <div class="product-price">Rp 1.377.584</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">3</div>
+      <h3 id="labelPaymentMethod">Pilih Pembayaran</h3>
+      <div class="payment-methods">
+        <div class="payment-method" data-payment="bri">
+          <img src="logo bri.png" alt="Bank BRI" class="payment-icon">
+          <span>Bank BRI</span>
+        </div>
+        <div class="payment-method" data-payment="gopay">
+          <img src="gopay.png" alt="GoPay" class="payment-icon">
+          <span>GoPay</span>
+        </div>
+        <div class="payment-method" data-payment="shopeepay">
+          <img src="shopee-pay-logo-png_seeklogo-406839.png" alt="ShopeePay" class="payment-icon">
+          <span>ShopeePay</span>
+        </div>
+        <div class="payment-method" data-payment="dana">
+          <img src="DANA-Apa-pun-transaksinya-selalu-ada-DANA-1.png" alt="DANA" class="payment-icon">
+          <span>DANA</span>
+        </div>
+      </div>
+      <input type="hidden" id="paymentMethod" name="paymentMethod" required>
+      <div id="paymentMethodError" class="error-message">Pilih metode pembayaran.</div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">4</div>
+      <h3>Beli!</h3>
+      <form id="checkoutForm" aria-label="Formulir checkout">
+        <label for="promoCode" id="labelPromoCode">Kode Promo</label>
+        <input type="text" id="promoCode" name="promoCode" placeholder="Masukkan kode promo" autocomplete="off" />
+        <div id="promoCodeMessage" class="error-message" style="display:none;"></div>
+        <button type="submit" id="checkoutBtn" disabled>Pesan Sekarang!</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="right-column">
+    <div class="ratings-card">
+      <h3>Ulasan dan rating</h3>
+      <div class="rating-summary">
+        <span class="rating-score">5.00</span>
+        <div class="rating-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+      </div>
+      <small>Berdasarkan total 4 rating</small>
+    </div>
+
+    <div class="help-card">
+      <h3>Butuh Bantuan?</h3>
+      <p>Kamu bisa hubungi admin di sini:</p>
+      <div class="admin-links">
+        <a href="https://wa.me/6285651205765" target="_blank" class="admin-link"><i class="fab fa-whatsapp"></i> Admin 1</a>
+        <a href="https://wa.me/6281545733412" target="_blank" class="admin-link"><i class="fab fa-whatsapp"></i> Admin 2</a>
+      </div>
+    </div>
+
+    <div class="cart-summary-card">
+        <h3 id="cartTitle">Keranjang</h3>
+        <div id="cartItems">Belum ada item yang dipilih.</div>
+        <div id="discountDisplay" style="display:none;"></div>
+        <div id="cartTotal">Total: Rp 0</div>
+    </div>
+  </div>
+</main>
+
+<div class="main-content" style="flex-direction: column; padding-top: 0;">
+    <div class="review-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        <div class="review-section" style="flex: 1; min-width: 300px;">
+            <h2><i class="fas fa-comment-dots"></i> Beri Ulasan Anda</h2>
+            <form id="reviewForm">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
+                </div>
+                <input type="text" id="pubgUsername" placeholder="Nama Pengguna PUBG Mobile Anda" required style="margin-bottom: 10px;">
+                <textarea id="reviewText" placeholder="Tulis ulasan Anda di sini..." required></textarea>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <label for="reviewImage" class="file-upload-label" style="flex: 1;">
+                        <i class="fas fa-camera"></i> Unggah Foto
+                    </label>
+                    <button type="submit" id="submitReviewBtn" class="review-submit-btn" style="flex: 2;">Kirim Ulasan</button>
+                </div>
+                <input type="file" id="reviewImage" accept="image/*">
+                <img id="imagePreview" src="" alt="Pratinjau Gambar" style="display:none; max-width: 100px; margin-top: 10px;"/>
+            </form>
+        </div>
+
+        <div class="review-display-section" style="flex: 1; min-width: 300px;">
+            <h2><i class="fas fa-star"></i> Testimoni Pelanggan</h2>
+            <div id="review-list">
+                <!-- Ulasan akan ditampilkan di sini oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="logo.jpg" alt="Verda4Garden Logo" class="footer-logo">
+      <p>Top up game murah, cepat, dan terpercaya. Proses instan 24/7 dengan pembayaran lengkap.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@fahril29124?_t=ZS-8xm7Utsr1sO&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:verda4garden@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Peta Situs</h4>
+      <ul>
+        <li><a href="home.html">Beranda</a></li>
+        <li><a href="login.html">Masuk</a></li>
+        <li><a href="register.html">Daftar</a></li>
+        <li><a href="cek-transaksi.html">Cek Transaksi</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Dukungan</h4>
+      <ul>
+        <li><a href="hubungi-kami.html">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legalitas</h4>
+      <ul>
+        <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="view-switcher">
+      <button id="switch-view-btn">Ubah Tampilan</button>
+    </div>
+    &copy; <span id="currentYear"></span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
+<div id="transactionModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <div class="success-animation">
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      </svg>
+    </div>
+    <h3 id="modalTitle">Transaksi Berhasil!</h3>
+    <div id="transactionDetails">
+      <div class="invoice-container">
+        <p>ID Invoice:</p>
+        <div class="invoice-id-container">
+          <span id="invoiceIdDisplay">-</span>
+          <button id="copyInvoiceBtn" title="Salin ID Invoice">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <div id="copyMessage" class="copy-message">ID Invoice disalin!</div>
+      </div>
+      <div id="transactionSummary"></div>
+      <div class="modal-buttons">
+        <a href="cek-transaksi.html" class="modal-button primary">Cek Status</a>
+        <button id="continueShoppingBtn" class="modal-button secondary">Lanjut Belanja</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+<script src="auth.js"></script>
+<script src="device-selector.js"></script>
+<style>
+    .usd-price {
+        font-size: 0.85em;
+        color: var(--secondary-text);
+        opacity: 0.8;
+    }
+    
+    /* Fly to cart animation */
+    .fly-to-cart {
+        position: fixed;
+        font-size: 2em;
+        color: var(--primary-text);
+        z-index: 10000;
+        pointer-events: none;
+        transition: all 1s cubic-bezier(0.5, -0.5, 1, 0.5);
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-3px); }
+        75% { transform: translateX(3px); }
+    }
+    
+    .shake {
+        animation: shake 0.3s ease-in-out;
+    }
+    
+    /* Dark mode toggle animation */
+    @keyframes toggle-spin {
+        0% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.2) rotate(180deg); }
+        100% { transform: scale(1) rotate(360deg); }
+    }
+    
+    .animate-toggle {
+        animation: toggle-spin 0.5s ease-in-out;
+    }
+    
+    /* Payment methods styling */
+    .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .payment-method {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: var(--card-background);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .payment-method:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .payment-method.selected {
+        border: 2px solid var(--primary-text);
+        background-color: rgba(233, 69, 96, 0.1);
+    }
+    
+    .payment-icon {
+        width: 40px;
+        height: 25px;
+        object-fit: contain;
+        margin-bottom: 8px;
+    }
+    
+    .payment-method span {
+        font-size: 12px;
+        text-align: center;
+    }
+    
+    /* Transaction Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        overflow: auto;
+        backdrop-filter: blur(5px);
+    }
+    
+    .modal-content {
+        position: relative;
+        background-color: var(--card-background);
+        margin: 10% auto;
+        padding: 30px;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 15px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        transform: translateY(50px);
+        opacity: 0;
+        transition: all 0.3s ease-out;
+        text-align: center;
+    }
+    
+    .show-modal {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .close-button {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.2s;
+        height: 30px;
+        width: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 50%;
+    }
+    
+    .close-button:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Success Animation */
+    .success-animation {
+        margin: 20px auto;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .checkmark {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: block;
+        stroke-width: 2;
+        stroke: #4bb71b;
+        stroke-miterlimit: 10;
+        box-shadow: inset 0px 0px 0px #4bb71b;
+        animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    }
+    
+    .checkmark__circle {
+        stroke-dasharray: 166;
+        stroke-dashoffset: 166;
+        stroke-width: 2;
+        stroke-miterlimit: 10;
+        stroke: #4bb71b;
+        fill: none;
+        animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+    
+    .checkmark__check {
+        transform-origin: 50% 50%;
+        stroke-dasharray: 48;
+        stroke-dashoffset: 48;
+        animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+    
+    @keyframes stroke {
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+    
+    @keyframes scale {
+        0%, 100% {
+            transform: none;
+        }
+        50% {
+            transform: scale3d(1.1, 1.1, 1);
+        }
+    }
+    
+    @keyframes fill {
+        100% {
+            box-shadow: inset 0px 0px 0px 30px #4bb71b;
+        }
+    }
+    
+    /* Invoice ID styling */
+    .invoice-container {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+    
+    .invoice-id-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin: 10px 0;
+    }
+    
+    #invoiceIdDisplay {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--primary-text);
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 8px 15px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+    
+    #copyInvoiceBtn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    #copyInvoiceBtn:hover {
+        background-color: var(--primary-color-dark);
+        transform: scale(1.05);
+    }
+    
+    .copy-message {
+        font-size: 12px;
+        color: green;
+        margin-top: 5px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .copy-message.show {
+        opacity: 1;
+    }
+    
+    /* Modal buttons */
+    .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .modal-button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .modal-button.primary {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+    }
+    
+    .modal-button.secondary {
+        background-color: transparent;
+        color: var(--primary-text);
+        border: 1px solid var(--border-color);
+    }
+    
+    .modal-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Promo code validation styling */
+    #promoCode {
+        transition: all 0.3s ease;
+    }
+    
+    #promoCode.valid {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        animation: validPulse 1.5s infinite;
+    }
+    
+    #promoCode.invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        animation: invalidShake 0.5s;
+    }
+    
+    @keyframes validPulse {
+        0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+        50% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+    }
+    
+    @keyframes invalidShake {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-5px); }
+        40%, 80% { transform: translateX(5px); }
+    }
+    
+    #discountDisplay {
+        padding: 10px;
+        margin: 10px 0;
+        background-color: rgba(40, 167, 69, 0.1);
+        border-radius: 5px;
+        color: #28a745;
+        font-weight: bold;
+        animation: fadeIn 0.5s;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+<script>
+    // Exchange rate (1 USD = 15,500 IDR approximately)
+    const exchangeRate = 15500;
+    
+    // Convert all prices to USD
+    function convertPricesToUSD() {
+        document.querySelectorAll('.product-item').forEach(item => {
+            const priceElement = item.querySelector('.product-price');
+            if (priceElement && !priceElement.querySelector('.usd-price')) {
+                const priceText = priceElement.textContent;
+                const priceMatch = priceText.match(/Rp\s+([\d.,]+)/);
+                if (priceMatch) {
+                    const idrPrice = parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+                    const usdPrice = (idrPrice / exchangeRate).toFixed(2);
+                    const usdSpan = document.createElement('span');
+                    usdSpan.className = 'usd-price';
+                    usdSpan.textContent = ` ($${usdPrice})`;
+                    priceElement.appendChild(usdSpan);
+                }
+            }
+        });
+    }
+    
+    // Fly to cart animation
+    function flyToCart(startElement) {
+        const flyingIcon = document.createElement('div');
+        flyingIcon.className = 'fly-to-cart';
+        flyingIcon.textContent = '💰';
+        document.body.appendChild(flyingIcon);
+
+        const startRect = startElement.getBoundingClientRect();
+        const cartEl = document.getElementById('cartItems');
+        const endRect = cartEl.getBoundingClientRect();
+
+        flyingIcon.style.left = `${startRect.left + startRect.width / 2}px`;
+        flyingIcon.style.top = `${startRect.top + startRect.height / 2}px`;
+
+        setTimeout(() => {
+            flyingIcon.style.left = `${endRect.left + endRect.width / 2}px`;
+            flyingIcon.style.top = `${endRect.top + endRect.height / 2}px`;
+            flyingIcon.style.transform = 'scale(0.1)';
+            flyingIcon.style.opacity = '0';
+        }, 10);
+
+        setTimeout(() => {
+            document.body.removeChild(flyingIcon);
+            cartEl.classList.add('shake');
+            setTimeout(() => cartEl.classList.remove('shake'), 300);
+        }, 1000);
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        // Convert prices to USD
+        convertPricesToUSD();
+        
+        // Add click event to product items for fly to cart animation
+        document.querySelectorAll('.product-item').forEach(item => {
+            item.addEventListener('click', function() {
+                flyToCart(this);
+                
+                // Get product info
+                const id = this.dataset.productId;
+                const name = this.querySelector('.product-name').textContent;
+                const priceText = this.querySelector('.product-price').textContent;
+                const priceMatch = priceText.match(/Rp\s+([\d.,]+)/);
+                const price = priceMatch ? parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.')) : 0;
+                
+                // Add to cart (simplified)
+                const cartItems = document.getElementById('cartItems');
+                const cartTotal = document.getElementById('cartTotal');
+                
+                if (cartItems.textContent.includes('Belum ada item yang dipilih')) {
+                    cartItems.innerHTML = '';
+                }
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `<span>${name}</span> <span>Rp ${price.toLocaleString('id-ID')}</span>`;
+                cartItems.appendChild(cartItem);
+                
+                // Update total (simplified)
+                let total = 0;
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    const itemPrice = item.querySelector('span:last-child').textContent;
+                    const priceMatch = itemPrice.match(/Rp\s+([\d.,]+)/);
+                    if (priceMatch) {
+                        total += parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+                    }
+                });
+                
+                cartTotal.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+                
+                // Enable checkout button if payment method is selected
+                updateCheckoutButtonState();
+            });
+        });
+        
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentMethodInput = document.getElementById('paymentMethod');
+        const paymentMethodError = document.getElementById('paymentMethodError');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                // Remove selected class from all payment methods
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                
+                // Add selected class to clicked payment method
+                this.classList.add('selected');
+                
+                // Update hidden input value
+                paymentMethodInput.value = this.dataset.payment;
+                
+                // Hide error message
+                paymentMethodError.style.display = 'none';
+                
+                // Play selection sound
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.2;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+                
+                // Enable checkout button if product is selected
+                updateCheckoutButtonState();
+            });
+        });
+        
+        // Function to update checkout button state
+        function updateCheckoutButtonState() {
+            const hasProduct = document.querySelectorAll('.cart-item').length > 0;
+            const hasPaymentMethod = paymentMethodInput.value !== '';
+            
+            checkoutBtn.disabled = !(hasProduct && hasPaymentMethod);
+        }
+        // Add UC icons to all product items
+        const productItems = document.querySelectorAll('.product-item');
+        productItems.forEach(item => {
+            if (!item.querySelector('.pet-icon')) {
+                const icon = document.createElement('div');
+                icon.className = 'pet-icon';
+                icon.textContent = '💰';
+                item.prepend(icon);
+            }
+        });
+        
+        // Initialize checkout form validation
+        const checkoutForm = document.getElementById('checkoutForm');
+        const buyerNameInput = document.getElementById('buyerName');
+        const buyerNameError = document.getElementById('buyerNameError');
+        
+        buyerNameInput.addEventListener('input', function() {
+            if (this.value.length < 3) {
+                buyerNameError.style.display = 'block';
+            } else {
+                buyerNameError.style.display = 'none';
+            }
+            updateCheckoutButtonState();
+        });
+        
+        // Promo code validation with enhanced visual feedback
+        const promoCode = document.getElementById('promoCode');
+        const promoCodeMessage = document.getElementById('promoCodeMessage');
+        const discountDisplay = document.getElementById('discountDisplay');
+        
+        // List of valid promo codes with expiration date and usage limits
+        const validPromoCodes = {
+            'WELCOME10': { discount: 10, expires: '2025-07-10', maxUses: 10, usedBy: [] },
+            'PUBG10': { discount: 10, expires: '2025-07-10', maxUses: 10, usedBy: [] },
+            'VERDA10': { discount: 10, expires: '2025-07-10', maxUses: 10, usedBy: [] }
+        };
+        
+        // Load promo code usage data from localStorage
+        const loadPromoUsage = () => {
+            const savedData = localStorage.getItem('promoCodeUsage');
+            if (savedData) {
+                const usageData = JSON.parse(savedData);
+                Object.keys(validPromoCodes).forEach(code => {
+                    if (usageData[code]) {
+                        validPromoCodes[code].usedBy = usageData[code].usedBy || [];
+                    }
+                });
+            }
+        };
+        
+        // Save promo code usage data to localStorage
+        const savePromoUsage = () => {
+            const usageData = {};
+            Object.keys(validPromoCodes).forEach(code => {
+                usageData[code] = {
+                    usedBy: validPromoCodes[code].usedBy || []
+                };
+            });
+            localStorage.setItem('promoCodeUsage', JSON.stringify(usageData));
+        };
+        
+        // Load existing promo usage data
+        loadPromoUsage();
+        
+        promoCode.addEventListener('input', function() {
+            const code = this.value.trim().toUpperCase();
+            
+            // Remove previous validation classes
+            this.classList.remove('valid', 'invalid');
+            
+            if (code === '') {
+                promoCodeMessage.style.display = 'none';
+                discountDisplay.style.display = 'none';
+                return;
+            }
+            
+            if (validPromoCodes[code]) {
+                const promoInfo = validPromoCodes[code];
+                const today = new Date();
+                const expiryDate = new Date(promoInfo.expires);
+                const userId = localStorage.getItem('userId') || 'guest-' + Date.now();
+                
+                // Check if promo code is expired
+                if (today > expiryDate) {
+                    this.classList.add('invalid');
+                    promoCodeMessage.innerHTML = '<i class="fas fa-times-circle"></i> Kode promo sudah kadaluarsa';
+                    promoCodeMessage.style.color = 'red';
+                    promoCodeMessage.style.display = 'block';
+                    discountDisplay.style.display = 'none';
+                    return;
+                }
+                
+                // Check if promo code has reached max uses
+                if (promoInfo.usedBy.length >= promoInfo.maxUses) {
+                    this.classList.add('invalid');
+                    promoCodeMessage.innerHTML = '<i class="fas fa-times-circle"></i> Kode promo sudah mencapai batas penggunaan';
+                    promoCodeMessage.style.color = 'red';
+                    promoCodeMessage.style.display = 'block';
+                    discountDisplay.style.display = 'none';
+                    return;
+                }
+                
+                // Check if user has already used this promo code
+                if (promoInfo.usedBy.includes(userId)) {
+                    this.classList.add('invalid');
+                    promoCodeMessage.innerHTML = '<i class="fas fa-times-circle"></i> Anda sudah menggunakan kode promo ini';
+                    promoCodeMessage.style.color = 'red';
+                    promoCodeMessage.style.display = 'block';
+                    discountDisplay.style.display = 'none';
+                    return;
+                }
+                
+                // Valid promo code
+                this.classList.add('valid');
+                promoCodeMessage.innerHTML = `<i class="fas fa-check-circle"></i> Kode promo valid! Diskon ${promoInfo.discount}%<br><small>Berlaku hingga 10 Juli 2025</small>`;
+                promoCodeMessage.style.color = 'green';
+                promoCodeMessage.style.display = 'block';
+                
+                // Update discount display
+                updateDiscountDisplay(code);
+            } else {
+                // Invalid promo code
+                this.classList.add('invalid');
+                promoCodeMessage.textContent = 'Kode promo tidak valid';
+                promoCodeMessage.style.color = 'red';
+                promoCodeMessage.style.display = 'block';
+                discountDisplay.style.display = 'none';
+            }
+        });
+        
+        // Function to update discount display
+        function updateDiscountDisplay(promoCode) {
+            const cartTotal = document.getElementById('cartTotal');
+            const totalText = cartTotal.textContent;
+            const totalMatch = totalText.match(/Rp\s+([\d.,]+)/);
+            
+            if (totalMatch) {
+                const total = parseFloat(totalMatch[1].replace(/\./g, '').replace(',', '.'));
+                const discountPercent = validPromoCodes[promoCode].discount;
+                const discountAmount = total * (discountPercent / 100);
+                const discountedTotal = total - discountAmount;
+                
+                discountDisplay.innerHTML = `
+                    <div>Diskon (${discountPercent}%): <span>-Rp ${discountAmount.toLocaleString('id-ID')}</span></div>
+                    <div>Total setelah diskon: <span>Rp ${discountedTotal.toLocaleString('id-ID')}</span></div>
+                `;
+                discountDisplay.style.display = 'block';
+            }
+        }
+        
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate buyer name
+            if (buyerNameInput.value.length < 3) {
+                buyerNameError.style.display = 'block';
+                return;
+            }
+            
+            // Validate payment method
+            if (!paymentMethodInput.value) {
+                paymentMethodError.style.display = 'block';
+                return;
+            }
+            
+            // Get selected product and payment method
+            const selectedProduct = document.querySelector('.cart-item span:first-child')?.textContent || 'Tidak ada produk';
+            const selectedPrice = document.querySelector('.cart-item span:last-child')?.textContent || 'Rp 0';
+            const paymentMethod = document.querySelector('.payment-method.selected span')?.textContent || 'Tidak ada metode pembayaran';
+            
+            // Generate invoice ID
+            const invoiceId = generateInvoiceId();
+            
+            // Calculate total and discount
+            let total = parseFloat(document.getElementById('cartTotal').textContent.match(/Rp\s+([\d.,]+)/)[1].replace(/\./g, '').replace(',', '.'));
+            let discount = 0;
+            let promoCodeValue = promoCode.value.trim().toUpperCase();
+            
+            if (validPromoCodes[promoCodeValue]) {
+                const promoInfo = validPromoCodes[promoCodeValue];
+                const today = new Date();
+                const expiryDate = new Date(promoInfo.expires);
+                const userId = localStorage.getItem('userId') || 'guest-' + Date.now();
+                
+                // Only apply discount if promo code is valid, not expired, and user hasn't used it before
+                if (today <= expiryDate && promoInfo.usedBy.length < promoInfo.maxUses && !promoInfo.usedBy.includes(userId)) {
+                    discount = total * (promoInfo.discount / 100);
+                    total = total - discount;
+                    
+                    // Mark promo code as used by this user
+                    promoInfo.usedBy.push(userId);
+                    savePromoUsage();
+                }
+            }
+            
+            // Save transaction data to localStorage
+            const transactionData = {
+                invoiceId: invoiceId,
+                date: new Date().toLocaleString('id-ID'),
+                buyerName: buyerNameInput.value,
+                paymentMethod: paymentMethod,
+                cart: [{
+                    name: selectedProduct,
+                    price: parseFloat(selectedPrice.match(/Rp\s+([\d.,]+)/)[1].replace(/\./g, '').replace(',', '.')),
+                    qty: 1,
+                    emoji: '💰'
+                }],
+                subtotal: parseFloat(selectedPrice.match(/Rp\s+([\d.,]+)/)[1].replace(/\./g, '').replace(',', '.')),
+                discount: discount,
+                promoCode: promoCodeValue || '',
+                total: total
+            };
+            
+            localStorage.setItem(invoiceId, JSON.stringify(transactionData));
+            
+            // Show invoice modal instead of alert
+            showInvoiceModal(invoiceId, transactionData);
+            
+            // Create WhatsApp message with invoice ID
+            const message = `*Order PUBG Mobile*\n\n` +
+                `Invoice ID: ${invoiceId}\n` +
+                `ID: ${buyerNameInput.value}\n` +
+                `Produk: ${selectedProduct}\n` +
+                `Harga: ${selectedPrice}\n` +
+                `Pembayaran: ${paymentMethod}\n` +
+                `Promo: ${promoCode.value || 'Tidak ada'}\n\n` +
+                `Mohon konfirmasi pesanan ini. Terima kasih!`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Redirect to WhatsApp (using the first admin number)
+            window.open(`https://wa.me/6285651205765?text=${encodedMessage}`, '_blank');
+        });
+        
+        // Top Up button functionality - redirect to home page
+        const topUpBtn = document.getElementById('topUpBtn');
+        if (topUpBtn) {
+            topUpBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'home.html';
+            });
+        }
+        
+        // Language switcher functionality
+        const langSelector = document.getElementById('langSelector');
+        if (langSelector) {
+            langSelector.addEventListener('change', function() {
+                const lang = this.value;
+                localStorage.setItem('language', lang);
+                updateLanguage(lang);
+            });
+            
+            // Set initial language from localStorage or default to 'id'
+            const savedLang = localStorage.getItem('language') || 'id';
+            langSelector.value = savedLang;
+            updateLanguage(savedLang);
+        }
+        
+        // Enhanced Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function() {
+                // Toggle dark mode class
+                document.body.classList.toggle('dark-mode');
+                
+                // Update localStorage
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+                
+                // Update icon with animation
+                darkModeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+                darkModeToggle.classList.add('animate-toggle');
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    darkModeToggle.classList.remove('animate-toggle');
+                }, 500);
+                
+                // Play a subtle sound effect
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.3;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+            });
+            
+            // Set initial dark mode from localStorage
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '☀️';
+            } else if (savedDarkMode === 'disabled') {
+                document.body.classList.remove('dark-mode');
+                darkModeToggle.innerHTML = '🌙';
+            } else {
+                // Default based on user's system preference
+                const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    darkModeToggle.innerHTML = '☀️';
+                    localStorage.setItem('darkMode', 'enabled');
+                }
+            }
+        }
+    });
+    
+    // Function to generate unique invoice ID with game-specific prefix
+    function generateInvoiceId() {
+        const prefix = 'PUBG-';
+        const timestamp = Date.now().toString().slice(-10);
+        const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        return prefix + timestamp + random;
+    }
+    
+    // Function to show transaction modal
+    function showInvoiceModal(invoiceId, transactionData) {
+        const modal = document.getElementById('transactionModal');
+        const modalContent = modal.querySelector('.modal-content');
+        const invoiceIdDisplay = document.getElementById('invoiceIdDisplay');
+        const transactionSummary = document.getElementById('transactionSummary');
+        const copyMessage = document.getElementById('copyMessage');
+        const copyBtn = document.getElementById('copyInvoiceBtn');
+        const continueShoppingBtn = document.getElementById('continueShoppingBtn');
+        
+        // Set invoice ID
+        invoiceIdDisplay.textContent = invoiceId;
+        
+        // Create transaction summary
+        let summaryHTML = `
+            <div class="transaction-item">
+                <strong>Tanggal:</strong> ${transactionData.date}
+            </div>
+            <div class="transaction-item">
+                <strong>ID PUBG:</strong> ${transactionData.buyerName}
+            </div>
+            <div class="transaction-item">
+                <strong>Pembayaran:</strong> ${transactionData.paymentMethod}
+            </div>
+        `;
+        
+        // Add cart items
+        transactionData.cart.forEach(item => {
+            summaryHTML += `
+                <div class="transaction-item">
+                    <strong>${item.name}:</strong> Rp ${item.price.toLocaleString('id-ID')}
+                </div>
+            `;
+        });
+        
+        // Add discount if applicable
+        if (transactionData.discount > 0) {
+            summaryHTML += `
+                <div class="transaction-item discount">
+                    <strong>Diskon (${transactionData.promoCode}):</strong> -Rp ${transactionData.discount.toLocaleString('id-ID')}
+                </div>
+                <div class="transaction-item total">
+                    <strong>Total:</strong> Rp ${transactionData.total.toLocaleString('id-ID')}
+                </div>
+            `;
+        }
+        
+        transactionSummary.innerHTML = summaryHTML;
+        
+        // Show modal with animation
+        modal.style.display = 'block';
+        setTimeout(() => {
+            modalContent.classList.add('show-modal');
+        }, 10);
+        
+        // Copy button functionality
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(invoiceId).then(() => {
+                copyMessage.classList.add('show');
+                setTimeout(() => {
+                    copyMessage.classList.remove('show');
+                }, 2000);
+            });
+        });
+        
+        // Continue shopping button
+        continueShoppingBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            modalContent.classList.remove('show-modal');
+        });
+        
+        // Close button functionality
+        const closeButton = modal.querySelector('.close-button');
+        closeButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+            modalContent.classList.remove('show-modal');
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                modalContent.classList.remove('show-modal');
+            }
+        });
+    }
+    
+    // Function to update language (comprehensive)
+    function updateLanguage(lang) {
+        // Set language for all pages by storing in localStorage
+        localStorage.setItem('language', lang);
+        const translations = {
+            'id': {
+                // Header
+                'Masuk': 'Masuk',
+                'Daftar': 'Daftar',
+                'Top Up': 'Top Up',
+                'Cek Transaksi': 'Cek Transaksi',
+                '🔑 Masuk': '🔑 Masuk',
+                '📝 Daftar': '📝 Daftar',
+                '💎 Top Up': '💎 Top Up',
+                '🧾 Cek Transaksi': '🧾 Cek Transaksi',
+                
+                // Main content
+                'Masukkan Data Akun': 'Masukkan Data Akun',
+                'Pilih Nominal - UC': 'Pilih Nominal - UC',
+                'Pilih Pembayaran': 'Pilih Pembayaran',
+                'Pesan Sekarang!': 'Pesan Sekarang!',
+                'Beli!': 'Beli!',
+                'Kode Promo': 'Kode Promo',
+                'Masukkan kode promo': 'Masukkan kode promo',
+                'Pastikan data akun yang diisi sudah benar': 'Pastikan data akun yang diisi sudah benar',
+                'ID minimal 3 karakter.': 'ID minimal 3 karakter.',
+                'Pilih metode pembayaran': 'Pilih metode pembayaran',
+                'Pilih metode pembayaran.': 'Pilih metode pembayaran.',
+                
+                // Right column
+                'Ulasan dan rating': 'Ulasan dan rating',
+                'Berdasarkan total 4 rating': 'Berdasarkan total 4 rating',
+                'Butuh Bantuan?': 'Butuh Bantuan?',
+                'Kamu bisa hubungi admin di sini:': 'Kamu bisa hubungi admin di sini:',
+                'Keranjang': 'Keranjang',
+                'Belum ada item yang dipilih.': 'Belum ada item yang dipilih.',
+                'Total': 'Total',
+                
+                // Review section
+                'Beri Ulasan Anda': 'Beri Ulasan Anda',
+                'Tulis ulasan Anda di sini...': 'Tulis ulasan Anda di sini...',
+                'Unggah Foto': 'Unggah Foto',
+                'Kirim Ulasan': 'Kirim Ulasan',
+                'Testimoni Pelanggan': 'Testimoni Pelanggan',
+                
+                // Footer
+                'Peta Situs': 'Peta Situs',
+                'Dukungan': 'Dukungan',
+                'Legalitas': 'Legalitas',
+                'Beranda': 'Beranda',
+                'Hubungi Kami': 'Hubungi Kami',
+                'Kebijakan Privasi': 'Kebijakan Privasi',
+                'Syarat & Ketentuan': 'Syarat & Ketentuan',
+                'Ubah Tampilan': 'Ubah Tampilan',
+                'All rights reserved.': 'All rights reserved.'
+            },
+            'en': {
+                // Header
+                'Masuk': 'Login',
+                'Daftar': 'Register',
+                'Top Up': 'Top Up',
+                'Cek Transaksi': 'Check Transaction',
+                '🔑 Masuk': '🔑 Login',
+                '📝 Daftar': '📝 Register',
+                '💎 Top Up': '💎 Top Up',
+                '🧾 Cek Transaksi': '🧾 Check Transaction',
+                
+                // Main content
+                'Masukkan Data Akun': 'Enter Account Data',
+                'Pilih Nominal - UC': 'Select Amount - UC',
+                'Pilih Pembayaran': 'Select Payment',
+                'Pesan Sekarang!': 'Order Now!',
+                'Beli!': 'Buy!',
+                'Kode Promo': 'Promo Code',
+                'Masukkan kode promo': 'Enter promo code',
+                'Pastikan data akun yang diisi sudah benar': 'Make sure the account data is correct',
+                'ID minimal 3 karakter.': 'ID must be at least 3 characters.',
+                'Pilih metode pembayaran': 'Select payment method',
+                'Pilih metode pembayaran.': 'Select payment method.',
+                
+                // Right column
+                'Ulasan dan rating': 'Reviews and ratings',
+                'Berdasarkan total 4 rating': 'Based on 4 ratings',
+                'Butuh Bantuan?': 'Need Help?',
+                'Kamu bisa hubungi admin di sini:': 'You can contact admin here:',
+                'Keranjang': 'Cart',
+                'Belum ada item yang dipilih.': 'No items selected yet.',
+                'Total': 'Total',
+                
+                // Review section
+                'Beri Ulasan Anda': 'Give Your Review',
+                'Tulis ulasan Anda di sini...': 'Write your review here...',
+                'Unggah Foto': 'Upload Photo',
+                'Kirim Ulasan': 'Submit Review',
+                'Testimoni Pelanggan': 'Customer Testimonials',
+                
+                // Footer
+                'Peta Situs': 'Site Map',
+                'Dukungan': 'Support',
+                'Legalitas': 'Legal',
+                'Beranda': 'Home',
+                'Hubungi Kami': 'Contact Us',
+                'Kebijakan Privasi': 'Privacy Policy',
+                'Syarat & Ketentuan': 'Terms & Conditions',
+                'Ubah Tampilan': 'Switch View',
+                'All rights reserved.': 'All rights reserved.'
+            }
+        };
+        
+        // Update text content based on selected language
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                element.textContent = translations[lang][key];
+            }
+        });
+        
+        // For elements without data-translate attribute, try to match by text content
+        document.querySelectorAll('a, h1, h2, h3, h4, button, span, p, label, option, small, div.product-name, div.product-price, input[placeholder], textarea[placeholder]').forEach(element => {
+            // Skip elements with only icons or empty text
+            if (element.children.length > 0 && element.textContent.trim().length <= 2) return;
+            
+            const text = element.textContent.trim();
+            if (translations[lang] && translations[lang][text]) {
+                element.textContent = translations[lang][text];
+            }
+            
+            // Handle placeholders
+            if (element.hasAttribute('placeholder')) {
+                const placeholder = element.getAttribute('placeholder');
+                if (translations[lang] && translations[lang][placeholder]) {
+                    element.setAttribute('placeholder', translations[lang][placeholder]);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

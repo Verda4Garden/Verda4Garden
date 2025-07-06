@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Grow A Garden – Verda4Garden</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="style.css" id="main-stylesheet" />
+<style>
+    /* Ensure consistent dark mode styling */
+    body.dark-mode {
+        --background-primary: #1a1a2e;
+        --background-secondary: #16213e;
+        --background-tertiary: #0f3460;
+        --primary-text: #e94560;
+        --secondary-text: #ffffff;
+        --card-background: #2a2a4a;
+        --accent-color: #e94560;
+        --border-color: #4a4a6a;
+        --star-color: #f9ca24;
+        --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        --button-gradient: linear-gradient(135deg, #e94560, #ff6b81);
+        --header-gradient: linear-gradient(to right, #1a1a2e, #16213e);
+    }
+    
+    /* Fix checkout steps visibility */
+    .checkout-step {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Product item styling */
+    .product-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .product-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border-color: var(--primary-text);
+    }
+    
+    .pet-icon {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    
+    .product-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .product-price {
+        color: var(--primary-text);
+    }
+    
+    .product-description {
+        font-size: 0.8em;
+        margin-top: 5px;
+        text-align: center;
+    }
+    
+    /* Payment methods styling */
+    .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .payment-method {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: var(--card-background);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .payment-method:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .payment-method.selected {
+        border: 2px solid var(--primary-text);
+        background-color: rgba(233, 69, 96, 0.1);
+    }
+    
+    .payment-icon {
+        width: 40px;
+        height: 25px;
+        object-fit: contain;
+        margin-bottom: 8px;
+    }
+    
+    .payment-method span {
+        font-size: 12px;
+        text-align: center;
+    }
+    
+    /* Fly to cart animation */
+    .fly-to-cart {
+        position: fixed;
+        font-size: 2em;
+        color: var(--primary-text);
+        z-index: 10000;
+        pointer-events: none;
+        transition: all 1s cubic-bezier(0.5, -0.5, 1, 0.5);
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-3px); }
+        75% { transform: translateX(3px); }
+    }
+    
+    .shake {
+        animation: shake 0.3s ease-in-out;
+    }
+    
+    /* Animation for dark mode toggle */
+    @keyframes toggleAnimation {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    
+    .animate-toggle {
+        animation: toggleAnimation 0.5s ease;
+    }
+</style>
+</head>
+<body>
+
+<div id="device-choice-modal">
+  <div class="modal-content">
+    <h2>Pilih Tampilan</h2>
+    <p>Untuk pengalaman terbaik, silakan pilih tampilan yang sesuai dengan perangkat Anda.</p>
+    <div class="modal-buttons">
+      <button id="choice-mobile" class="choice-btn">📱 Tampilan Mobile</button>
+      <button id="choice-computer" class="choice-btn">💻 Tampilan Komputer</button>
+    </div>
+  </div>
+</div>
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<header>
+  <div class="header-left">
+    <img src="logo.jpg" alt="Verda4Garden Logo" id="headerLogo">
+    <span class="header-title">Verda4Garden</span>
+  </div>
+  <div class="header-right">
+    <select id="langSelector" aria-label="Pilih Bahasa">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+    </select>
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+    <a href="cek-transaksi.html" class="header-link"><i class="fas fa-receipt"></i> 🧾 Cek Transaksi</a>
+    <div id="user-auth-links" class="header-right">
+        <a href="login.html" class="header-link"><i class="fas fa-sign-in-alt"></i> 🔑 Masuk</a>
+        <a href="register.html" class="header-link primary"><i class="fas fa-user-plus"></i> 📝 Daftar</a>
+        <a href="#" class="header-link" id="topUpBtn"><i class="fas fa-gem"></i> 💎 Top Up</a>
+    </div>
+    <div id="user-profile" style="display:none;" class="header-right">
+        <div class="user-dropdown">
+            <div class="user-dropdown-header">
+                <i class="fas fa-user-circle"></i>
+                <span id="usernameDisplay"></span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="user-dropdown-content">
+                <a href="#" class="dropdown-item"><i class="fas fa-user"></i> Profile</a>
+                <a href="cek-transaksi.html" class="dropdown-item"><i class="fas fa-receipt"></i> Check Transaction</a>
+                <a href="#" class="dropdown-item" id="topUpBtnDropdown"><i class="fas fa-gem"></i> Top Up</a>
+                <a href="#" class="dropdown-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="left-column">
+    <div class="product-header" style="display: flex; align-items: center; gap: 20px;">
+      <img src="noFilter.webp" alt="Grow A Garden" class="product-banner" style="max-width: 150px; border-radius: 10px;">
+      <div>
+        <h1>GROW A GARDEN</h1>
+        <p>The Garden Game (ROBLOX)</p>
+        <div class="product-tags">
+          <span><i class="fas fa-check-circle"></i> Proses Cepat</span>
+          <span><i class="fas fa-headset"></i> Layanan Chat 24/7</span>
+          <span><i class="fas fa-shield-alt"></i> Pembayaran Aman!</span>
+          <span style="color: #28a745;"><i class="fas fa-wifi"></i> ONLINE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">1</div>
+      <h3 id="labelBuyerName">Masukkan Data Akun</h3>
+      <input type="text" id="buyerName" name="buyerName" required placeholder="Username Roblox" autocomplete="name" />
+      <small>Pastikan data akun yang diisi sudah benar</small>
+      <div id="buyerNameError" class="error-message">Username minimal 3 karakter.</div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">2</div>
+      <h3 id="petTitle">Pilih Pet</h3>
+      <div id="petList" class="product-grid">
+        <div class="product-item" data-product-id="DB" data-price="80000">
+            <div class="pet-icon">🐝🎉</div>
+            <div class="product-name">Disco Bee</div>
+            <div class="product-price">Rp 80.000</div>
+            <p class="product-description">Setiap ~20 menit, memiliki peluang 12.28% untuk mengaktifkan mutasi Disco (nilai 125x) pada buah terdekat.</p>
+        </div>
+        <div class="product-item" data-product-id="QB" data-price="30000">
+            <div class="pet-icon">👑🐝</div>
+            <div class="product-name">Queen Bee</div>
+            <div class="product-price">Rp 30.000</div>
+            <p class="product-description">Setiap ~25 menit, menerapkan mutasi Pollinated pada buah di sekitar dan mengatur ulang cooldown kemampuan pet lain.</p>
+        </div>
+        <div class="product-item" data-product-id="Redfox" data-price="15000">
+            <div class="pet-icon">🦊</div>
+            <div class="product-name">Red Fox</div>
+            <div class="product-price">Rp 15.000</div>
+            <p class="product-description">Mencuri (mendupilasi) benih dari kebun pemain lain (khusus dari Seed Shop).</p>
+        </div>
+        <div class="product-item" data-product-id="Red Fox (Random)" data-price="10000">
+            <div class="pet-icon">🦊</div>
+            <div class="product-name">Red Fox (Random)</div>
+            <div class="product-price">Rp 10.000</div>
+            <p class="product-description">Mencuri (mendupilasi) benih dari kebun pemain lain (khusus dari Seed Shop).</p>
+        </div>
+        <div class="product-item" data-product-id="Mantis10" data-price="5000">
+            <div class="pet-icon">🦗</div>
+            <div class="product-name">Praying Mantis (10+)</div>
+            <div class="product-price">Rp 5.000</div>
+            <p class="product-description">Memicu mutasi umum (Gold, Rainbow, Shocked, dll.), membuat hasil panen lebih berharga.</p>
+        </div>
+        <div class="product-item" data-product-id="Mantis30" data-price="10000">
+            <div class="pet-icon">🦗</div>
+            <div class="product-name">Praying Mantis (30+)</div>
+            <div class="product-price">Rp 10.000</div>
+            <p class="product-description">Memicu mutasi umum (Gold, Rainbow, Shocked, dll.), membuat hasil panen lebih berharga.</p>
+        </div>
+        <div class="product-item" data-product-id="Seal" data-price="10000">
+            <div class="pet-icon">🦭</div>
+            <div class="product-name">Seal</div>
+            <div class="product-price">Rp 10.000</div>
+            <p class="product-description">Saat menjual pet, memiliki peluang 2% untuk mendapatkan kembali pet tersebut dalam bentuk telur.</p>
+        </div>
+        <div class="product-item" data-product-id="Macaw" data-price="30000">
+            <div class="pet-icon">🦜❤️</div>
+            <div class="product-name">Scarlet Macaw</div>
+            <div class="product-price">Rp 30.000</div>
+            <p class="product-description">Memiliki peluang 15.95% untuk memutasi buah Anda menjadi varian Verdant (nilai 4x) setiap 11.50 menit.</p>
+        </div>
+        <div class="product-item" data-product-id="Moon" data-price="5000">
+            <div class="pet-icon">🌕🐱</div>
+            <div class="product-name">Moon Cat</div>
+            <div class="product-price">Rp 5.000</div>
+            <p class="product-description">Meningkatkan ukuran buah (1.51x) dalam jarak kecil saat tidur setiap 1 menit. Juga membantu buah tipe Moon tetap di pohon setelah dipanen.</p>
+        </div>
+        <div class="product-item" data-product-id="Blood" data-price="15000">
+            <div class="pet-icon">🦉🩸</div>
+            <div class="product-name">Blood Owl</div>
+            <div class="product-price">Rp 15.000</div>
+            <p class="product-description">Membuat semua pet aktif Anda menua lebih cepat (mendapatkan XP lebih banyak).</p>
+        </div>
+        <div class="product-item" data-product-id="Night" data-price="10000">
+            <div class="pet-icon">🌙🦉</div>
+            <div class="product-name">Night Owl</div>
+            <div class="product-price">Rp 10.000</div>
+            <p class="product-description">Memberikan tambahan XP kepada semua pet aktif sebesar 0.05 hingga 0.25 per detik.</p>
+        </div>
+        <div class="product-item" data-product-id="Owl" data-price="10000">
+            <div class="pet-icon">🦉</div>
+            <div class="product-name">Owl</div>
+            <div class="product-price">Rp 10.000</div>
+            <p class="product-description">Memberikan tambahan 0.22 XP/detik kepada semua pet.</p>
+        </div>
+        <div class="product-item" data-product-id="Peacock" data-price="15000">
+            <div class="pet-icon">🦚</div>
+            <div class="product-name">Peacock</div>
+            <div class="product-price">Rp 15.000</div>
+            <p class="product-description">Mengurangi cooldown kemampuan pet aktif (info lebih detail belum ditemukan).</p>
+        </div>
+        <div class="product-item" data-product-id="Dragonfly" data-price="50000">
+            <div class="pet-icon">🐉🪰</div>
+            <div class="product-name">Dragonfly</div>
+            <div class="product-price">Rp 50.000</div>
+            <p class="product-description">Memberikan mutasi Gold pada buah acak setiap 5 menit (nilai 20x lebih tinggi).</p>
+        </div>
+        <div class="product-item" data-product-id="Raccoon" data-price="85000">
+            <div class="pet-icon">🦝</div>
+            <div class="product-name">Raccoon</div>
+            <div class="product-price">Rp 85.000</div>
+            <p class="product-description">Memberikan buah gratis setiap 15 menit dengan mengkloning buah dari kebun tetangga.</p>
+        </div>
+        <div class="product-item" data-product-id="Butterfly" data-price="70000">
+            <div class="pet-icon">🦋</div>
+            <div class="product-name">Butterfly</div>
+            <div class="product-price">Rp 70.000</div>
+            <p class="product-description">Menerapkan mutasi Rainbow (50x) pada tanaman dengan 5 mutasi setiap 30 menit (melewati yang difavoritkan).</p>
+        </div>
+        <div class="product-item" data-product-id="MimicOctopus" data-price="50000">
+            <div class="pet-icon">🐙</div>
+            <div class="product-name">Mimic Octopus</div>
+            <div class="product-price">Rp 50.000</div>
+            <p class="product-description">Meniru kemampuan pet aktif lainnya. Terbaik saat dipasangkan dengan pet S-tier lainnya.</p>
+        </div>
+        <div class="product-item" data-product-id="ToucanRandom" data-price="4000">
+            <div class="pet-icon">🐦</div>
+            <div class="product-name">Toucan (Random)</div>
+            <div class="product-price">Rp 4.000</div>
+            <p class="product-description">Meningkatkan ukuran dan peluang mutasi varian pada tanaman tropis di dekatnya, menjadikannya ideal untuk kebun yang berfokus pada mutasi.</p>
+        </div>
+        <div class="product-item" data-product-id="ToucanGemuk" data-price="7000">
+            <div class="pet-icon">🐦💪</div>
+            <div class="product-name">Toucan (Gemuk)</div>
+            <div class="product-price">Rp 7.000</div>
+            <p class="product-description">Meningkatkan ukuran dan peluang mutasi varian pada tanaman tropis di dekatnya, menjadikannya ideal untuk kebun yang berfokus pada mutasi.</p>
+        </div>
+        <div class="product-item" data-product-id="ChickenZombie" data-price="10000">
+            <div class="pet-icon">🐔🧟</div>
+            <div class="product-name">Chicken Zombie (Random)</div>
+            <div class="product-price">Rp 10.000</div>
+            <p class="product-description">Memberikan mutasi "Zombified" (nilai jual 25x) pada tanaman di sekitarnya dan mempercepat penetasan telur. Tanaman yang bermutasi akan memiliki aura hijau kabur.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">3</div>
+      <h3 id="bundleTitle">Pilih Bundle</h3>
+      <div id="bundleList" class="product-grid">
+        <div class="product-item" data-product-id="bundleA" data-price="120000">
+            <div class="pet-icon">🐝🎉👑🐝🦊</div>
+            <div class="product-name">Bundle Sultan</div>
+            <div class="product-price">Rp 120.000</div>
+            <p class="product-description">1 DB + 1 QB + 1 Redfox</p>
+        </div>
+        <div class="product-item" data-product-id="bundleB" data-price="40000">
+            <div class="pet-icon">🦜❤️🦚🐦💪</div>
+            <div class="product-name">Bundle Paradise</div>
+            <div class="product-price">Rp 40.000</div>
+            <p class="product-description">1 Macaw + 1 Peacock + 1 Toucan (Gemuk)</p>
+        </div>
+        <div class="product-item" data-product-id="bundleC" data-price="25000">
+            <div class="pet-icon">💰💰💰💦</div>
+            <div class="product-name">Bundle Hemat</div>
+            <div class="product-price">Rp 25.000</div>
+            <p class="product-description">3 Sheckles (6t) + 1 Sprinkler</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">4</div>
+      <h3 id="sprinklerTitle">Pilih Sprinkler</h3>
+      <div id="sprinklerList" class="product-grid">
+        <div class="product-item" data-product-id="sprinkler" data-price="8000">
+            <div class="pet-icon">💦</div>
+            <div class="product-name">Sprinkler</div>
+            <div class="product-price">Rp 8.000</div>
+            <p class="product-description">Alat penyiram tanaman otomatis untuk kebun Anda.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">5</div>
+      <h3 id="shecklesTitle">Pilih Sheckles</h3>
+      <div id="shecklesList" class="product-grid">
+        <div class="product-item" data-product-id="sheckles6t" data-price="3000">
+            <div class="pet-icon">💰</div>
+            <div class="product-name">Sheckles 6t</div>
+            <div class="product-price">Rp 3.000</div>
+        </div>
+        <div class="product-item" data-product-id="sheckles12t" data-price="6000">
+            <div class="pet-icon">💰</div>
+            <div class="product-name">Sheckles 12t</div>
+            <div class="product-price">Rp 6.000</div>
+        </div>
+        <div class="product-item" data-product-id="sheckles18t" data-price="9000">
+            <div class="pet-icon">💰</div>
+            <div class="product-name">Sheckles 18t</div>
+            <div class="product-price">Rp 9.000</div>
+        </div>
+        <div class="product-item" data-product-id="sheckles24t" data-price="12000">
+            <div class="pet-icon">💰</div>
+            <div class="product-name">Sheckles 24t</div>
+            <div class="product-price">Rp 12.000</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">6</div>
+      <h3 id="labelPaymentMethod">Pilih Pembayaran</h3>
+      <div class="payment-methods">
+        <div class="payment-method" data-payment="bri">
+          <img src="logo bri.png" alt="Bank BRI" class="payment-icon">
+          <span>Bank BRI</span>
+        </div>
+        <div class="payment-method" data-payment="gopay">
+          <img src="gopay.png" alt="GoPay" class="payment-icon">
+          <span>GoPay</span>
+        </div>
+        <div class="payment-method" data-payment="shopeepay">
+          <img src="shopee-pay-logo-png_seeklogo-406839.png" alt="ShopeePay" class="payment-icon">
+          <span>ShopeePay</span>
+        </div>
+        <div class="payment-method" data-payment="dana">
+          <img src="DANA-Apa-pun-transaksinya-selalu-ada-DANA-1.png" alt="DANA" class="payment-icon">
+          <span>DANA</span>
+        </div>
+      </div>
+      <input type="hidden" id="paymentMethod" name="paymentMethod" required>
+      <div id="paymentMethodError" class="error-message">Pilih metode pembayaran.</div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">7</div>
+      <h3>Beli!</h3>
+      <form id="checkoutForm" aria-label="Formulir checkout">
+        <label for="promoCode" id="labelPromoCode">Kode Promo</label>
+        <input type="text" id="promoCode" name="promoCode" placeholder="Masukkan kode promo" autocomplete="off" />
+        <div id="promoCodeMessage" class="error-message" style="display:none;"></div>
+        <button type="submit" id="checkoutBtn" disabled>Pesan Sekarang!</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="right-column">
+    <div class="ratings-card">
+      <h3><i class="fas fa-star-half-alt"></i> Ulasan dan rating</h3>
+      <div class="rating-summary">
+        <span class="rating-score">5.00</span>
+        <div class="rating-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+      </div>
+      <small>Berdasarkan total 4 rating</small>
+    </div>
+
+    <div class="help-card">
+      <h3><i class="fas fa-headset"></i> Butuh Bantuan?</h3>
+      <p>Kamu bisa hubungi admin di sini:</p>
+      <div class="admin-links">
+        <a href="https://wa.me/6285651205765" target="_blank" class="admin-link">Admin 1</a>
+        <a href="https://wa.me/6281545733412" target="_blank" class="admin-link">Admin 2</a>
+      </div>
+    </div>
+
+    <div class="cart-summary-card">
+        <h3 id="cartTitle"><i class="fas fa-shopping-cart"></i> Keranjang</h3>
+        <div id="cartItems">Belum ada item yang dipilih.</div>
+        <div id="discountDisplay" style="display:none;"></div>
+        <div id="cartTotal">Total: Rp 0</div>
+    </div>
+  </div>
+</main>
+
+<div class="main-content" style="flex-direction: column; padding-top: 0;">
+    <div class="reviews-container">
+        <div class="review-section">
+            <h2><i class="fas fa-edit"></i> Beri Ulasan Anda</h2>
+            <form id="reviewForm">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
+                </div>
+                <input type="text" id="robloxUsername" placeholder="Nama Pengguna Roblox Anda" required style="margin-bottom: 15px;">
+                <textarea id="reviewText" placeholder="Tulis ulasan Anda di sini..." required></textarea>
+                <label for="reviewImage" class="file-upload-label">
+                    <i class="fas fa-camera"></i> Unggah Foto
+                </label>
+                <input type="file" id="reviewImage" accept="image/*">
+                <img id="imagePreview" src="" alt="Pratinjau Gambar" style="display:none; max-width: 100px; margin-top: 10px;"/>
+                <button type="submit" id="submitReviewBtn" class="review-submit-btn">Kirim Ulasan</button>
+            </form>
+        </div>
+
+        <div class="review-display-section">
+            <h2><i class="fas fa-comments"></i> Testimoni Pelanggan</h2>
+            <div id="review-list" class="review-list-scrollable">
+                <!-- Ulasan akan ditampilkan di sini oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="logo.jpg" alt="Verda4Garden Logo" class="footer-logo">
+      <p>Top up game murah, cepat, dan terpercaya. Proses instan 24/7 dengan pembayaran lengkap.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@fahril29124?_t=ZS-8xm7Utsr1sO&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:verda4garden@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Peta Situs</h4>
+      <ul>
+        <li><a href="home.html">Beranda</a></li>
+        <li><a href="login.html">Masuk</a></li>
+        <li><a href="register.html">Daftar</a></li>
+        <li><a href="cek-transaksi.html">Cek Transaksi</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Dukungan</h4>
+      <ul>
+        <li><a href="hubungi-kami.html">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legalitas</h4>
+      <ul>
+        <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="view-switcher">
+      <button id="switch-view-btn">Ubah Tampilan</button>
+    </div>
+    &copy; <span id="currentYear"></span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
+<div id="transactionModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <h3 id="modalTitle">Detail Transaksi Terakhir</h3>
+    <div id="transactionDetails">
+      <p>Belum ada transaksi yang dilakukan.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="device-selector.js"></script>
+<style>
+    /* User dropdown styling */
+    .user-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .user-dropdown-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background-color: rgba(var(--primary-rgb), 0.1);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .user-dropdown-header:hover {
+        background-color: rgba(var(--primary-rgb), 0.2);
+    }
+    
+    .user-dropdown-content {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        width: 200px;
+        background-color: var(--card-background);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        padding: 8px 0;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+    }
+    
+    .user-dropdown.active .user-dropdown-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 15px;
+        color: var(--primary-text);
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    
+    .dropdown-item:hover {
+        background-color: rgba(var(--primary-rgb), 0.1);
+    }
+    
+    /* Compact cards styling */
+    .ratings-card, .help-card, .cart-summary-card {
+        padding: 15px;
+        margin-bottom: 15px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .ratings-card h3, .help-card h3, .cart-summary-card h3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 0;
+        font-size: 1rem;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    /* Reviews layout */
+    .reviews-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .review-section, .review-display-section {
+        padding: 20px;
+        background-color: var(--card-background);
+        border-radius: 10px;
+        box-shadow: var(--card-shadow);
+    }
+    
+    .review-section h2, .review-display-section h2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+        margin-top: 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .review-list-scrollable {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+    
+    /* Custom scrollbar */
+    .review-list-scrollable::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .review-list-scrollable::-webkit-scrollbar-track {
+        background: rgba(var(--background-rgb), 0.1);
+        border-radius: 10px;
+    }
+    
+    .review-list-scrollable::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 10px;
+    }
+    
+    /* Responsive layout for mobile */
+    @media (max-width: 768px) {
+        .reviews-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hide loader
+        const loader = document.getElementById('loader');
+        if (loader) loader.style.display = 'none';
+        
+        // Apply dark mode if saved in localStorage
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode === 'enabled') {
+            document.body.classList.add('dark-mode');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) darkModeToggle.innerHTML = '☀️';
+        }
+        
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+                darkModeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+                
+                // Play a subtle sound effect
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.3;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+            });
+        }
+        
+        // Top Up button functionality - redirect to home page
+        const topUpBtn = document.getElementById('topUpBtn');
+        if (topUpBtn) {
+            topUpBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'home.html';
+            });
+        }
+        
+        // Make checkout steps visible
+        document.querySelectorAll('.checkout-step').forEach(step => {
+            step.classList.add('visible');
+        });
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentMethodInput = document.getElementById('paymentMethod');
+        const paymentMethodError = document.getElementById('paymentMethodError');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                // Remove selected class from all payment methods
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                
+                // Add selected class to clicked payment method
+                this.classList.add('selected');
+                
+                // Update hidden input value
+                paymentMethodInput.value = this.dataset.payment;
+                
+                // Hide error message
+                paymentMethodError.style.display = 'none';
+                
+                // Play selection sound
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.2;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+                
+                // Enable checkout button if product is selected
+                updateCheckoutButtonState();
+            });
+        });
+        
+        // Function to update checkout button state
+        function updateCheckoutButtonState() {
+            const hasProduct = document.querySelectorAll('.cart-item').length > 0;
+            const hasPaymentMethod = paymentMethodInput.value !== '';
+            
+            checkoutBtn.disabled = !(hasProduct && hasPaymentMethod);
+        }
+        
+        // Add click event to product items
+        document.querySelectorAll('.product-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Get product info
+                const id = this.dataset.productId;
+                const name = this.querySelector('.product-name').textContent;
+                const priceText = this.querySelector('.product-price').textContent;
+                const priceMatch = priceText.match(/Rp\s+([\d.,]+)/);
+                const price = priceMatch ? parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.')) : 0;
+                
+                // Create flying icon animation
+                const flyingIcon = document.createElement('div');
+                flyingIcon.className = 'fly-to-cart';
+                flyingIcon.textContent = '💰';
+                document.body.appendChild(flyingIcon);
+                
+                const startRect = this.getBoundingClientRect();
+                const cartEl = document.getElementById('cartItems');
+                const endRect = cartEl.getBoundingClientRect();
+                
+                flyingIcon.style.left = `${startRect.left + startRect.width / 2}px`;
+                flyingIcon.style.top = `${startRect.top + startRect.height / 2}px`;
+                
+                setTimeout(() => {
+                    flyingIcon.style.left = `${endRect.left + endRect.width / 2}px`;
+                    flyingIcon.style.top = `${endRect.top + endRect.height / 2}px`;
+                    flyingIcon.style.transform = 'scale(0.1)';
+                    flyingIcon.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    document.body.removeChild(flyingIcon);
+                    cartEl.classList.add('shake');
+                    setTimeout(() => cartEl.classList.remove('shake'), 300);
+                }, 1000);
+                
+                // Add to cart
+                const cartItems = document.getElementById('cartItems');
+                const cartTotal = document.getElementById('cartTotal');
+                
+                if (cartItems.textContent.includes('Belum ada item yang dipilih')) {
+                    cartItems.innerHTML = '';
+                }
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `<span>${name}</span> <span>Rp ${price.toLocaleString('id-ID')}</span>`;
+                cartItems.appendChild(cartItem);
+                
+                // Update total
+                let total = 0;
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    const itemPrice = item.querySelector('span:last-child').textContent;
+                    const priceMatch = itemPrice.match(/Rp\s+([\d.,]+)/);
+                    if (priceMatch) {
+                        total += parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+                    }
+                });
+                
+                cartTotal.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+                
+                // Play sound
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.2;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+                
+                // Enable checkout button if payment method is selected
+                updateCheckoutButtonState();
+            });
+        });
+        
+        // Initialize checkout form validation
+        const checkoutForm = document.getElementById('checkoutForm');
+        const buyerNameInput = document.getElementById('buyerName');
+        const buyerNameError = document.getElementById('buyerNameError');
+        
+        buyerNameInput.addEventListener('input', function() {
+            if (this.value.length < 3) {
+                buyerNameError.style.display = 'block';
+            } else {
+                buyerNameError.style.display = 'none';
+            }
+            updateCheckoutButtonState();
+        });
+        
+        // Promo code validation
+        const promoCode = document.getElementById('promoCode');
+        const promoCodeMessage = document.getElementById('promoCodeMessage');
+        
+        // List of valid promo codes with expiration date and usage limits
+        const validPromoCodes = {
+            'WELCOME10': {
+                discount: 10,
+                expiryDate: new Date('July 10, 2025'),
+                maxUses: 10,
+                maxUsesPerUser: 1
+            },
+            'GARDEN10': {
+                discount: 10,
+                expiryDate: new Date('July 10, 2025'),
+                maxUses: 10,
+                maxUsesPerUser: 1
+            },
+            'VERDA10': {
+                discount: 10,
+                expiryDate: new Date('July 10, 2025'),
+                maxUses: 10,
+                maxUsesPerUser: 1
+            }
+        };
+        
+        // Initialize promo code usage tracking in localStorage if not exists
+        if (!localStorage.getItem('promoCodeUsage')) {
+            localStorage.setItem('promoCodeUsage', JSON.stringify({}));
+        }
+        
+        promoCode.addEventListener('input', function() {
+            validatePromoCode();
+        });
+        
+        // Function to validate promo code with animation
+        function validatePromoCode() {
+            const code = promoCode.value.trim().toUpperCase();
+            
+            if (code === '') {
+                promoCodeMessage.style.display = 'none';
+                return;
+            }
+            
+            // Add loading animation
+            promoCodeMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memeriksa kode promo...';
+            promoCodeMessage.style.color = '#666';
+            promoCodeMessage.style.display = 'block';
+            
+            // Simulate network delay for better UX
+            setTimeout(() => {
+                if (validPromoCodes[code]) {
+                    // Check if promo code is expired
+                    const now = new Date();
+                    if (now > validPromoCodes[code].expiryDate) {
+                        promoCodeMessage.innerHTML = '<i class="fas fa-calendar-times"></i> Kode promo sudah kedaluwarsa';
+                        promoCodeMessage.style.color = 'red';
+                        promoCode.classList.add('invalid-input');
+                        setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                        return;
+                    }
+                    
+                    // Check total usage limit
+                    const usageData = JSON.parse(localStorage.getItem('promoCodeUsage'));
+                    const codeUsage = usageData[code] || { totalUses: 0, userIds: {} };
+                    
+                    if (codeUsage.totalUses >= validPromoCodes[code].maxUses) {
+                        promoCodeMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Kode promo sudah mencapai batas penggunaan';
+                        promoCodeMessage.style.color = 'red';
+                        promoCode.classList.add('invalid-input');
+                        setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                        return;
+                    }
+                    
+                    // Check per-user usage limit
+                    const currentUser = localStorage.getItem('currentUser') || 'guest';
+                    if (codeUsage.userIds[currentUser] && codeUsage.userIds[currentUser] >= validPromoCodes[code].maxUsesPerUser) {
+                        promoCodeMessage.innerHTML = '<i class="fas fa-user-times"></i> Anda sudah menggunakan kode promo ini';
+                        promoCodeMessage.style.color = 'red';
+                        promoCode.classList.add('invalid-input');
+                        setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                        return;
+                    }
+                    
+                    // Promo code is valid
+                    promoCodeMessage.innerHTML = `<i class="fas fa-check-circle"></i> Kode promo valid! Diskon ${validPromoCodes[code].discount}%`;
+                    promoCodeMessage.style.color = 'green';
+                    promoCodeMessage.style.display = 'block';
+                    
+                    // Add success animation to the input
+                    promoCode.classList.add('valid-input');
+                    setTimeout(() => promoCode.classList.remove('valid-input'), 1000);
+                    
+                    // Update cart with discount
+                    updateCartWithDiscount(validPromoCodes[code].discount);
+                } else {
+                    promoCodeMessage.innerHTML = '<i class="fas fa-times-circle"></i> Kode promo tidak valid';
+                    promoCodeMessage.style.color = 'red';
+                    promoCodeMessage.style.display = 'block';
+                    
+                    // Add error animation to the input
+                    promoCode.classList.add('invalid-input');
+                    setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                }
+            }, 500);
+        }
+        
+        // Function to update cart with discount
+        function updateCartWithDiscount(discountPercent) {
+            const cartItems = document.querySelectorAll('.cart-item');
+            if (cartItems.length === 0) return;
+            
+            // Calculate subtotal
+            let subtotal = 0;
+            cartItems.forEach(item => {
+                const itemPrice = item.querySelector('span:last-child').textContent;
+                const priceMatch = itemPrice.match(/Rp\s+([\d.,]+)/);
+                if (priceMatch) {
+                    subtotal += parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+                }
+            });
+            
+            // Calculate discount
+            const discount = subtotal * (discountPercent / 100);
+            const total = subtotal - discount;
+            
+            // Update discount display
+            const discountDisplay = document.getElementById('discountDisplay');
+            discountDisplay.innerHTML = `<div class="discount-item">Diskon (${discountPercent}%): -Rp ${discount.toLocaleString('id-ID')}</div>`;
+            discountDisplay.style.display = 'block';
+            
+            // Update total
+            const cartTotal = document.getElementById('cartTotal');
+            cartTotal.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+            
+            // Add animation to the discount display
+            discountDisplay.classList.add('discount-animation');
+            setTimeout(() => discountDisplay.classList.remove('discount-animation'), 1000);
+        }
+        
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate buyer name
+            if (buyerNameInput.value.length < 3) {
+                buyerNameError.style.display = 'block';
+                return;
+            }
+            
+            // Validate payment method
+            if (!paymentMethodInput.value) {
+                paymentMethodError.style.display = 'block';
+                return;
+            }
+            
+            // Get selected product and payment method
+            const selectedProduct = document.querySelector('.cart-item span:first-child')?.textContent || 'Tidak ada produk';
+            const selectedPrice = document.querySelector('.cart-item span:last-child')?.textContent || 'Rp 0';
+            const paymentMethod = document.querySelector('.payment-method.selected span')?.textContent || 'Tidak ada metode pembayaran';
+            
+            // Calculate total and discount
+            let total = parseFloat(document.getElementById('cartTotal').textContent.match(/Rp\s+([\d.,]+)/)[1].replace(/\./g, '').replace(',', '.'));
+            let discount = 0;
+            let promoCodeValue = promoCode.value.trim().toUpperCase();
+            
+            if (validPromoCodes[promoCodeValue]) {
+                discount = total * (validPromoCodes[promoCodeValue].discount / 100);
+                total = total - discount;
+                
+                // Record promo code usage when checkout is completed
+                const usageData = JSON.parse(localStorage.getItem('promoCodeUsage'));
+                const currentUser = localStorage.getItem('currentUser') || 'guest';
+                
+                if (!usageData[promoCodeValue]) {
+                    usageData[promoCodeValue] = { totalUses: 0, userIds: {} };
+                }
+                
+                usageData[promoCodeValue].totalUses += 1;
+                
+                if (!usageData[promoCodeValue].userIds[currentUser]) {
+                    usageData[promoCodeValue].userIds[currentUser] = 0;
+                }
+                
+                usageData[promoCodeValue].userIds[currentUser] += 1;
+                
+                localStorage.setItem('promoCodeUsage', JSON.stringify(usageData));
+            }
+            
+            // Create WhatsApp message
+            const message = `*Order Grow A Garden*\n\n` +
+                `Username: ${buyerNameInput.value}\n` +
+                `Produk: ${selectedProduct}\n` +
+                `Harga: ${selectedPrice}\n` +
+                `Pembayaran: ${paymentMethod}\n` +
+                `Promo: ${promoCode.value || 'Tidak ada'}\n\n` +
+                `Mohon konfirmasi pesanan ini. Terima kasih!`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Redirect to WhatsApp (using the first admin number)
+            window.open(`https://wa.me/6285651205765?text=${encodedMessage}`, '_blank');
+        });
+    });
+</script>
+</body>
+</html>

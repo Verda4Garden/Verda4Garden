@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Free Fire – Verda4Garden</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="style.css" id="main-stylesheet" />
+</head>
+<body>
+
+<div id="device-choice-modal">
+  <div class="modal-content">
+    <h2>Pilih Tampilan</h2>
+    <p>Untuk pengalaman terbaik, silakan pilih tampilan yang sesuai dengan perangkat Anda.</p>
+    <div class="modal-buttons">
+      <button id="choice-mobile" class="choice-btn">📱 Tampilan Mobile</button>
+      <button id="choice-computer" class="choice-btn">💻 Tampilan Komputer</button>
+    </div>
+  </div>
+</div>
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<header>
+  <div class="header-left">
+    <img src="logo.jpg" alt="Verda4Garden Logo" id="headerLogo">
+    <span class="header-title">Verda4Garden</span>
+  </div>
+  <div class="header-right">
+    <select id="langSelector" aria-label="Pilih Bahasa">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+    </select>
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+    <a href="cek-transaksi.html" class="header-link"><i class="fas fa-receipt"></i> 🧾 Cek Transaksi</a>
+    <div id="user-auth-links" class="header-right">
+        <a href="login.html" class="header-link"><i class="fas fa-sign-in-alt"></i> 🔑 Masuk</a>
+        <a href="register.html" class="header-link primary"><i class="fas fa-user-plus"></i> 📝 Daftar</a>
+        <a href="#" class="header-link" id="topUpBtn"><i class="fas fa-gem"></i> 💎 Top Up</a>
+    </div>
+    <div id="user-profile" style="display:none;" class="header-right">
+        <div class="user-dropdown">
+            <div class="user-dropdown-header">
+                <i class="fas fa-user-circle"></i>
+                <span id="usernameDisplay"></span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="user-dropdown-content">
+                <a href="#" class="dropdown-item"><i class="fas fa-user"></i> Profile</a>
+                <a href="cek-transaksi.html" class="dropdown-item"><i class="fas fa-receipt"></i> Check Transaction</a>
+                <a href="#" class="dropdown-item" id="topUpBtnDropdown"><i class="fas fa-gem"></i> Top Up</a>
+                <a href="#" class="dropdown-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="left-column">
+    <div class="product-header" style="display: flex; align-items: center; gap: 20px;">
+      <img src="unnamed.png" alt="Free Fire" class="product-banner" style="max-width: 150px; border-radius: 10px;">
+      <div>
+        <h1>FREE FIRE</h1>
+        <p>Battle Royale Game</p>
+        <div class="product-tags">
+          <span><i class="fas fa-check-circle"></i> Proses Cepat</span>
+          <span><i class="fas fa-headset"></i> Layanan Chat 24/7</span>
+          <span><i class="fas fa-shield-alt"></i> Pembayaran Aman!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">1</div>
+      <h3 id="labelBuyerName">Masukkan Data Akun</h3>
+      <input type="text" id="buyerName" name="buyerName" required placeholder="ID Free Fire" autocomplete="name" />
+      <small>Pastikan data akun yang diisi sudah benar</small>
+      <div id="buyerNameError" class="error-message">ID minimal 3 karakter.</div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">2</div>
+      <h3 id="diamondsTitle">Pilih Nominal - Diamonds</h3>
+      <div id="diamondsList" class="product-grid">
+        <div class="product-item" data-product-id="ff-55" data-price="9318">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">55 Diamond</div>
+          <div class="product-price">Rp 9.318 <span class="usd-price">($0.60)</span></div>
+        </div>
+        <div class="product-item" data-product-id="ff-60" data-price="9886">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">60 Diamond</div>
+          <div class="product-price">Rp 9.886</div>
+        </div>
+        <div class="product-item" data-product-id="ff-70" data-price="10688">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">70 Diamond</div>
+          <div class="product-price">Rp 10.688</div>
+        </div>
+        <div class="product-item" data-product-id="ff-75" data-price="11539">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">75 Diamond</div>
+          <div class="product-price">Rp 11.539</div>
+        </div>
+        <div class="product-item" data-product-id="ff-80" data-price="12294">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">80 Diamond</div>
+          <div class="product-price">Rp 12.294</div>
+        </div>
+        <div class="product-item" data-product-id="ff-90" data-price="13877">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">90 Diamond</div>
+          <div class="product-price">Rp 13.877</div>
+        </div>
+        <div class="product-item" data-product-id="ff-95" data-price="14668">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">95 Diamond</div>
+          <div class="product-price">Rp 14.668</div>
+        </div>
+        <div class="product-item" data-product-id="ff-100" data-price="15011">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">100 Diamond</div>
+          <div class="product-price">Rp 15.011</div>
+        </div>
+        <div class="product-item" data-product-id="ff-120" data-price="17044">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">120 Diamond</div>
+          <div class="product-price">Rp 17.044</div>
+        </div>
+        <div class="product-item" data-product-id="ff-130" data-price="18628">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">130 Diamond</div>
+          <div class="product-price">Rp 18.628</div>
+        </div>
+        <div class="product-item" data-product-id="ff-140" data-price="19466">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">140 Diamond</div>
+          <div class="product-price">Rp 19.466</div>
+        </div>
+        <div class="product-item" data-product-id="ff-145" data-price="20178">
+          <div class="pet-icon">💎</div>
+          <div class="product-name">145 Diamond</div>
+          <div class="product-price">Rp 20.178</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">3</div>
+      <h3 id="labelPaymentMethod">Pilih Pembayaran</h3>
+      <div class="payment-methods">
+        <div class="payment-method" data-payment="bri">
+          <img src="logo bri.png" alt="Bank BRI" class="payment-icon">
+          <span>Bank BRI</span>
+        </div>
+        <div class="payment-method" data-payment="gopay">
+          <img src="gopay.png" alt="GoPay" class="payment-icon">
+          <span>GoPay</span>
+        </div>
+        <div class="payment-method" data-payment="shopeepay">
+          <img src="shopee-pay-logo-png_seeklogo-406839.png" alt="ShopeePay" class="payment-icon">
+          <span>ShopeePay</span>
+        </div>
+        <div class="payment-method" data-payment="dana">
+          <img src="DANA-Apa-pun-transaksinya-selalu-ada-DANA-1.png" alt="DANA" class="payment-icon">
+          <span>DANA</span>
+        </div>
+      </div>
+      <input type="hidden" id="paymentMethod" name="paymentMethod" required>
+      <div id="paymentMethodError" class="error-message">Pilih metode pembayaran.</div>
+    </div>
+
+    <div class="checkout-step">
+      <div class="step-number">4</div>
+      <h3>Beli!</h3>
+      <form id="checkoutForm" aria-label="Formulir checkout">
+        <label for="promoCode" id="labelPromoCode">Kode Promo</label>
+        <input type="text" id="promoCode" name="promoCode" placeholder="Masukkan kode promo" autocomplete="off" />
+        <div id="promoCodeMessage" class="error-message" style="display:none;"></div>
+        <button type="submit" id="checkoutBtn" disabled>Pesan Sekarang!</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="right-column">
+    <div class="ratings-card">
+      <h3><i class="fas fa-star-half-alt"></i> Ulasan dan rating</h3>
+      <div class="rating-summary">
+        <span class="rating-score">5.00</span>
+        <div class="rating-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+      </div>
+      <small>Berdasarkan total 4 rating</small>
+    </div>
+
+    <div class="help-card">
+      <h3><i class="fas fa-headset"></i> Butuh Bantuan?</h3>
+      <p>Kamu bisa hubungi admin di sini:</p>
+      <div class="admin-links">
+        <a href="https://wa.me/6285651205765" target="_blank" class="admin-link">Admin 1</a>
+        <a href="https://wa.me/6281545733412" target="_blank" class="admin-link">Admin 2</a>
+      </div>
+    </div>
+
+    <div class="cart-summary-card">
+        <h3 id="cartTitle"><i class="fas fa-shopping-cart"></i> Keranjang</h3>
+        <div id="cartItems">Belum ada item yang dipilih.</div>
+        <div id="discountDisplay" style="display:none;"></div>
+        <div id="cartTotal">Total: Rp 0</div>
+    </div>
+  </div>
+</main>
+
+<div class="main-content" style="flex-direction: column; padding-top: 0;">
+    <div class="reviews-container">
+        <div class="review-section">
+            <h2><i class="fas fa-edit"></i> Beri Ulasan Anda</h2>
+            <form id="reviewForm">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
+                </div>
+                <input type="text" id="ffUsername" placeholder="Nama Pengguna Free Fire Anda" required style="margin-bottom: 15px;">
+                <textarea id="reviewText" placeholder="Tulis ulasan Anda di sini..." required></textarea>
+                <label for="reviewImage" class="file-upload-label">
+                    <i class="fas fa-camera"></i> Unggah Foto
+                </label>
+                <input type="file" id="reviewImage" accept="image/*">
+                <img id="imagePreview" src="" alt="Pratinjau Gambar" style="display:none; max-width: 100px; margin-top: 10px;"/>
+                <button type="submit" id="submitReviewBtn" class="review-submit-btn">Kirim Ulasan</button>
+            </form>
+        </div>
+
+        <div class="review-display-section">
+            <h2><i class="fas fa-comments"></i> Testimoni Pelanggan</h2>
+            <div id="review-list" class="review-list-scrollable">
+                <!-- Ulasan akan ditampilkan di sini oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="logo.jpg" alt="Verda4Garden Logo" class="footer-logo">
+      <p>Top up game murah, cepat, dan terpercaya. Proses instan 24/7 dengan pembayaran lengkap.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/verda4garden?igsh=YXQwNnlicTZsdHpl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@fahril29124?_t=ZS-8xm7Utsr1sO&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:verda4garden@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Peta Situs</h4>
+      <ul>
+        <li><a href="home.html">Beranda</a></li>
+        <li><a href="login.html">Masuk</a></li>
+        <li><a href="register.html">Daftar</a></li>
+        <li><a href="cek-transaksi.html">Cek Transaksi</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Dukungan</h4>
+      <ul>
+        <li><a href="hubungi-kami.html">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legalitas</h4>
+      <ul>
+        <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+        <li><a href="syarat-ketentuan.html">Syarat & Ketentuan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="view-switcher">
+      <button id="switch-view-btn">Ubah Tampilan</button>
+    </div>
+    &copy; <span id="currentYear"></span> Verda4Garden. All rights reserved.
+  </div>
+</footer>
+
+<div id="transactionModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeInvoiceModal()">&times;</span>
+    <h3 id="modalTitle">Detail Transaksi Terakhir</h3>
+    <div id="transactionDetails">
+      <p>Belum ada transaksi yang dilakukan.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Modal Animation Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  overflow: auto;
+}
+
+.modal-content {
+  position: relative;
+  background-color: var(--card-background);
+  margin: 10% auto;
+  padding: 25px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transform: scale(0.7);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-content.show-modal {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: var(--primary-text);
+}
+
+/* Success Animation */
+.invoice-success-animation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.check-icon {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 4px solid #4CAF50;
+}
+
+.check-icon::before {
+  top: 3px;
+  left: -2px;
+  width: 30px;
+  transform-origin: 100% 50%;
+  border-radius: 100px 0 0 100px;
+}
+
+.check-icon::after {
+  top: 0;
+  left: 30px;
+  width: 60px;
+  transform-origin: 0 50%;
+  border-radius: 0 100px 100px 0;
+  animation: rotate-circle 4.25s ease-in;
+}
+
+.check-icon::before, .check-icon::after {
+  content: '';
+  height: 100px;
+  position: absolute;
+  background: var(--card-background);
+  transform: rotate(-45deg);
+}
+
+.check-icon .icon-line {
+  height: 5px;
+  background-color: #4CAF50;
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+}
+
+.check-icon .icon-line.line-tip {
+  top: 46px;
+  left: 14px;
+  width: 25px;
+  transform: rotate(45deg);
+  animation: icon-line-tip 0.75s;
+}
+
+.check-icon .icon-line.line-long {
+  top: 38px;
+  right: 8px;
+  width: 47px;
+  transform: rotate(-45deg);
+  animation: icon-line-long 0.75s;
+}
+
+@keyframes icon-line-tip {
+  0% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  54% {
+    width: 0;
+    left: 1px;
+    top: 19px;
+  }
+  70% {
+    width: 50px;
+    left: -8px;
+    top: 37px;
+  }
+  84% {
+    width: 17px;
+    left: 21px;
+    top: 48px;
+  }
+  100% {
+    width: 25px;
+    left: 14px;
+    top: 46px;
+  }
+}
+
+@keyframes icon-line-long {
+  0% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  65% {
+    width: 0;
+    right: 46px;
+    top: 54px;
+  }
+  84% {
+    width: 55px;
+    right: 0px;
+    top: 35px;
+  }
+  100% {
+    width: 47px;
+    right: 8px;
+    top: 38px;
+  }
+}
+
+/* Invoice ID Display */
+.invoice-highlight-box {
+  background-color: rgba(var(--primary-rgb), 0.05);
+  border: 2px dashed var(--primary-color);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.invoice-id-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.invoice-label {
+  font-size: 0.9em;
+  color: var(--secondary-text);
+}
+
+.invoice-id-value {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--primary-text);
+  padding: 12px 15px;
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  border-radius: 8px;
+  letter-spacing: 1px;
+  margin: 10px 0;
+  user-select: all;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.invoice-id-value:hover {
+  background-color: rgba(var(--primary-rgb), 0.15);
+  transform: scale(1.02);
+}
+
+.copy-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.copy-button:hover {
+  background-color: #d43a50;
+  transform: translateY(-2px);
+}
+
+.copy-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.copy-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Transaction Summary */
+.transaction-summary {
+  background-color: rgba(var(--background-rgb), 0.5);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.transaction-summary p {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.modal-button {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.modal-button.primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.modal-button.secondary {
+  background-color: var(--background-tertiary);
+  color: var(--secondary-text);
+  border: 1px solid var(--border-color);
+}
+
+.modal-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-button.primary:hover {
+  background-color: #d43a50;
+}
+
+.modal-button.secondary:hover {
+  background-color: var(--background-secondary);
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+<script src="auth.js"></script>
+<script src="device-selector.js"></script>
+<style>
+    /* User dropdown styling */
+    .user-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .user-dropdown-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background-color: rgba(var(--primary-rgb), 0.1);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .user-dropdown-header:hover {
+        background-color: rgba(var(--primary-rgb), 0.2);
+    }
+    
+    .user-dropdown-content {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        width: 200px;
+        background-color: var(--card-background);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        padding: 8px 0;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+    }
+    
+    .user-dropdown.active .user-dropdown-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 15px;
+        color: var(--primary-text);
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    
+    .dropdown-item:hover {
+        background-color: rgba(var(--primary-rgb), 0.1);
+    }
+    
+    /* Compact cards styling */
+    .ratings-card, .help-card, .cart-summary-card {
+        padding: 15px;
+        margin-bottom: 15px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .ratings-card h3, .help-card h3, .cart-summary-card h3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 0;
+        font-size: 1rem;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    /* Reviews layout */
+    .reviews-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .review-section, .review-display-section {
+        padding: 20px;
+        background-color: var(--card-background);
+        border-radius: 10px;
+        box-shadow: var(--card-shadow);
+    }
+    
+    .review-section h2, .review-display-section h2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+        margin-top: 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .review-list-scrollable {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+    
+    /* Custom scrollbar */
+    .review-list-scrollable::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .review-list-scrollable::-webkit-scrollbar-track {
+        background: rgba(var(--background-rgb), 0.1);
+        border-radius: 10px;
+    }
+    
+    .review-list-scrollable::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 10px;
+    }
+    
+    /* Responsive layout for mobile */
+    @media (max-width: 768px) {
+        .reviews-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<style>
+    .usd-price {
+        font-size: 0.85em;
+        color: var(--secondary-text);
+        opacity: 0.8;
+    }
+    
+    /* Fly to cart animation */
+    .fly-to-cart {
+        position: fixed;
+        font-size: 2em;
+        color: var(--primary-text);
+        z-index: 10000;
+        pointer-events: none;
+        transition: all 1s cubic-bezier(0.5, -0.5, 1, 0.5);
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-3px); }
+        75% { transform: translateX(3px); }
+    }
+    
+    .shake {
+        animation: shake 0.3s ease-in-out;
+    }
+    
+    /* Promo code validation animations */
+    .valid-input {
+        animation: validPulse 1s ease;
+    }
+    
+    .invalid-input {
+        animation: invalidShake 0.5s ease-in-out;
+    }
+    
+    @keyframes validPulse {
+        0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+        50% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+    }
+    
+    @keyframes invalidShake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-10px); }
+        40% { transform: translateX(10px); }
+        60% { transform: translateX(-10px); }
+        80% { transform: translateX(10px); }
+    }
+    
+    /* Discount display animation */
+    #discountDisplay {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 8px;
+        background-color: rgba(40, 167, 69, 0.1);
+        border: 1px dashed #28a745;
+    }
+    
+    .discount-item {
+        color: #28a745;
+        font-weight: bold;
+    }
+    
+    .discount-animation {
+        animation: highlightDiscount 1s ease;
+    }
+    
+    @keyframes highlightDiscount {
+        0% { background-color: rgba(40, 167, 69, 0.3); }
+        100% { background-color: rgba(40, 167, 69, 0.1); }
+    }
+    
+    /* Animation for dark mode toggle */
+    @keyframes toggleAnimation {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    
+    .animate-toggle {
+        animation: toggleAnimation 0.5s ease;
+    }
+    
+    /* Payment methods styling */
+    .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .payment-method {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: var(--card-background);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .payment-method:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .payment-method.selected {
+        border: 2px solid var(--primary-text);
+        background-color: rgba(233, 69, 96, 0.1);
+    }
+    
+    .payment-icon {
+        width: 40px;
+        height: 25px;
+        object-fit: contain;
+        margin-bottom: 8px;
+    }
+    
+    .payment-method span {
+        font-size: 12px;
+        text-align: center;
+    }
+</style>
+<script>
+    // Exchange rate (1 USD = 15,500 IDR approximately)
+    const exchangeRate = 15500;
+    
+    // Convert all prices to USD
+    function convertPricesToUSD() {
+        document.querySelectorAll('.product-item').forEach(item => {
+            const priceElement = item.querySelector('.product-price');
+            if (priceElement && !priceElement.querySelector('.usd-price')) {
+                const priceText = priceElement.textContent;
+                const priceMatch = priceText.match(/Rp\s+([\d.,]+)/);
+                if (priceMatch) {
+                    const idrPrice = parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+                    const usdPrice = (idrPrice / exchangeRate).toFixed(2);
+                    const usdSpan = document.createElement('span');
+                    usdSpan.className = 'usd-price';
+                    usdSpan.textContent = ` ($${usdPrice})`;
+                    priceElement.appendChild(usdSpan);
+                }
+            }
+        });
+    }
+    
+    // Fly to cart animation
+    function flyToCart(startElement) {
+        const flyingIcon = document.createElement('div');
+        flyingIcon.className = 'fly-to-cart';
+        flyingIcon.textContent = '💎';
+        document.body.appendChild(flyingIcon);
+
+        const startRect = startElement.getBoundingClientRect();
+        const cartEl = document.getElementById('cartItems');
+        const endRect = cartEl.getBoundingClientRect();
+
+        flyingIcon.style.left = `${startRect.left + startRect.width / 2}px`;
+        flyingIcon.style.top = `${startRect.top + startRect.height / 2}px`;
+
+        setTimeout(() => {
+            flyingIcon.style.left = `${endRect.left + endRect.width / 2}px`;
+            flyingIcon.style.top = `${endRect.top + endRect.height / 2}px`;
+            flyingIcon.style.transform = 'scale(0.1)';
+            flyingIcon.style.opacity = '0';
+        }, 10);
+
+        setTimeout(() => {
+            document.body.removeChild(flyingIcon);
+            cartEl.classList.add('shake');
+            setTimeout(() => cartEl.classList.remove('shake'), 300);
+        }, 1000);
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        // Convert prices to USD
+        convertPricesToUSD();
+        
+        // Add click event to product items for fly to cart animation
+        document.querySelectorAll('.product-item').forEach(item => {
+            item.addEventListener('click', function() {
+                flyToCart(this);
+                
+                // Get product info
+                const id = this.dataset.productId;
+                const name = this.querySelector('.product-name').textContent;
+                const priceText = this.querySelector('.product-price').textContent;
+                const priceMatch = priceText.match(/Rp\s+([\d.,]+)/);
+                const price = priceMatch ? parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.')) : 0;
+                
+                // Add to cart (simplified)
+                const cartItems = document.getElementById('cartItems');
+                const cartTotal = document.getElementById('cartTotal');
+                
+                if (cartItems.textContent.includes('Belum ada item yang dipilih')) {
+                    cartItems.innerHTML = '';
+                }
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `<span>${name}</span> <span>Rp ${price.toLocaleString('id-ID')}</span>`;
+                cartItems.appendChild(cartItem);
+                
+                // Update total (simplified)
+                let total = 0;
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    const itemPrice = item.querySelector('span:last-child').textContent;
+                    const priceMatch = itemPrice.match(/Rp\s+([\d.,]+)/);
+                    if (priceMatch) {
+                        total += parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+                    }
+                });
+                
+                cartTotal.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+                
+                // Enable checkout button if payment method is selected
+                updateCheckoutButtonState();
+            });
+        });
+        
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentMethodInput = document.getElementById('paymentMethod');
+        const paymentMethodError = document.getElementById('paymentMethodError');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                // Remove selected class from all payment methods
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                
+                // Add selected class to clicked payment method
+                this.classList.add('selected');
+                
+                // Update hidden input value
+                paymentMethodInput.value = this.dataset.payment;
+                
+                // Hide error message
+                paymentMethodError.style.display = 'none';
+                
+                // Play selection sound
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.2;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+                
+                // Enable checkout button if product is selected
+                updateCheckoutButtonState();
+            });
+        });
+        
+        // Function to update checkout button state
+        function updateCheckoutButtonState() {
+            const hasProduct = document.querySelectorAll('.cart-item').length > 0;
+            const hasPaymentMethod = paymentMethodInput.value !== '';
+            
+            checkoutBtn.disabled = !(hasProduct && hasPaymentMethod);
+        }
+        // Add diamond icons to all product items
+        const productItems = document.querySelectorAll('.product-item');
+        productItems.forEach(item => {
+            if (!item.querySelector('.pet-icon')) {
+                const icon = document.createElement('div');
+                icon.className = 'pet-icon';
+                icon.textContent = '💎';
+                item.prepend(icon);
+            }
+        });
+        
+        // Initialize checkout form validation
+        const checkoutForm = document.getElementById('checkoutForm');
+        const buyerNameInput = document.getElementById('buyerName');
+        const buyerNameError = document.getElementById('buyerNameError');
+        
+        buyerNameInput.addEventListener('input', function() {
+            if (this.value.length < 3) {
+                buyerNameError.style.display = 'block';
+            } else {
+                buyerNameError.style.display = 'none';
+            }
+            updateCheckoutButtonState();
+        });
+        
+        // Promo code validation
+        const promoCode = document.getElementById('promoCode');
+        const promoCodeMessage = document.getElementById('promoCodeMessage');
+        
+        // List of valid promo codes with expiration date and usage limits
+        const validPromoCodes = {
+            'WELCOME10': {
+                discount: 10,
+                expiryDate: new Date('July 10, 2025'),
+                maxUses: 10,
+                maxUsesPerUser: 1
+            },
+            'FF10': {
+                discount: 10,
+                expiryDate: new Date('July 10, 2025'),
+                maxUses: 10,
+                maxUsesPerUser: 1
+            },
+            'VERDA10': {
+                discount: 10,
+                expiryDate: new Date('July 10, 2025'),
+                maxUses: 10,
+                maxUsesPerUser: 1
+            }
+        };
+        
+        // Initialize promo code usage tracking in localStorage if not exists
+        if (!localStorage.getItem('promoCodeUsage')) {
+            localStorage.setItem('promoCodeUsage', JSON.stringify({}));
+        }
+        
+        promoCode.addEventListener('input', function() {
+            validatePromoCode();
+        });
+        
+        // Function to validate promo code with animation
+        function validatePromoCode() {
+            const code = promoCode.value.trim().toUpperCase();
+            
+            if (code === '') {
+                promoCodeMessage.style.display = 'none';
+                return;
+            }
+            
+            // Add loading animation
+            promoCodeMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memeriksa kode promo...';
+            promoCodeMessage.style.color = '#666';
+            promoCodeMessage.style.display = 'block';
+            
+            // Simulate network delay for better UX
+            setTimeout(() => {
+                if (validPromoCodes[code]) {
+                    // Check if promo code is expired
+                    const now = new Date();
+                    if (now > validPromoCodes[code].expiryDate) {
+                        promoCodeMessage.innerHTML = '<i class="fas fa-calendar-times"></i> Kode promo sudah kedaluwarsa';
+                        promoCodeMessage.style.color = 'red';
+                        promoCode.classList.add('invalid-input');
+                        setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                        return;
+                    }
+                    
+                    // Check total usage limit
+                    const usageData = JSON.parse(localStorage.getItem('promoCodeUsage'));
+                    const codeUsage = usageData[code] || { totalUses: 0, userIds: {} };
+                    
+                    if (codeUsage.totalUses >= validPromoCodes[code].maxUses) {
+                        promoCodeMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Kode promo sudah mencapai batas penggunaan';
+                        promoCodeMessage.style.color = 'red';
+                        promoCode.classList.add('invalid-input');
+                        setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                        return;
+                    }
+                    
+                    // Check per-user usage limit
+                    const currentUser = localStorage.getItem('currentUser') || 'guest';
+                    if (codeUsage.userIds[currentUser] && codeUsage.userIds[currentUser] >= validPromoCodes[code].maxUsesPerUser) {
+                        promoCodeMessage.innerHTML = '<i class="fas fa-user-times"></i> Anda sudah menggunakan kode promo ini';
+                        promoCodeMessage.style.color = 'red';
+                        promoCode.classList.add('invalid-input');
+                        setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                        return;
+                    }
+                    
+                    // Promo code is valid
+                    promoCodeMessage.innerHTML = `<i class="fas fa-check-circle"></i> Kode promo valid! Diskon ${validPromoCodes[code].discount}%`;
+                    promoCodeMessage.style.color = 'green';
+                    promoCodeMessage.style.display = 'block';
+                    
+                    // Add success animation to the input
+                    promoCode.classList.add('valid-input');
+                    setTimeout(() => promoCode.classList.remove('valid-input'), 1000);
+                    
+                    // Update cart with discount
+                    updateCartWithDiscount(validPromoCodes[code].discount);
+                } else {
+                    promoCodeMessage.innerHTML = '<i class="fas fa-times-circle"></i> Kode promo tidak valid';
+                    promoCodeMessage.style.color = 'red';
+                    promoCodeMessage.style.display = 'block';
+                    
+                    // Add error animation to the input
+                    promoCode.classList.add('invalid-input');
+                    setTimeout(() => promoCode.classList.remove('invalid-input'), 1000);
+                }
+            }, 500);
+        }
+        
+        // Function to update cart with discount
+        function updateCartWithDiscount(discountPercent) {
+            const cartItems = document.querySelectorAll('.cart-item');
+            if (cartItems.length === 0) return;
+            
+            // Calculate subtotal
+            let subtotal = 0;
+            cartItems.forEach(item => {
+                const itemPrice = item.querySelector('span:last-child').textContent;
+                const priceMatch = itemPrice.match(/Rp\s+([\d.,]+)/);
+                if (priceMatch) {
+                    subtotal += parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'));
+                }
+            });
+            
+            // Calculate discount
+            const discount = subtotal * (discountPercent / 100);
+            const total = subtotal - discount;
+            
+            // Update discount display
+            const discountDisplay = document.getElementById('discountDisplay');
+            discountDisplay.innerHTML = `<div class="discount-item">Diskon (${discountPercent}%): -Rp ${discount.toLocaleString('id-ID')}</div>`;
+            discountDisplay.style.display = 'block';
+            
+            // Update total
+            const cartTotal = document.getElementById('cartTotal');
+            cartTotal.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+            
+            // Add animation to the discount display
+            discountDisplay.classList.add('discount-animation');
+            setTimeout(() => discountDisplay.classList.remove('discount-animation'), 1000);
+        }
+        
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate buyer name
+            if (buyerNameInput.value.length < 3) {
+                buyerNameError.style.display = 'block';
+                return;
+            }
+            
+            // Validate payment method
+            if (!paymentMethodInput.value) {
+                paymentMethodError.style.display = 'block';
+                return;
+            }
+            
+            // Get selected product and payment method
+            const selectedProduct = document.querySelector('.cart-item span:first-child')?.textContent || 'Tidak ada produk';
+            const selectedPrice = document.querySelector('.cart-item span:last-child')?.textContent || 'Rp 0';
+            const paymentMethod = document.querySelector('.payment-method.selected span')?.textContent || 'Tidak ada metode pembayaran';
+            
+            // Generate invoice ID
+            const invoiceId = generateInvoiceId();
+            
+            // Calculate total and discount
+            let total = parseFloat(document.getElementById('cartTotal').textContent.match(/Rp\s+([\d.,]+)/)[1].replace(/\./g, '').replace(',', '.'));
+            let discount = 0;
+            let promoCodeValue = promoCode.value.trim().toUpperCase();
+            
+            if (validPromoCodes[promoCodeValue]) {
+                discount = total * (validPromoCodes[promoCodeValue].discount / 100);
+                total = total - discount;
+                
+                // Record promo code usage when checkout is completed
+                const usageData = JSON.parse(localStorage.getItem('promoCodeUsage'));
+                const currentUser = localStorage.getItem('currentUser') || 'guest';
+                
+                if (!usageData[promoCodeValue]) {
+                    usageData[promoCodeValue] = { totalUses: 0, userIds: {} };
+                }
+                
+                usageData[promoCodeValue].totalUses += 1;
+                
+                if (!usageData[promoCodeValue].userIds[currentUser]) {
+                    usageData[promoCodeValue].userIds[currentUser] = 0;
+                }
+                
+                usageData[promoCodeValue].userIds[currentUser] += 1;
+                
+                localStorage.setItem('promoCodeUsage', JSON.stringify(usageData));
+            }
+            
+            // Save transaction data to localStorage
+            const transactionData = {
+                invoiceId: invoiceId,
+                date: new Date().toLocaleString('id-ID'),
+                buyerName: buyerNameInput.value,
+                paymentMethod: paymentMethod,
+                cart: [{
+                    name: selectedProduct,
+                    price: parseFloat(selectedPrice.match(/Rp\s+([\d.,]+)/)[1].replace(/\./g, '').replace(',', '.')),
+                    qty: 1,
+                    emoji: '💎'
+                }],
+                subtotal: parseFloat(selectedPrice.match(/Rp\s+([\d.,]+)/)[1].replace(/\./g, '').replace(',', '.')),
+                discount: discount,
+                promoCode: promoCodeValue || '',
+                total: total
+            };
+            
+            localStorage.setItem(invoiceId, JSON.stringify(transactionData));
+            
+            // Show invoice ID to user with animated modal instead of alert
+            showInvoiceModal(invoiceId, transactionData);
+            
+            // Create WhatsApp message with invoice ID
+            const message = `*Order Free Fire*\n\n` +
+                `Invoice ID: ${invoiceId}\n` +
+                `ID: ${buyerNameInput.value}\n` +
+                `Produk: ${selectedProduct}\n` +
+                `Harga: ${selectedPrice}\n` +
+                `Pembayaran: ${paymentMethod}\n` +
+                `Promo: ${promoCode.value || 'Tidak ada'}\n\n` +
+                `Mohon konfirmasi pesanan ini. Terima kasih!`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Redirect to WhatsApp (using the first admin number)
+            window.open(`https://wa.me/6285651205765?text=${encodedMessage}`, '_blank');
+        });
+        
+        // Top Up button functionality - redirect to home page
+        const topUpBtn = document.getElementById('topUpBtn');
+        if (topUpBtn) {
+            topUpBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'home.html';
+            });
+        }
+        
+        // Language switcher functionality
+        const langSelector = document.getElementById('langSelector');
+        if (langSelector) {
+            langSelector.addEventListener('change', function() {
+                const lang = this.value;
+                localStorage.setItem('language', lang);
+                updateLanguage(lang);
+            });
+            
+            // Set initial language from localStorage or default to 'id'
+            const savedLang = localStorage.getItem('language') || 'id';
+            langSelector.value = savedLang;
+            updateLanguage(savedLang);
+        }
+        
+        // Enhanced Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function() {
+                // Toggle dark mode class
+                document.body.classList.toggle('dark-mode');
+                
+                // Update localStorage
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+                
+                // Update icon with animation
+                darkModeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+                darkModeToggle.classList.add('animate-toggle');
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    darkModeToggle.classList.remove('animate-toggle');
+                }, 500);
+                
+                // Play a subtle sound effect
+                const audio = new Audio('add-to-cart.mp3');
+                audio.volume = 0.3;
+                audio.play().catch(e => console.log('Audio play prevented:', e));
+            });
+            
+            // Set initial dark mode from localStorage
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '☀️';
+            } else if (savedDarkMode === 'disabled') {
+                document.body.classList.remove('dark-mode');
+                darkModeToggle.innerHTML = '🌙';
+            } else {
+                // Default based on user's system preference
+                const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    darkModeToggle.innerHTML = '☀️';
+                    localStorage.setItem('darkMode', 'enabled');
+                }
+            }
+        }
+    });
+    
+    // Function to generate unique invoice ID with game-specific prefix
+    function generateInvoiceId() {
+        const prefix = 'FF-';  // Free Fire specific prefix
+        const timestamp = Date.now().toString().slice(-10);
+        const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        return prefix + timestamp + random;
+    }
+    
+    // Function to show invoice modal with animation
+    function showInvoiceModal(invoiceId, transactionData) {
+        const modal = document.getElementById('transactionModal');
+        const modalContent = modal.querySelector('.modal-content');
+        const modalTitle = document.getElementById('modalTitle');
+        const transactionDetails = document.getElementById('transactionDetails');
+        
+        // Set modal title and content
+        modalTitle.textContent = 'Pesanan Berhasil! 🎉';
+        
+        // Format the transaction details
+        let detailsHtml = `
+            <div class="invoice-success-animation">
+                <div class="success-checkmark">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice-highlight-box">
+                <div class="invoice-id-display">
+                    <span class="invoice-label">Nomor Invoice:</span>
+                    <div class="invoice-id-value" id="invoice-id-display">${invoiceId}</div>
+                    <button id="copy-button" class="copy-button" onclick="copyInvoiceId()"><i class="fas fa-copy"></i> Salin Invoice ID</button>
+                </div>
+            </div>
+            <div class="transaction-summary">
+                <p><strong>ID Free Fire:</strong> ${transactionData.buyerName}</p>
+                <p><strong>Produk:</strong> ${transactionData.cart[0].name}</p>
+                <p><strong>Total Pembayaran:</strong> ${formatPrice(transactionData.total)}</p>
+                <p><strong>Metode Pembayaran:</strong> ${transactionData.paymentMethod}</p>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeInvoiceModal()" class="modal-button secondary">Tutup</button>
+                <a href="cek-transaksi.html" class="modal-button primary">Cek Status Transaksi</a>
+            </div>
+        `;
+        
+        transactionDetails.innerHTML = detailsHtml;
+        
+        // Show modal with animation
+        modal.style.display = 'block';
+        setTimeout(() => {
+            modalContent.classList.add('show-modal');
+        }, 10);
+        
+        // Add copy functionality
+        window.copyInvoiceId = function() {
+            const invoiceId = document.getElementById('invoice-id-display').textContent;
+            navigator.clipboard.writeText(invoiceId)
+                .then(() => {
+                    const copyBtn = document.getElementById('copy-button');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                    
+                    // Show a floating notification
+                    const notification = document.createElement('div');
+                    notification.className = 'copy-notification';
+                    notification.innerHTML = '<i class="fas fa-check-circle"></i> Invoice ID berhasil disalin!';
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.classList.add('show');
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                        setTimeout(() => {
+                            document.body.removeChild(notification);
+                        }, 300);
+                    }, 2000);
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Salin Invoice ID';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Could not copy text: ', err);
+                    alert('Tidak dapat menyalin teks. Silakan salin manual.');
+                });
+        };
+        
+        // Add close functionality
+        window.closeInvoiceModal = function() {
+            modalContent.classList.remove('show-modal');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        };
+    }
+    
+    // Helper function to format price
+    function formatPrice(num) {
+        return 'Rp ' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    
+    // Function to update language (improved)
+    function updateLanguage(lang) {
+        // Set language for all pages by storing in localStorage
+        localStorage.setItem('language', lang);
+        const translations = {
+            'id': {
+                'Masuk': 'Masuk',
+                'Daftar': 'Daftar',
+                'Top Up': 'Top Up',
+                'Cek Transaksi': 'Cek Transaksi',
+                'Pilih Nominal - Diamonds': 'Pilih Nominal - Diamonds',
+                'Pilih Pembayaran': 'Pilih Pembayaran',
+                'Pesan Sekarang!': 'Pesan Sekarang!',
+                'Keranjang': 'Keranjang',
+                'Belum ada item yang dipilih.': 'Belum ada item yang dipilih.',
+                'Total': 'Total',
+                'Beri Ulasan Anda': 'Beri Ulasan Anda',
+                'Kirim Ulasan': 'Kirim Ulasan'
+            },
+            'en': {
+                'Masuk': 'Login',
+                'Daftar': 'Register',
+                'Top Up': 'Top Up',
+                'Cek Transaksi': 'Check Transaction',
+                'Pilih Nominal - Diamonds': 'Select Amount - Diamonds',
+                'Pilih Pembayaran': 'Select Payment',
+                'Pesan Sekarang!': 'Order Now!',
+                'Keranjang': 'Cart',
+                'Belum ada item yang dipilih.': 'No items selected yet.',
+                'Total': 'Total',
+                'Beri Ulasan Anda': 'Give Your Review',
+                'Kirim Ulasan': 'Submit Review'
+            }
+        };
+        
+        // Update text content based on selected language
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                element.textContent = translations[lang][key];
+            }
+        });
+        
+        // For elements without data-translate attribute, try to match by text content
+        document.querySelectorAll('a, h1, h2, h3, h4, button, span, p').forEach(element => {
+            const text = element.textContent.trim();
+            if (translations[lang] && translations[lang][text]) {
+                element.textContent = translations[lang][text];
+            }
+        });
+    }
+</script>
+</body>
+</html>
